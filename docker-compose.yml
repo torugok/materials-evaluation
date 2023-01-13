@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  backend:
+    container_name: materials_evaluation
+    build:
+      context: ./materials-evaluation-dotnet/
+    ports:
+      - "5000:80"
+    volumes:
+      - ./materials-evaluation-dotnet:/App
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:80
+    restart: on-failure
