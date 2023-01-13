@@ -1,0 +1,23 @@
+<h1 *ngIf="!isChange" mat-dialog-title>Novo Material</h1>
+<h1 *ngIf="isChange" mat-dialog-title>Editar Material</h1>
+
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Nome</mat-label>
+    <input matInput [(ngModel)]="data.name" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button
+    *ngIf="!isChange"
+    mat-button
+    [mat-dialog-close]="data"
+    cdkFocusInitial
+  >
+    Salvar
+  </button>
+  <button *ngIf="isChange" mat-button [mat-dialog-close]="data" cdkFocusInitial>
+    Editar
+  </button>
+</div>

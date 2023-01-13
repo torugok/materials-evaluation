@@ -1,5 +1,9 @@
 # Avaliação de Materiais
 
+# Rodar Front-end
+
+`cd materials-evaluation-spa`
+`ng serve --open`
 
 # C# Scaffolds
 
