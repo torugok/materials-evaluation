@@ -1,30 +1,30 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
+import { Material } from 'src/app/models/Material';
+import { MaterialService } from 'src/app/services/Material.service';
 import { MaterialDialogComponent } from './material-dialog/material-dialog.component';
-
-export interface Material {
-  id: number;
-  name: string;
-}
-
-const MATERIALS_FAKE_DATA: Material[] = [
-  { id: 1, name: 'Material 1' },
-  { id: 2, name: 'Material 2' },
-];
 
 @Component({
   selector: 'app-materials',
   templateUrl: './materials.component.html',
   styleUrls: ['./materials.component.scss'],
+  providers: [MaterialService],
 })
 export class MaterialsComponent {
   @ViewChild(MatTable)
   table!: MatTable<any>;
   displayedColumns: string[] = ['id', 'name', 'action'];
-  dataSource = MATERIALS_FAKE_DATA;
+  dataSource!: Material[];
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    public materialService: MaterialService
+  ) {
+    this.materialService.getMaterials().subscribe((data: Material[]) => {
+      this.dataSource = data;
+    });
+  }
 
   openDialog(material: Material | null): void {
     const dialogRef = this.dialog.open(MaterialDialogComponent, {
@@ -36,18 +36,36 @@ export class MaterialsComponent {
 
     dialogRef.afterClosed().subscribe((result: Material) => {
       if (result !== undefined) {
+        // edição
         if (this.dataSource.map((p) => p.id).includes(result.id)) {
-          this.dataSource[result.id - 1] = result;
+          this.materialService
+            .editMaterial(result)
+            .subscribe((data: Material) => {
+              var index = this.dataSource.findIndex(
+                (item) => item.id === data.id
+              );
+              this.dataSource[index] = result;
+              this.table.renderRows();
+            });
         } else {
-          this.dataSource.push(result);
+          // criação
+          this.materialService
+            .newMaterial(result)
+            .subscribe((data: Material) => {
+              this.dataSource.push(data);
+              this.table.renderRows();
+            });
         }
-        this.table.renderRows();
       }
     });
   }
 
   onDeleteMaterial(id: number): void {
-    this.dataSource = this.dataSource.filter((material) => material.id !== id);
+    this.materialService.deleteMaterial(id).subscribe((data: Material) => {
+      this.dataSource = this.dataSource.filter(
+        (material) => material.id !== id
+      );
+    });
   }
 
   onEditMaterial(material: Material): void {

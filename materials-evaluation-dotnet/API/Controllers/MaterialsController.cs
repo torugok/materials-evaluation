@@ -52,7 +52,7 @@ namespace MaterialsEvaluation.API_Controllers
         // PUT: api/Materials/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMaterial(long id, Material material)
+        public async Task<ActionResult<Material>> PutMaterial(long id, Material material)
         {
             if (id != material.Id)
             {
@@ -77,7 +77,7 @@ namespace MaterialsEvaluation.API_Controllers
                 }
             }
 
-            return NoContent();
+            return material;
         }
 
         // POST: api/Materials
