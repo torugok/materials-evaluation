@@ -11,4 +11,5 @@ public class DatabaseContext : DbContext
     }
 
     public DbSet<Material> Materials { get; set; } = null!;
+    public DbSet<QualityProperty> QualityProperties { get; set; } = null!;
 }
