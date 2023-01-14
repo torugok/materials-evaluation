@@ -14,7 +14,18 @@ import { QualityPropertyDialogComponent } from './quality-property-dialog/qualit
 export class QualityPropertiesComponent {
   @ViewChild(MatTable)
   table!: MatTable<any>;
-  displayedColumns: string[] = ['id', 'acronym', 'type', 'action'];
+  displayedColumns: string[] = [
+    //'id',
+    'acronym',
+    'description',
+    'type',
+    'quantitativeDecimals',
+    'quantitativeUnit',
+    'quantitativeNominalValue',
+    'quantitativeInferiorLimit',
+    'quantitativeSuperiorLimit',
+    'action',
+  ];
   dataSource!: QualityProperty[];
 
   constructor(
@@ -24,6 +35,7 @@ export class QualityPropertiesComponent {
     this.qualityPropertyService
       .getAll()
       .subscribe((data: QualityProperty[]) => {
+        console.log(data);
         this.dataSource = data;
       });
   }
@@ -32,11 +44,29 @@ export class QualityPropertiesComponent {
     const dialogRef = this.dialog.open(QualityPropertyDialogComponent, {
       data:
         qualityProperty === null
-          ? { acronym: null, type: null }
+          ? {
+              acronym: null,
+              description: null,
+              type: null,
+              quantitativeDecimals: null,
+              quantitativeUnit: null,
+              quantitativeNominalValue: null,
+              quantitativeInferiorLimit: null,
+              quantitativeSuperiorLimit: null,
+            }
           : {
               id: qualityProperty.id,
               acronym: qualityProperty.acronym,
+              description: qualityProperty.description,
               type: qualityProperty.type,
+              quantitativeDecimals: qualityProperty.quantitativeDecimals,
+              quantitativeUnit: qualityProperty.quantitativeUnit,
+              quantitativeNominalValue:
+                qualityProperty.quantitativeNominalValue,
+              quantitativeInferiorLimit:
+                qualityProperty.quantitativeInferiorLimit,
+              quantitativeSuperiorLimit:
+                qualityProperty.quantitativeSuperiorLimit,
             },
     });
 

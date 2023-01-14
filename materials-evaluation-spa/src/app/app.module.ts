@@ -26,7 +26,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './views/home/home.component';
-import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { SidenavComponent } from './shared/sidenav/sidenav.component';
 import { QualityPropertiesComponent } from './views/quality-properties/quality-property.component';
@@ -36,7 +35,6 @@ import { QualityPropertyDialogComponent } from './views/quality-properties/quali
   declarations: [
     AppComponent,
     HomeComponent,
-    HeaderComponent,
     FooterComponent,
     MaterialsComponent,
     MaterialDialogComponent,

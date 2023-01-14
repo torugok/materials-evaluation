@@ -14,7 +14,11 @@ import { MaterialDialogComponent } from './material-dialog/material-dialog.compo
 export class MaterialsComponent {
   @ViewChild(MatTable)
   table!: MatTable<any>;
-  displayedColumns: string[] = ['id', 'name', 'action'];
+  displayedColumns: string[] = [
+    //'id',
+    'name',
+    'action',
+  ];
   dataSource!: Material[];
 
   constructor(

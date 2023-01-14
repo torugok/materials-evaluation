@@ -11,6 +11,12 @@
     </li>
     <li>
       <mat-form-field appearance="fill">
+        <mat-label>Descrição</mat-label>
+        <input matInput [(ngModel)]="data.description" />
+      </mat-form-field>
+    </li>
+    <li>
+      <mat-form-field appearance="fill">
         <mat-label>Selecione uma opção</mat-label>
         <mat-select [(value)]="data.type">
           <mat-option value="QUANTITATIVE">Quantitativa</mat-option>
@@ -18,6 +24,55 @@
         </mat-select>
       </mat-form-field>
     </li>
+
+    <div *ngIf="data.type == 'QUANTITATIVE'">
+      <li>
+        <mat-form-field appearance="fill">
+          <mat-label>Casas Decimais</mat-label>
+          <input
+            type="number"
+            matInput
+            [(ngModel)]="data.quantitativeDecimals"
+          />
+        </mat-form-field>
+      </li>
+      <li>
+        <mat-form-field appearance="fill">
+          <mat-label>Unidade</mat-label>
+          <input type="text" matInput [(ngModel)]="data.quantitativeUnit" />
+        </mat-form-field>
+      </li>
+      <li>
+        <mat-form-field appearance="fill">
+          <mat-label>Valor Nominal</mat-label>
+          <input
+            type="number"
+            matInput
+            [(ngModel)]="data.quantitativeNominalValue"
+          />
+        </mat-form-field>
+      </li>
+      <li>
+        <mat-form-field appearance="fill">
+          <mat-label>Limite Inferior</mat-label>
+          <input
+            type="number"
+            matInput
+            [(ngModel)]="data.quantitativeInferiorLimit"
+          />
+        </mat-form-field>
+      </li>
+      <li>
+        <mat-form-field appearance="fill">
+          <mat-label>Limite Superior</mat-label>
+          <input
+            type="number"
+            matInput
+            [(ngModel)]="data.quantitativeSuperiorLimit"
+          />
+        </mat-form-field>
+      </li>
+    </div>
   </ol>
 </div>
 <div mat-dialog-actions>
