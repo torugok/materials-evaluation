@@ -35,7 +35,6 @@ export class QualityPropertiesComponent {
     this.qualityPropertyService
       .getAll()
       .subscribe((data: QualityProperty[]) => {
-        console.log(data);
         this.dataSource = data;
       });
   }
