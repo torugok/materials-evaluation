@@ -1,14 +1,14 @@
-using Microsoft.EntityFrameworkCore;
 using MaterialsEvaluation.Database;
+using Microsoft.EntityFrameworkCore;
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(
-        MyAllowSpecificOrigins,
+        myAllowSpecificOrigins,
         policy =>
         {
             policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod(); // FIXME: configurar CORS apropriadamente para produção
@@ -36,7 +36,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors(myAllowSpecificOrigins);
 
 app.UseAuthorization();
 

@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using MaterialsEvaluation.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MaterialsEvaluation.Database;
 
 namespace MaterialsEvaluation.API_Controllers
 {
@@ -28,6 +23,7 @@ namespace MaterialsEvaluation.API_Controllers
             {
                 return NotFound();
             }
+
             return await _context.Materials.ToListAsync();
         }
 
@@ -39,6 +35,7 @@ namespace MaterialsEvaluation.API_Controllers
             {
                 return NotFound();
             }
+
             var material = await _context.Materials.FindAsync(id);
 
             if (material == null)
@@ -99,6 +96,7 @@ namespace MaterialsEvaluation.API_Controllers
             {
                 return NotFound();
             }
+
             var material = await _context.Materials.FindAsync(id);
             if (material == null)
             {
