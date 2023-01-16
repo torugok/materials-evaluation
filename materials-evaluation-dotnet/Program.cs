@@ -1,45 +1,19 @@
-using MaterialsEvaluation.Database;
-using Microsoft.EntityFrameworkCore;
+using Autofac.Extensions.DependencyInjection;
 
-var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddCors(options =>
+namespace MaterialsEvaluation
 {
-    options.AddPolicy(
-        myAllowSpecificOrigins,
-        policy =>
+    public class Program
+    {
+        public static void Main(string[] args)
         {
-            policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod(); // FIXME: configurar CORS apropriadamente para produção
+            Host.CreateDefaultBuilder(args)
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                })
+                .Build()
+                .Run();
         }
-    );
-});
-
-// Add services to the container.
-builder.Services.AddControllers();
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddDbContext<DatabaseContext>(
-    opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("Database"))
-);
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    }
 }
-
-app.UseCors(myAllowSpecificOrigins);
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();

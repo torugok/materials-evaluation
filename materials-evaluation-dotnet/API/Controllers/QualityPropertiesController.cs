@@ -47,7 +47,7 @@ namespace MaterialsEvaluation.API_Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<ActionResult<QualityProperty>> PutQualityProperty(
-            long id,
+            Guid id,
             QualityProperty qualityProperty
         )
         {
@@ -94,7 +94,7 @@ namespace MaterialsEvaluation.API_Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteQualityProperty(long id)
+        public async Task<IActionResult> DeleteQualityProperty(Guid id)
         {
             if (_context.QualityProperties == null)
             {
@@ -113,7 +113,7 @@ namespace MaterialsEvaluation.API_Controllers
             return NoContent();
         }
 
-        private bool QualityPropertyExists(long id)
+        private bool QualityPropertyExists(Guid id)
         {
             return (_context.QualityProperties?.Any(e => e.Id == id)).GetValueOrDefault();
         }

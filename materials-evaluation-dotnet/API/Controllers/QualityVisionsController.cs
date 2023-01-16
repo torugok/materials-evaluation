@@ -1,6 +1,7 @@
-using MaterialsEvaluation.Database;
+using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
+using MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using MediatR;
 
 namespace MaterialsEvaluation.API_Controllers
 {
@@ -8,121 +9,23 @@ namespace MaterialsEvaluation.API_Controllers
     [ApiController]
     public class QualityVisionsController : ControllerBase
     {
-        private readonly DatabaseContext _context;
+        private readonly IMediator _mediator;
 
-        public QualityVisionsController(DatabaseContext context)
+        public QualityVisionsController(IMediator mediator)
         {
-            _context = context;
-        }
-
-        // GET: api/QualityVisions
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<QualityVision>>> GetQualityVisions()
-        {
-            if (_context.QualityVisions == null)
-            {
-                return NotFound();
-            }
-
-            return await _context.QualityVisions.ToListAsync();
-        }
-
-        // GET: api/QualityVisions/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<QualityVision>> GetQualityVision(long id)
-        {
-            if (_context.QualityVisions == null)
-            {
-                return NotFound();
-            }
-
-            var qualityVision = await _context.QualityVisions.FindAsync(id);
-
-            if (qualityVision == null)
-            {
-                return NotFound();
-            }
-
-            return qualityVision;
-        }
-
-        // PUT: api/QualityVisions/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutQualityVision(long id, QualityVision qualityVision)
-        {
-            if (id != qualityVision.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(qualityVision).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!QualityVisionExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            _mediator = mediator;
         }
 
         // POST: api/QualityVisions
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<QualityVision>> PostQualityVision(
-            QualityVision qualityVision
+        public async Task<ActionResult<QualityVisionDto>> PostQualityVision(
+            CreateQualityVisionCommand command
         )
         {
-            if (_context.QualityVisions == null)
-            {
-                return Problem("Entity set 'DatabaseContext.QualityVisions'  is null.");
-            }
-
-            _context.QualityVisions.Add(qualityVision);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(
-                "GetQualityVision",
-                new { id = qualityVision.Id },
-                qualityVision
-            );
-        }
-
-        // DELETE: api/QualityVisions/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteQualityVision(long id)
-        {
-            if (_context.QualityVisions == null)
-            {
-                return NotFound();
-            }
-
-            var qualityVision = await _context.QualityVisions.FindAsync(id);
-            if (qualityVision == null)
-            {
-                return NotFound();
-            }
-
-            _context.QualityVisions.Remove(qualityVision);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool QualityVisionExists(long id)
-        {
-            return (_context.QualityVisions?.Any(e => e.Id == id)).GetValueOrDefault();
+            var response = _mediator.Send(command);
+            Console.Write(response);
+            return Ok(response);
         }
     }
 }

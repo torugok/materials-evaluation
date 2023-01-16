@@ -2,7 +2,7 @@ namespace MaterialsEvaluation.Database;
 
 public class QualityProperty
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
     public string? Acronym { get; set; }
     public string? Description { get; set; }
     public string? Type { get; set; }

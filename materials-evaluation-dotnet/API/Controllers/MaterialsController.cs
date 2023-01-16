@@ -29,7 +29,7 @@ namespace MaterialsEvaluation.API_Controllers
 
         // GET: api/Materials/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Material>> GetMaterial(long id)
+        public async Task<ActionResult<Material>> GetMaterial(Guid id)
         {
             if (_context.Materials == null)
             {
@@ -49,7 +49,7 @@ namespace MaterialsEvaluation.API_Controllers
         // PUT: api/Materials/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult<Material>> PutMaterial(long id, Material material)
+        public async Task<ActionResult<Material>> PutMaterial(Guid id, Material material)
         {
             if (id != material.Id)
             {
@@ -90,7 +90,7 @@ namespace MaterialsEvaluation.API_Controllers
 
         // DELETE: api/Materials/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMaterial(long id)
+        public async Task<IActionResult> DeleteMaterial(Guid id)
         {
             if (_context.Materials == null)
             {
@@ -109,7 +109,7 @@ namespace MaterialsEvaluation.API_Controllers
             return NoContent();
         }
 
-        private bool MaterialExists(long id)
+        private bool MaterialExists(Guid id)
         {
             return (_context.Materials?.Any(e => e.Id == id)).GetValueOrDefault();
         }
