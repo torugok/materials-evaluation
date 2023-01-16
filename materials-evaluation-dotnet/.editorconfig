@@ -52,3 +52,7 @@ dotnet_diagnostic.SA1516.severity = none
 dotnet_diagnostic.SA1127.severity = none
 # will be changed with https://github.com/belav/csharpier/issues/526
 dotnet_diagnostic.SA1128.severity = none
+
+# CS8618: A propriedade não anulável 'X' precisa conter um valor não nulo ao sair do construtor. Considere declarar o propriedade como anulável.
+# FIXME: utilizado para classes de comandos que precisam de construtores vazios
+dotnet_diagnostic.CS8618.severity = none
