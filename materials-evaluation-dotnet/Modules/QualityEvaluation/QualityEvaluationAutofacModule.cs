@@ -12,6 +12,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation
                 .RegisterType<EFQualityVisionRepository>()
                 .As<IQualityVisionRepository>()
                 .InstancePerLifetimeScope();
+            builder.RegisterType<EFUnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
         }
     }
 }

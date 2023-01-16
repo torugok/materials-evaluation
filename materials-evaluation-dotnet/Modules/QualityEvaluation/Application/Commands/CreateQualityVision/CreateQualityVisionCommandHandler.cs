@@ -1,16 +1,16 @@
-using MediatR;
 using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
+using MediatR;
 
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
 {
     public class CreateQualityVisionCommandHandler
         : IRequestHandler<CreateQualityVisionCommand, QualityVisionDto>
     {
-        private readonly IQualityVisionRepository _qualityVisionRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateQualityVisionCommandHandler(IQualityVisionRepository qualityVisionRepository)
+        public CreateQualityVisionCommandHandler(IUnitOfWork unitOfWork)
         {
-            this._qualityVisionRepository = qualityVisionRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<QualityVisionDto> Handle(
@@ -23,7 +23,10 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
                 request.Name,
                 request.AvaliationMethodology
             );
-            await Task.Delay(0); // HACK: corrige erro temporario, remover isso
+
+            await _unitOfWork.QualityVisionRepository.Insert(qualityVision);
+            await _unitOfWork.Commit(cancellationToken);
+
             return new QualityVisionDto(
                 qualityVision.Id,
                 qualityVision.Name,

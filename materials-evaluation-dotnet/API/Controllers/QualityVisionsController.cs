@@ -1,11 +1,10 @@
-using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
 using MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands;
-using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MaterialsEvaluation.API_Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/quality-visions")]
     [ApiController]
     public class QualityVisionsController : ControllerBase
     {
@@ -23,9 +22,8 @@ namespace MaterialsEvaluation.API_Controllers
             CreateQualityVisionCommand command
         )
         {
-            var response = _mediator.Send(command);
-            Console.Write(response);
-            return Ok(response);
+            var response = await _mediator.Send(command);
+            return CreatedAtAction(nameof(PostQualityVision), new { id = response.Id }, response);
         }
     }
 }
