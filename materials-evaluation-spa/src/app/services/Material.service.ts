@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class MaterialService {
-  materialsUrl = 'http://localhost:5000/api/Materials'; // FIXME: usar .env
+  materialsUrl = 'http://localhost:5000/api/materials'; // FIXME: usar .env
   constructor(private http: HttpClient) {}
 
   getMaterials(): Observable<Material[]> {

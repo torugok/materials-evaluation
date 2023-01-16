@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MaterialsEvaluation.API_Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/quality-properties")]
     [ApiController]
     public class QualityPropertiesController : ControllerBase
     {

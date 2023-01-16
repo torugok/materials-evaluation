@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class QualityPropertyService {
-  qualityPropertiesUrl = 'http://localhost:5000/api/QualityProperties'; // FIXME: usar .env
+  qualityPropertiesUrl = 'http://localhost:5000/api/quality-properties'; // FIXME: usar .env
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<QualityProperty[]> {
