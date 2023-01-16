@@ -4,14 +4,22 @@ namespace MaterialsEvaluation.Database;
 
 public class DatabaseContext : DbContext
 {
+    public DbSet<Material> Materials { get; set; } = null!;
+    public DbSet<QualityProperty> QualityProperties { get; set; } = null!;
+    public DbSet<QualityVision> QualityVisions { get; set; } = null!;
+    public DbSet<QualityVisionProperties> QualityVisionProperties { get; set; } = null!;
+
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
         // HACK: Substituir para outra abordagem, não recomendada por: https://learn.microsoft.com/pt-br/ef/core/managing-schemas/migrations/applying?tabs=dotnet-core-cli#apply-migrations-at-runtime
         this.Database.Migrate();
     }
 
-    public DbSet<Material> Materials { get; set; } = null!;
-    public DbSet<QualityProperty> QualityProperties { get; set; } = null!;
-    public DbSet<QualityVision> QualityVisions { get; set; } = null!;
-    public DbSet<QualityVisionProperties> QualityVisionProperties { get; set; } = null!;
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<QualityVisionProperties>(b =>
+        {
+            b.HasIndex(e => new { e.QualityVisionId, e.QualityPropertyId }).IsUnique();
+        });
+    }
 }

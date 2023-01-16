@@ -12,13 +12,17 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
 
         public QuantitativeParams? QuantitativeParams { get; set; }
 
+        public QualityProperty() { }
+
         public QualityProperty(
+            Guid id,
             string acronym,
             string description,
             string type,
             QuantitativeParams? quantitativeParams
         )
         {
+            Id = id;
             Acronym = acronym;
             Description = description;
             Type = type;

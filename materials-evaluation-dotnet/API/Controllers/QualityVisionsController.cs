@@ -1,6 +1,7 @@
 using MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MaterialsEvaluation.API_Controllers
 {
@@ -22,8 +23,19 @@ namespace MaterialsEvaluation.API_Controllers
             CreateQualityVisionCommand command
         )
         {
-            var response = await _mediator.Send(command);
-            return CreatedAtAction(nameof(PostQualityVision), new { id = response.Id }, response);
+            try
+            {
+                var response = await _mediator.Send(command);
+                return CreatedAtAction(
+                    nameof(PostQualityVision),
+                    new { id = response.Id },
+                    response
+                );
+            }
+            catch (DbUpdateException exception)
+            {
+                return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
+            }
         }
     }
 }

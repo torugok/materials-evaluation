@@ -28,14 +28,23 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
         public static QualityVision Create(
             Guid materialId,
             string name,
-            AvaliationMethodology avaliationMethodology
+            AvaliationMethodology avaliationMethodology,
+            List<Guid> qualityPropertiesIds
         )
         {
+            var qualityProperties = new List<QualityProperty>();
+            foreach (Guid id in qualityPropertiesIds)
+            {
+                qualityProperties.Add(
+                    new QualityProperty(id, string.Empty, string.Empty, string.Empty, null) // HACK: verificar outra maneira de usar objetos compostos em C#
+                );
+            }
+
             var qualityVision = new QualityVision(
                 materialId,
                 name,
                 avaliationMethodology,
-                new List<QualityProperty>()
+                qualityProperties
             );
             qualityVision.AddDomainEvent(new QualityVisionCreated());
             return qualityVision;

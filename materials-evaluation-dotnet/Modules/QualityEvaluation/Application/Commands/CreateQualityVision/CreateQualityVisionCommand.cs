@@ -16,17 +16,22 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
         [DataMember]
         public AvaliationMethodology AvaliationMethodology { get; set; }
 
+        [DataMember]
+        public List<Guid> QualityProperties { get; set; }
+
         public CreateQualityVisionCommand() { }
 
         public CreateQualityVisionCommand(
             string name,
             Guid materialId,
-            AvaliationMethodology avaliationMethodology
+            AvaliationMethodology avaliationMethodology,
+            List<Guid> qualityProperties
         )
         {
             Name = name;
             MaterialId = materialId;
             AvaliationMethodology = avaliationMethodology;
+            QualityProperties = qualityProperties;
         }
     }
 }

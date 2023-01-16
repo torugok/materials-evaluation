@@ -21,7 +21,8 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
             var qualityVision = QualityVision.Create(
                 request.MaterialId,
                 request.Name,
-                request.AvaliationMethodology
+                request.AvaliationMethodology,
+                request.QualityProperties
             );
 
             await _unitOfWork.QualityVisionRepository.Insert(qualityVision);
@@ -30,7 +31,8 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
             return new QualityVisionDto(
                 qualityVision.Id,
                 qualityVision.Name,
-                qualityVision.AvaliationMethodology
+                qualityVision.AvaliationMethodology,
+                request.QualityProperties
             );
         }
     }

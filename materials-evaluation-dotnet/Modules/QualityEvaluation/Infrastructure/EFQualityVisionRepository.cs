@@ -16,7 +16,18 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
 
         public async Task Insert(QualityVision qualityVision)
         {
-            Seen.Add(qualityVision);
+            var qualityVisionProperties = new List<Database.QualityVisionProperties>();
+            foreach (QualityProperty qualityProperty in qualityVision.QualityProperties)
+            {
+                qualityVisionProperties.Add(
+                    new Database.QualityVisionProperties(
+                        Guid.NewGuid(),
+                        qualityVision.Id,
+                        qualityProperty.Id
+                    )
+                );
+            }
+
             await _context.AddAsync(
                 new Database.QualityVision(
                     qualityVision.Id,
@@ -25,9 +36,11 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
                     qualityVision.AvaliationMethodology.Grouping.ToString(),
                     qualityVision.AvaliationMethodology.CalculationType.ToString(),
                     qualityVision.MaterialId,
-                    new List<Database.QualityVisionProperties>()
+                    qualityVisionProperties
                 )
             );
+
+            Seen.Add(qualityVision);
         }
 
         public Task<QualityVision> Get(Guid id)
@@ -37,8 +50,9 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
 
         public Task Update(QualityVision qualityVision)
         {
-            Seen.Add(qualityVision);
             throw new NotImplementedException();
+
+            Seen.Add(qualityVision);
         }
 
         public async Task Delete(Guid id)

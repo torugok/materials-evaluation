@@ -14,6 +14,8 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
 
         public double SuperiorLimit { get; set; }
 
+        public QuantitativeParams() { }
+
         public QuantitativeParams(
             int decimals,
             string unit,
