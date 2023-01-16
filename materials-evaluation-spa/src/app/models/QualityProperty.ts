@@ -4,7 +4,7 @@ enum QualityType {
 }
 
 export interface QualityProperty {
-  id: number;
+  id: string;
   acronym: string;
   description: string;
   type: QualityType;

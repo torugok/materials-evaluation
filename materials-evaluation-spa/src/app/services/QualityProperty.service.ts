@@ -26,7 +26,7 @@ export class QualityPropertyService {
     );
   }
 
-  delete(id: number): Observable<any> {
+  delete(id: string): Observable<any> {
     return this.http.delete<QualityProperty>(
       `${this.qualityPropertiesUrl}/${id}`
     );

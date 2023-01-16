@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './views/home/home.component';
 import { MaterialsComponent } from './views/materials/materials.component';
 import { QualityPropertiesComponent } from './views/quality-properties/quality-property.component';
+import { QualityVisionsComponent } from './views/quality-visions/quality-visions.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'qualidade/caracteristicas',
     component: QualityPropertiesComponent,
+  },
+  {
+    path: 'qualidade/visoes',
+    component: QualityVisionsComponent,
   },
 ];
 

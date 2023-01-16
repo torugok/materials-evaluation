@@ -30,6 +30,8 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { SidenavComponent } from './shared/sidenav/sidenav.component';
 import { QualityPropertiesComponent } from './views/quality-properties/quality-property.component';
 import { QualityPropertyDialogComponent } from './views/quality-properties/quality-property-dialog/quality-property-dialog.component';
+import { QualityVisionsComponent } from './views/quality-visions/quality-visions.component';
+import { QualityVisionDialogComponent } from './views/quality-visions/quality-vision-dialog/quality-vision.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { QualityPropertyDialogComponent } from './views/quality-properties/quali
     SidenavComponent,
     QualityPropertiesComponent,
     QualityPropertyDialogComponent,
+    QualityVisionsComponent,
+    QualityVisionDialogComponent,
   ],
   imports: [
     BrowserModule,

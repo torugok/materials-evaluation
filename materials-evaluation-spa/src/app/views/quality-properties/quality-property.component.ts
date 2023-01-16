@@ -95,7 +95,7 @@ export class QualityPropertiesComponent {
     });
   }
 
-  onDelete(id: number): void {
+  onDelete(id: string): void {
     this.qualityPropertyService
       .delete(id)
       .subscribe((data: QualityProperty) => {
