@@ -30,6 +30,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
                     new QualityVisionDto(
                         rawItem.Id,
                         rawItem.Name,
+                        rawItem.MaterialId,
                         new AvaliationMethodology(
                             rawItem.AvaliationMinQuantity,
                             Enum.Parse<Grouping>(rawItem.AvaliationGrouping),

@@ -13,6 +13,9 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
         public string Name { get; set; }
 
         [DataMember]
+        public Guid MaterialId { get; set; }
+
+        [DataMember]
         public AvaliationMethodology AvaliationMethodology { get; set; }
 
         [DataMember]
@@ -23,12 +26,14 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
         public QualityVisionDto(
             Guid id,
             string name,
+            Guid materialId,
             AvaliationMethodology avaliationMethodology,
             List<QualityPropertyDto> qualityProperties
         )
         {
             Id = id;
             Name = name;
+            MaterialId = materialId;
             AvaliationMethodology = avaliationMethodology;
             QualityProperties = qualityProperties;
         }
