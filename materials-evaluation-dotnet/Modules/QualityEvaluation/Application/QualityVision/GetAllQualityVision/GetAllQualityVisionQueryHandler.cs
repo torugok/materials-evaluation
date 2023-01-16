@@ -20,7 +20,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
         )
         {
             var qualityVisionRaw = await _context.QualityVisions
-                .Include(b => b.QualityVisionProperties)
+                .Include("QualityVisionProperties.QualityProperty")
                 .ToListAsync(cancellationToken);
             var qualityVisionsResult = new List<QualityVisionDto>();
 
@@ -36,8 +36,26 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
                             Enum.Parse<CalculationType>(rawItem.AvaliationCalculationType)
                         ),
                         rawItem.QualityVisionProperties != null
-                            ? (from c in rawItem.QualityVisionProperties select c.Id).ToList()
-                            : new List<Guid>()
+                            ? rawItem.QualityVisionProperties
+                                .Select(
+                                    o =>
+                                        new QualityPropertyDto
+                                        {
+                                            Id = o.QualityProperty.Id,
+                                            Acronym = o.QualityProperty.Acronym,
+                                            Description = o.QualityProperty.Description,
+                                            Type = o.QualityProperty.Type,
+                                            QuantitativeParams = new QuantitativeParams(
+                                                o.QualityProperty.QuantitativeDecimals,
+                                                o.QualityProperty.QuantitativeUnit,
+                                                o.QualityProperty.QuantitativeNominalValue,
+                                                o.QualityProperty.QuantitativeInferiorLimit,
+                                                o.QualityProperty.QuantitativeSuperiorLimit
+                                            )
+                                        }
+                                )
+                                .ToList()
+                            : new List<QualityPropertyDto>()
                     )
                 );
             }
