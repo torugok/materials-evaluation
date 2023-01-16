@@ -1,9 +1,9 @@
+using System.Text.Json.Serialization;
 using Autofac;
 using MaterialsEvaluation.Database;
-using Microsoft.EntityFrameworkCore;
 using MaterialsEvaluation.Modules.QualityEvaluation;
 using MediatR.Extensions.Autofac.DependencyInjection;
-using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 
 namespace MaterialsEvaluation
 {
