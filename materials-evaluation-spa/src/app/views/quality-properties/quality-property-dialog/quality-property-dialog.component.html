@@ -19,13 +19,13 @@
       <mat-form-field appearance="fill">
         <mat-label>Selecione uma opção</mat-label>
         <mat-select [(value)]="data.type">
-          <mat-option value="QUANTITATIVE">Quantitativa</mat-option>
-          <mat-option value="QUALITATIVE">Qualitativa</mat-option>
+          <mat-option value="Quantitative">Quantitativa</mat-option>
+          <mat-option value="Qualitative">Qualitativa</mat-option>
         </mat-select>
       </mat-form-field>
     </li>
 
-    <div *ngIf="data.type == 'QUANTITATIVE'">
+    <div *ngIf="data.type == 'Quantitative'">
       <li>
         <mat-form-field appearance="fill">
           <mat-label>Casas Decimais</mat-label>

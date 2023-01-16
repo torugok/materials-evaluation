@@ -1,6 +1,6 @@
 enum QualityType {
-  Quantitative = 'QUANTITATIVE',
-  Qualitative = 'QUALITATIVE',
+  Quantitative = 'Quantitative',
+  Qualitative = 'Qualitative',
 }
 
 export interface QualityProperty {
@@ -9,7 +9,7 @@ export interface QualityProperty {
   description: string;
   type: QualityType;
 
-  // apenas para tipo QUANTITATIVE
+  // apenas para tipo Quantitative
   quantitativeDecimals: number;
   quantitativeUnit: string;
   quantitativeNominalValue: number;
