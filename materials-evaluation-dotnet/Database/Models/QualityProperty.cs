@@ -3,9 +3,9 @@ namespace MaterialsEvaluation.Database;
 public class QualityProperty
 {
     public Guid Id { get; set; }
-    public string? Acronym { get; set; }
-    public string? Description { get; set; }
-    public string? Type { get; set; }
+    public string Acronym { get; set; }
+    public string Description { get; set; }
+    public string Type { get; set; }
 
     // Apenas para característica quantitativa
     // NOTE: Pode ter um jeito diferente de fazer isso, como um modelo especifico pra quantitativo?

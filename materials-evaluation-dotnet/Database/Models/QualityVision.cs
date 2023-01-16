@@ -39,19 +39,19 @@ public class QualityVisionProperties
 {
     public Guid Id { get; set; }
     public Guid QualityVisionId { get; set; }
-    public QualityVision? QualityVision { get; set; }
+    public QualityVision QualityVision { get; set; }
 
     public Guid QualityPropertyId { get; set; }
-    public QualityProperty? QualityProperty { get; set; }
+    public QualityProperty QualityProperty { get; set; }
 
     public QualityVisionProperties() { }
 
     public QualityVisionProperties(
         Guid id,
         Guid qualityVisionId,
-        QualityVision? qualityVision,
+        QualityVision qualityVision,
         Guid qualityPropertyId,
-        QualityProperty? qualityProperty
+        QualityProperty qualityProperty
     )
     {
         Id = id;
