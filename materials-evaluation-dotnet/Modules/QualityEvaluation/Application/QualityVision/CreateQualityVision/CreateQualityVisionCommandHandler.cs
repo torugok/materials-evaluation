@@ -4,7 +4,7 @@ using MediatR;
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
 {
     public class CreateQualityVisionCommandHandler
-        : IRequestHandler<CreateQualityVisionCommand, QualityVisionDto>
+        : IRequestHandler<CreateQualityVisionCommand, Guid>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -13,7 +13,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<QualityVisionDto> Handle(
+        public async Task<Guid> Handle(
             CreateQualityVisionCommand request,
             CancellationToken cancellationToken
         )
@@ -28,12 +28,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
             await _unitOfWork.QualityVisionRepository.Insert(qualityVision);
             await _unitOfWork.Commit(cancellationToken);
 
-            return new QualityVisionDto(
-                qualityVision.Id,
-                qualityVision.Name,
-                qualityVision.AvaliationMethodology,
-                request.QualityProperties
-            );
+            return qualityVision.Id;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace MaterialsEvaluation.Database
         public Guid MaterialId { get; set; }
         public Material Material { get; set; }
 
-        public List<QualityVisionProperties>? QualityVisionProperties { get; set; }
+        public List<QualityVisionProperties> QualityVisionProperties { get; set; }
 
         public QualityVision() { }
 
@@ -22,7 +22,7 @@ namespace MaterialsEvaluation.Database
             string avaliationGrouping,
             string avaliationCalculationType,
             Guid materialId,
-            List<QualityVisionProperties>? qualityVisionProperties
+            List<QualityVisionProperties> qualityVisionProperties
         )
         {
             Id = id;
