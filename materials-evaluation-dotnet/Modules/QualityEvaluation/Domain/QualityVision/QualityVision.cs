@@ -12,13 +12,15 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
 
         public List<QualityProperty> QualityProperties { get; set; }
 
-        private QualityVision(
+        public QualityVision(
+            Guid id,
             Guid materialId,
             string name,
             AvaliationMethodology avaliationMethodology,
             List<QualityProperty> qualityProperties
         )
         {
+            Id = id;
             MaterialId = materialId;
             Name = name;
             AvaliationMethodology = avaliationMethodology;
@@ -48,6 +50,19 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
             );
             qualityVision.AddDomainEvent(new QualityVisionCreated());
             return qualityVision;
+        }
+
+        private QualityVision(
+            Guid materialId,
+            string name,
+            AvaliationMethodology avaliationMethodology,
+            List<QualityProperty> qualityProperties
+        )
+        {
+            MaterialId = materialId;
+            Name = name;
+            AvaliationMethodology = avaliationMethodology;
+            QualityProperties = qualityProperties;
         }
     }
 }

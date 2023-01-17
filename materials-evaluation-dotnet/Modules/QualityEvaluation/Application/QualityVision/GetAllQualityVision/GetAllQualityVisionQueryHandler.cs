@@ -60,6 +60,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
                     )
                 );
             }
+
             return qualityVisionsResult;
         }
     }

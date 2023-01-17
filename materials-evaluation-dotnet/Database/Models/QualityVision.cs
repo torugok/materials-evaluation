@@ -12,6 +12,7 @@ namespace MaterialsEvaluation.Database
         public Material Material { get; set; }
 
         public List<QualityVisionProperties> QualityVisionProperties { get; set; }
+        public List<MaterialBatch> MaterialBatches { get; set; }
 
         public QualityVision() { }
 

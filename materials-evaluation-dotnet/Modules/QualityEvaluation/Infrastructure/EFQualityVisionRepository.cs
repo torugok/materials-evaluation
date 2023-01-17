@@ -1,4 +1,5 @@
 using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
 {
@@ -17,6 +18,8 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
         public async Task Insert(QualityVision qualityVision)
         {
             var qualityVisionProperties = new List<Database.QualityVisionProperties>();
+
+            // TODO: refatorar para usar LINQ
             foreach (QualityProperty qualityProperty in qualityVision.QualityProperties)
             {
                 qualityVisionProperties.Add(
@@ -43,9 +46,43 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
             Seen.Add(qualityVision);
         }
 
-        public Task<QualityVision> Get(Guid id)
+        public async Task<QualityVision> Get(Guid id)
         {
-            throw new NotImplementedException();
+            var rawItem = await _context.QualityVisions
+                .Include("QualityVisionProperties.QualityProperty")
+                .Where(q => q.Id == id)
+                .FirstOrDefaultAsync();
+            return new QualityVision(
+                rawItem.Id,
+                rawItem.MaterialId,
+                rawItem.Name,
+                new AvaliationMethodology(
+                    rawItem.AvaliationMinQuantity,
+                    Enum.Parse<Grouping>(rawItem.AvaliationGrouping),
+                    Enum.Parse<CalculationType>(rawItem.AvaliationCalculationType)
+                ),
+                rawItem.QualityVisionProperties != null
+                    ? rawItem.QualityVisionProperties
+                        .Select(
+                            o =>
+                                new QualityProperty
+                                {
+                                    Id = o.QualityProperty.Id,
+                                    Acronym = o.QualityProperty.Acronym,
+                                    Description = o.QualityProperty.Description,
+                                    Type = o.QualityProperty.Type,
+                                    QuantitativeParams = new QuantitativeParams(
+                                        o.QualityProperty.QuantitativeDecimals,
+                                        o.QualityProperty.QuantitativeUnit,
+                                        o.QualityProperty.QuantitativeNominalValue,
+                                        o.QualityProperty.QuantitativeInferiorLimit,
+                                        o.QualityProperty.QuantitativeSuperiorLimit
+                                    )
+                                }
+                        )
+                        .ToList()
+                    : new List<QualityProperty>()
+            );
         }
 
         public Task Update(QualityVision qualityVision)
