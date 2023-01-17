@@ -54,7 +54,6 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
                                             o.QualityProperty.QuantitativeSuperiorLimit
                                         )
                                     },
-                                    CreatedAt = o.CreatedAt,
                                     ResultQualitative = o.ResultQualitative,
                                     ResultQuantitative = o.ResultQuantitative
                                 }

@@ -59,5 +59,21 @@ namespace MaterialsEvaluation.API_Controllers
                 return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
             }
         }
+
+        [HttpPut("{id}/add-test")]
+        public async Task<ActionResult<CreatedEntity>> AddTest(
+            AddTestToMaterialBatchCommand command
+        )
+        {
+            try
+            {
+                var response = await _mediator.Send(command);
+                return new CreatedEntity(response);
+            }
+            catch (DbUpdateException exception)
+            {
+                return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
+            }
+        }
     }
 }

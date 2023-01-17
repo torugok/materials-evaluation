@@ -4,11 +4,11 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
 {
     public class Test : ValueObject
     {
-        public DateTime CreatedAt { get; set; }
+        public Guid QualityPropertyId { get; set; }
         public bool? ResultQualitative { get; set; }
         public double? ResultQuantitative { get; set; }
 
-        public Test(DateTime createdAt, bool? resultQualitative, double? resultQuantitative)
+        public Test(Guid qualityPropertyId, bool? resultQualitative, double? resultQuantitative)
         {
             if (resultQualitative == null && resultQuantitative == null)
             {
@@ -16,7 +16,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
                 throw new Exception("Operação não permitida");
             }
 
-            CreatedAt = createdAt;
+            QualityPropertyId = qualityPropertyId;
             ResultQualitative = resultQualitative;
             ResultQuantitative = resultQuantitative;
         }

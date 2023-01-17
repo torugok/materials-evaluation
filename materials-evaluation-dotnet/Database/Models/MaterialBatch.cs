@@ -40,7 +40,6 @@ namespace MaterialsEvaluation.Database
     public class MaterialBatchTests
     {
         public Guid Id { get; set; }
-        public DateTime CreatedAt { get; set; }
 
         public Guid MaterialBatchId { get; set; }
         public virtual MaterialBatch MaterialBatch { get; set; }
@@ -50,5 +49,20 @@ namespace MaterialsEvaluation.Database
 
         public bool? ResultQualitative { get; set; }
         public double? ResultQuantitative { get; set; }
+
+        public MaterialBatchTests(
+            Guid id,
+            Guid materialBatchId,
+            Guid qualityPropertyId,
+            bool? resultQualitative,
+            double? resultQuantitative
+        )
+        {
+            Id = id;
+            MaterialBatchId = materialBatchId;
+            QualityPropertyId = qualityPropertyId;
+            ResultQualitative = resultQualitative;
+            ResultQuantitative = resultQuantitative;
+        }
     }
 }

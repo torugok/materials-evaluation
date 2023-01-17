@@ -20,6 +20,34 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
         public Status Status { get; set; }
 
         public MaterialBatch(
+            Guid id,
+            Material material,
+            QualityVision qualityVision,
+            DateTime createdAt,
+            int amountOfTests,
+            DateTime? calculatedAt,
+            List<Test> tests,
+            Status status
+        )
+        {
+            if (qualityVision.MaterialId != material.Id)
+            {
+                // TODO: criar exceção "business"
+                throw new Exception(
+                    "Operação não permitida! A visão de qualidade pertencer ao material."
+                );
+            }
+            Id = id;
+            Material = material;
+            QualityVision = qualityVision;
+            CreatedAt = createdAt;
+            AmountOfTests = amountOfTests;
+            CalculatedAt = calculatedAt;
+            Tests = tests;
+            Status = status;
+        }
+
+        public MaterialBatch(
             Material material,
             QualityVision qualityVision,
             DateTime createdAt,
@@ -58,6 +86,12 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
             );
             materialBatch.AddDomainEvent(new MaterialBatchCreated());
             return materialBatch;
+        }
+
+        public void AddTest(List<Test> tests)
+        {
+            Tests.AddRange(tests);
+            AmountOfTests++;
         }
     }
 }

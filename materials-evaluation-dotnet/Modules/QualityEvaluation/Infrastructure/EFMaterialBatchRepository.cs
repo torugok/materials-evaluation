@@ -1,4 +1,5 @@
 using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
 {
@@ -31,14 +32,91 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
             Seen.Add(materialBatch);
         }
 
-        public Task<MaterialBatch> Get(Guid id)
+        public async Task<MaterialBatch> Get(Guid id)
         {
-            throw new NotImplementedException();
+            var rawItem = await _context.MaterialBatches
+                .Include("MaterialBatchTests")
+                .Include("Material")
+                .Include("QualityVision.QualityVisionProperties.QualityProperty")
+                .Where(m => m.Id == id)
+                .FirstOrDefaultAsync();
+            return new MaterialBatch(
+                rawItem.Id,
+                new Material(rawItem.Material.Id, rawItem.Material.Name),
+                new QualityVision(
+                    rawItem.QualityVision.Id,
+                    rawItem.QualityVision.MaterialId,
+                    rawItem.QualityVision.Name,
+                    new AvaliationMethodology(
+                        rawItem.QualityVision.AvaliationMinQuantity,
+                        Enum.Parse<Grouping>(rawItem.QualityVision.AvaliationGrouping),
+                        Enum.Parse<CalculationType>(rawItem.QualityVision.AvaliationCalculationType)
+                    ),
+                    rawItem.QualityVision.QualityVisionProperties != null
+                        ? rawItem.QualityVision.QualityVisionProperties
+                            .Select(
+                                o =>
+                                    new QualityProperty
+                                    {
+                                        Id = o.QualityProperty.Id,
+                                        Acronym = o.QualityProperty.Acronym,
+                                        Description = o.QualityProperty.Description,
+                                        Type = o.QualityProperty.Type,
+                                        QuantitativeParams = new QuantitativeParams(
+                                            o.QualityProperty.QuantitativeDecimals,
+                                            o.QualityProperty.QuantitativeUnit,
+                                            o.QualityProperty.QuantitativeNominalValue,
+                                            o.QualityProperty.QuantitativeInferiorLimit,
+                                            o.QualityProperty.QuantitativeSuperiorLimit
+                                        )
+                                    }
+                            )
+                            .ToList()
+                        : new List<QualityProperty>()
+                ),
+                rawItem.CreatedAt,
+                rawItem.AmountOfTests,
+                rawItem.CalculatedAt,
+                rawItem.MaterialBatchTests.ConvertAll(
+                    o => new Test(o.QualityPropertyId, o.ResultQualitative, o.ResultQuantitative)
+                ),
+                Enum.Parse<Status>(rawItem.Status)
+            );
         }
 
-        public Task Update(MaterialBatch materialBatch)
+        public async Task Update(MaterialBatch materialBatch)
         {
-            throw new NotImplementedException();
+            var rawItem = await _context.MaterialBatches
+                .Include("MaterialBatchTests")
+                .Where(m => m.Id == materialBatch.Id)
+                .FirstOrDefaultAsync();
+
+            if (rawItem != null)
+            {
+                if (rawItem.MaterialBatchTests != null)
+                {
+                    _context.MaterialBatchTests.RemoveRange(rawItem.MaterialBatchTests);
+                }
+
+                if (materialBatch.Tests.Count > 0)
+                {
+                    _context.MaterialBatchTests.BulkInsert(
+                        materialBatch.Tests.ConvertAll(
+                            o =>
+                                new Database.MaterialBatchTests(
+                                    Guid.NewGuid(),
+                                    materialBatch.Id,
+                                    o.QualityPropertyId,
+                                    o.ResultQualitative,
+                                    o.ResultQuantitative
+                                )
+                        )
+                    );
+                }
+
+                rawItem.AmountOfTests = materialBatch.AmountOfTests;
+                //TODO: adicionar restante dos campos
+            }
 
             Seen.Add(materialBatch);
         }
