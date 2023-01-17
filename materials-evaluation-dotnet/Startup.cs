@@ -4,6 +4,9 @@ using MaterialsEvaluation.Database;
 using MaterialsEvaluation.Modules.QualityEvaluation;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using FluentValidation;
+using MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands;
+using FluentValidation.AspNetCore;
 
 namespace MaterialsEvaluation
 {
@@ -51,6 +54,9 @@ namespace MaterialsEvaluation
             services.AddDbContext<DatabaseContext>(
                 opt => opt.UseSqlServer(_configuration.GetConnectionString("Database"))
             );
+
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining<CreateQualityVisionValidator>();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

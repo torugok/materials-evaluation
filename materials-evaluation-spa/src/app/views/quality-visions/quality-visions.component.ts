@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { QualityProperty, QualityVision } from 'src/app/models/QualityVision';
 import { QualityVisionService } from 'src/app/services/QualityVision.service';
+import { handleApiErrors } from 'src/app/shared/utils/Errors';
 import { QualityVisionDialogComponent } from './quality-vision-dialog/quality-vision.component';
 
 @Component({
@@ -25,9 +26,14 @@ export class QualityVisionsComponent {
     public dialog: MatDialog,
     public qualityVisionService: QualityVisionService
   ) {
-    this.qualityVisionService.getAll().subscribe((data: QualityVision[]) => {
-      this.dataSource = data;
-    });
+    this.qualityVisionService.getAll().subscribe(
+      (data: QualityVision[]) => {
+        this.dataSource = data;
+      },
+      (err) => {
+        handleApiErrors(err);
+      }
+    );
   }
 
   openDialog(qualityVision: QualityVision | null): void {
@@ -54,10 +60,15 @@ export class QualityVisionsComponent {
           //   });
         } else {
           // criação
-          this.qualityVisionService.add(result).subscribe(() => {
-            this.dataSource.push(result);
-            this.table.renderRows();
-          });
+          this.qualityVisionService.add(result).subscribe(
+            () => {
+              this.dataSource.push(result);
+              this.table.renderRows();
+            },
+            (err) => {
+              handleApiErrors(err);
+            }
+          );
         }
       }
     });

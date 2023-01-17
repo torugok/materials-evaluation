@@ -9,6 +9,7 @@ import {
 } from 'src/app/models/QualityVision';
 import { MaterialService } from 'src/app/services/Material.service';
 import { QualityVisionService } from 'src/app/services/QualityVision.service';
+import { handleApiErrors } from 'src/app/shared/utils/Errors';
 
 @Component({
   selector: 'app-material-batch-dialog',
@@ -53,12 +54,22 @@ export class MaterialBatchDialogComponent {
     } else {
       this.data = data;
     }
-    this.materialService.getMaterials().subscribe((data: Material[]) => {
-      this.materialsOptions = data;
-    });
-    this.qualityVisionService.getAll().subscribe((data: QualityVision[]) => {
-      this.qualityVisionsOptions = data;
-    });
+    this.materialService.getMaterials().subscribe(
+      (data: Material[]) => {
+        this.materialsOptions = data;
+      },
+      (err) => {
+        handleApiErrors(err);
+      }
+    );
+    this.qualityVisionService.getAll().subscribe(
+      (data: QualityVision[]) => {
+        this.qualityVisionsOptions = data;
+      },
+      (err) => {
+        handleApiErrors(err);
+      }
+    );
   }
 
   ngOnInit(): void {

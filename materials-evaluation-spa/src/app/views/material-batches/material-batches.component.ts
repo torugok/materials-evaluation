@@ -8,6 +8,7 @@ import { convertToLocaleString } from 'src/app/shared/utils/Dates';
 import { AddTestDialogComponent } from './add-test/add-test-dialog.component';
 import { TestResult } from 'src/app/models/QualityVision';
 import { Translations } from 'src/app/shared/utils/Translations';
+import { handleApiErrors } from 'src/app/shared/utils/Errors';
 
 @Component({
   selector: 'app-material-batches',
@@ -37,15 +38,20 @@ export class MaterialBatchesComponent {
     public dialog: MatDialog,
     public materialBatchService: MaterialBatchService
   ) {
-    this.materialBatchService.getAll().subscribe((data: MaterialBatch[]) => {
-      this.dataSource = data;
-      // convert timezone
-      this.dataSource.forEach((materialBatch, index) => {
-        this.dataSource[index].createdAt = convertToLocaleString(
-          materialBatch.createdAt
-        );
-      });
-    });
+    this.materialBatchService.getAll().subscribe(
+      (data: MaterialBatch[]) => {
+        this.dataSource = data;
+        // convert timezone
+        this.dataSource.forEach((materialBatch, index) => {
+          this.dataSource[index].createdAt = convertToLocaleString(
+            materialBatch.createdAt
+          );
+        });
+      },
+      (err) => {
+        handleApiErrors(err);
+      }
+    );
     this.translations = Translations;
   }
 
@@ -71,17 +77,23 @@ export class MaterialBatchesComponent {
           //   });
         } else {
           // criação
-          this.materialBatchService
-            .add(result)
-            .subscribe((data: MaterialBatch) => {
-              this.materialBatchService
-                .get(data.id)
-                .subscribe((data: MaterialBatch) => {
+          this.materialBatchService.add(result).subscribe(
+            (data: MaterialBatch) => {
+              this.materialBatchService.get(data.id).subscribe(
+                (data: MaterialBatch) => {
                   data.createdAt = convertToLocaleString(data.createdAt);
                   this.dataSource.push(data);
                   this.table.renderRows();
-                });
-            });
+                },
+                (err) => {
+                  handleApiErrors(err);
+                }
+              );
+            },
+            (err) => {
+              handleApiErrors(err);
+            }
+          );
         }
       }
     });
@@ -93,11 +105,14 @@ export class MaterialBatchesComponent {
     });
 
     dialogRef.afterClosed().subscribe((result: TestResult[]) => {
-      this.materialBatchService
-        .addTest(materialBatch.id, result)
-        .subscribe((data: any) => {
+      this.materialBatchService.addTest(materialBatch.id, result).subscribe(
+        (data: any) => {
           materialBatch.amountOfTests++;
-        });
+        },
+        (err) => {
+          handleApiErrors(err);
+        }
+      );
     });
   }
 }

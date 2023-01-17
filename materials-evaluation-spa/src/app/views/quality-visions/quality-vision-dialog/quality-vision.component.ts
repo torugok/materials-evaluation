@@ -10,6 +10,7 @@ import {
 import { MaterialService } from 'src/app/services/Material.service';
 import { QualityPropertyService } from 'src/app/services/QualityProperty.service';
 import { QualityVisionService } from 'src/app/services/QualityVision.service';
+import { handleApiErrors } from 'src/app/shared/utils/Errors';
 
 @Component({
   selector: 'app-quality-vision-dialog',
@@ -44,9 +45,14 @@ export class QualityVisionDialogComponent {
     } else {
       this.data = data;
     }
-    this.materialService.getMaterials().subscribe((data: Material[]) => {
-      this.materialsOptions = data;
-    });
+    this.materialService.getMaterials().subscribe(
+      (data: Material[]) => {
+        this.materialsOptions = data;
+      },
+      (err) => {
+        handleApiErrors(err);
+      }
+    );
     this.qualityPropertiesService
       .getAll()
       .subscribe((data: QualityProperty[]) => {
