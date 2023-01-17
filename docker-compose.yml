@@ -30,15 +30,15 @@ services:
       SA_PASSWORD: "MaterialsEvaluation@123456789"
 
   # FIXME: o angular não funciona para hot-reload nessas configurações
-  # spa:
-  #   restart: on-failure
-  #   container_name: angular-ui
-  #   build:
-  #     context: ./materials-evaluation-spa/
-  #   environment:
-  #     CHOKIDAR_USEPOLLING: "true"
-  #   ports:
-  #     - 4200:4200
-  #   volumes:
-  #     - ./materials-evaluation-spa:/usr/src/app/web
-  #     - /usr/src/app/web/node_modules
+  spa:
+    restart: on-failure
+    container_name: angular-ui
+    build:
+      context: ./materials-evaluation-spa/
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    ports:
+      - 4200:4200
+    volumes:
+      - ./materials-evaluation-spa:/usr/src/app
+      - /usr/src/app/web/node_modules
