@@ -24,6 +24,7 @@ export class MaterialBatchesComponent {
     'grouping',
     'calculationType',
     'amountOfTests',
+    'status',
     'action',
   ];
   dataSource!: MaterialBatch[];
@@ -79,5 +80,9 @@ export class MaterialBatchesComponent {
         }
       }
     });
+  }
+
+  onAddTest(materialBatch: MaterialBatch) {
+    console.log(materialBatch);
   }
 }
