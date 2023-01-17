@@ -8,6 +8,10 @@ export class QualityVisionService {
   qualityVisionsUrl = 'http://localhost:5000/api/quality-visions'; // FIXME: usar .env
   constructor(private http: HttpClient) {}
 
+  add(qualityVision: QualityVision): Observable<QualityVision> {
+    return this.http.post<QualityVision>(this.qualityVisionsUrl, qualityVision);
+  }
+
   getAll(): Observable<QualityVision[]> {
     return this.http.get<QualityVision[]>(this.qualityVisionsUrl);
   }

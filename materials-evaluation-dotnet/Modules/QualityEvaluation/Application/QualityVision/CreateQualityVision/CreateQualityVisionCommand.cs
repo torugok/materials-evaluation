@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.Serialization;
 using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
 using MediatR;
@@ -18,7 +17,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
         public AvaliationMethodology AvaliationMethodology { get; set; }
 
         [DataMember]
-        public List<Guid> QualityProperties { get; set; }
+        public List<Guid> QualityPropertiesIds { get; set; }
 
         public CreateQualityVisionCommand() { }
 
@@ -32,7 +31,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
             Name = name;
             MaterialId = materialId;
             AvaliationMethodology = avaliationMethodology;
-            QualityProperties = qualityProperties;
+            QualityPropertiesIds = qualityProperties;
         }
     }
 }

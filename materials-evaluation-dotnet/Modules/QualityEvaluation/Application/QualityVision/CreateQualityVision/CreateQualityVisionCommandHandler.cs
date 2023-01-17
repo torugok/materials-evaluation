@@ -22,7 +22,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
                 request.MaterialId,
                 request.Name,
                 request.AvaliationMethodology,
-                request.QualityProperties
+                request.QualityPropertiesIds
             );
 
             await _unitOfWork.QualityVisionRepository.Insert(qualityVision);
