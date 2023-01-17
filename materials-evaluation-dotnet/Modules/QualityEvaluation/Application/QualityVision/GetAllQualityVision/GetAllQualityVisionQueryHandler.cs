@@ -26,42 +26,45 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
 
             foreach (var rawItem in qualityVisionRaw)
             {
-                qualityVisionsResult.Add(
-                    new QualityVisionDto(
-                        rawItem.Id,
-                        rawItem.Name,
-                        rawItem.MaterialId,
-                        new AvaliationMethodology(
-                            rawItem.AvaliationMinQuantity,
-                            Enum.Parse<Grouping>(rawItem.AvaliationGrouping),
-                            Enum.Parse<CalculationType>(rawItem.AvaliationCalculationType)
-                        ),
-                        rawItem.QualityVisionProperties != null
-                            ? rawItem.QualityVisionProperties
-                                .Select(
-                                    o =>
-                                        new QualityPropertyDto
-                                        {
-                                            Id = o.QualityProperty.Id,
-                                            Acronym = o.QualityProperty.Acronym,
-                                            Description = o.QualityProperty.Description,
-                                            Type = o.QualityProperty.Type,
-                                            QuantitativeParams = new QuantitativeParams(
-                                                o.QualityProperty.QuantitativeDecimals,
-                                                o.QualityProperty.QuantitativeUnit,
-                                                o.QualityProperty.QuantitativeNominalValue,
-                                                o.QualityProperty.QuantitativeInferiorLimit,
-                                                o.QualityProperty.QuantitativeSuperiorLimit
-                                            )
-                                        }
-                                )
-                                .ToList()
-                            : new List<QualityPropertyDto>()
-                    )
-                );
+                qualityVisionsResult.Add(ConvertToDto(rawItem));
             }
 
             return qualityVisionsResult;
+        }
+
+        public static QualityVisionDto ConvertToDto(Database.QualityVision? rawItem)
+        {
+            return new QualityVisionDto(
+                rawItem.Id,
+                rawItem.Name,
+                rawItem.MaterialId,
+                new AvaliationMethodology(
+                    rawItem.AvaliationMinQuantity,
+                    Enum.Parse<Grouping>(rawItem.AvaliationGrouping),
+                    Enum.Parse<CalculationType>(rawItem.AvaliationCalculationType)
+                ),
+                rawItem.QualityVisionProperties != null
+                    ? rawItem.QualityVisionProperties
+                        .Select(
+                            o =>
+                                new QualityPropertyDto
+                                {
+                                    Id = o.QualityProperty.Id,
+                                    Acronym = o.QualityProperty.Acronym,
+                                    Description = o.QualityProperty.Description,
+                                    Type = o.QualityProperty.Type,
+                                    QuantitativeParams = new QuantitativeParams(
+                                        o.QualityProperty.QuantitativeDecimals,
+                                        o.QualityProperty.QuantitativeUnit,
+                                        o.QualityProperty.QuantitativeNominalValue,
+                                        o.QualityProperty.QuantitativeInferiorLimit,
+                                        o.QualityProperty.QuantitativeSuperiorLimit
+                                    )
+                                }
+                        )
+                        .ToList()
+                    : new List<QualityPropertyDto>()
+            );
         }
     }
 }

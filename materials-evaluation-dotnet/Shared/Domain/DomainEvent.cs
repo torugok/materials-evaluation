@@ -1,6 +1,8 @@
+using MediatR;
+
 namespace MaterialsEvaluation.Shared.Domain
 {
-    public abstract class DomainEvent
+    public abstract class DomainEvent : INotification
     {
         public Guid Id { get; }
 

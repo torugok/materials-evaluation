@@ -32,18 +32,18 @@ namespace MaterialsEvaluation.API_Controllers
             }
         }
 
-        // [HttpGet]
-        // public async Task<ActionResult<List<MaterialBatchDto>>> GetMaterialBatch()
-        // {
-        //     try
-        //     {
-        //         var response = await _mediator.Send(new GetAllMaterialBatchQuery());
-        //         return response;
-        //     }
-        //     catch (DbUpdateException exception)
-        //     {
-        //         return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
-        //     }
-        // }
+        [HttpGet]
+        public async Task<ActionResult<List<MaterialBatchDto>>> GetMaterialBatch()
+        {
+            try
+            {
+                var response = await _mediator.Send(new GetAllMaterialBatchQuery());
+                return response;
+            }
+            catch (DbUpdateException exception)
+            {
+                return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
+            }
+        }
     }
 }
