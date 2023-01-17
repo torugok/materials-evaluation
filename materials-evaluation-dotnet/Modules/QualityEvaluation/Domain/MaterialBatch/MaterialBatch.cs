@@ -29,6 +29,13 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
             Status status
         )
         {
+            if (qualityVision.MaterialId != material.Id)
+            {
+                // TODO: criar exceção "business"
+                throw new Exception(
+                    "Operação não permitida! A visão de qualidade pertencer ao material."
+                );
+            }
             Material = material;
             QualityVision = qualityVision;
             CreatedAt = createdAt;

@@ -23,7 +23,7 @@ export class MaterialService {
     );
   }
 
-  deleteMaterial(id: number): Observable<any> {
+  deleteMaterial(id: string): Observable<any> {
     return this.http.delete<Material>(`${this.materialsUrl}/${id}`);
   }
 }

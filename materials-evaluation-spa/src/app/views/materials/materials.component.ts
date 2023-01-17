@@ -64,7 +64,7 @@ export class MaterialsComponent {
     });
   }
 
-  onDeleteMaterial(id: number): void {
+  onDeleteMaterial(id: string): void {
     this.materialService.deleteMaterial(id).subscribe((data: Material) => {
       this.dataSource = this.dataSource.filter(
         (material) => material.id !== id

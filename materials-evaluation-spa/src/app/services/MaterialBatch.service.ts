@@ -8,11 +8,11 @@ export class MaterialBatchService {
   materialBatchesUrl = 'http://localhost:5000/api/material-batches'; // FIXME: usar .env
   constructor(private http: HttpClient) {}
 
-  add(qualityVision: MaterialBatch): Observable<MaterialBatch> {
-    return this.http.post<MaterialBatch>(
-      this.materialBatchesUrl,
-      qualityVision
-    );
+  add(materialBatch: MaterialBatch): Observable<MaterialBatch> {
+    return this.http.post<MaterialBatch>(this.materialBatchesUrl, {
+      materialId: materialBatch.material.id,
+      qualityVisionId: materialBatch.qualityVision.id,
+    });
   }
 
   getAll(): Observable<MaterialBatch[]> {
