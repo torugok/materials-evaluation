@@ -45,5 +45,19 @@ namespace MaterialsEvaluation.API_Controllers
                 return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
             }
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Guid>> DeleteQualityVision(Guid id)
+        {
+            try
+            {
+                var response = await _mediator.Send(new DeleteQualityVisionCommand(id));
+                return response;
+            }
+            catch (DbUpdateException exception)
+            {
+                return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
+            }
+        }
     }
 }

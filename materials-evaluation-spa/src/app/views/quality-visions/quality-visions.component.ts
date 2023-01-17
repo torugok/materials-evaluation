@@ -74,19 +74,22 @@ export class QualityVisionsComponent {
     });
   }
 
-  // FIXME: descomentar para adicionar a edição
-  // onDeleteQualityVision(id: number): void {
-  //   this.materialService
-  //     .deleteQualityVision(id)
-  //     .subscribe((data: QualityVision) => {
-  //       this.dataSource = this.dataSource.filter(
-  //         (material) => material.id !== id
-  //       );
-  //     });
-  // }
+  onDelete(id: string): void {
+    this.qualityVisionService.delete(id).subscribe(
+      (data: any) => {
+        this.dataSource = this.dataSource.filter(
+          (element) => element.id !== id
+        );
+      },
+      (err) => {
+        handleApiErrors(err);
+      }
+    );
+  }
 
-  // onEditMaterial(material: Material): void {
-  //   this.openDialog(material);
+  // FIXME: descomentar para adicionar a edição
+  // onEdit(qualityVision: QualityVision): void {
+  //   this.openDialog(qualityVision);
   // }
   //}
 }

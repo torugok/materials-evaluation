@@ -66,6 +66,20 @@ namespace MaterialsEvaluation.API_Controllers
             }
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Guid>> DeleteMaterialBatch(Guid id)
+        {
+            try
+            {
+                var response = await _mediator.Send(new DeleteMaterialBatchCommand(id));
+                return response;
+            }
+            catch (DbUpdateException exception)
+            {
+                return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
+            }
+        }
+
         [HttpPut("{id}/add-test")]
         public async Task<ActionResult<CreatedEntity>> AddTest(
             AddTestToMaterialBatchCommand command

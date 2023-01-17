@@ -94,8 +94,11 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
 
         public async Task Delete(Guid id)
         {
-            var qualityVision = await Get(id);
-            throw new NotImplementedException();
+            var qualityVision = await _context.QualityVisions.FindAsync(id);
+            if (qualityVision != null)
+            {
+                _context.QualityVisions.Remove(qualityVision);
+            }
         }
     }
 }

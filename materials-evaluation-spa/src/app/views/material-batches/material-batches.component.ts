@@ -99,6 +99,19 @@ export class MaterialBatchesComponent {
     });
   }
 
+  onDelete(id: string): void {
+    this.materialBatchService.delete(id).subscribe(
+      (data: any) => {
+        this.dataSource = this.dataSource.filter(
+          (element) => element.id !== id
+        );
+      },
+      (err) => {
+        handleApiErrors(err);
+      }
+    );
+  }
+
   onAddTest(materialBatch: MaterialBatch) {
     const dialogRef = this.dialog.open(AddTestDialogComponent, {
       data: { ...materialBatch },

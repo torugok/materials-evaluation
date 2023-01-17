@@ -6,32 +6,33 @@
   <table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>#</th>
-      <td mat-cell *matCellDef="let material">{{ material.id }}</td>
+      <td mat-cell *matCellDef="let qualityVision">{{ qualityVision.id }}</td>
     </ng-container>
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Nome</th>
-      <td mat-cell *matCellDef="let material">{{ material.name }}</td>
+      <td mat-cell *matCellDef="let qualityVision">{{ qualityVision.name }}</td>
     </ng-container>
 
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef>Ação</th>
-      <td mat-cell *matCellDef="let material">
-        <!-- Decomentar para edição e exclusão-->
+      <td mat-cell *matCellDef="let qualityVision">
+        <!-- TODO: adicionar edição-->
         <!-- <button
           mat-icon-button
           color="primary"
-          (click)="onEditMaterial(material)"
+          (click)="onEditMaterial(qualityVision)"
         >
           <mat-icon>edit</mat-icon>
         </button>
+      -->
         <button
           mat-icon-button
           color="warn"
-          (click)="onDeleteMaterial(material.id)"
+          (click)="onDelete(qualityVision.id)"
         >
           <mat-icon>delete</mat-icon>
-        </button> -->
+        </button>
       </td>
     </ng-container>
 

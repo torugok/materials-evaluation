@@ -123,8 +123,11 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
 
         public async Task Delete(Guid id)
         {
-            var materialBatch = await Get(id);
-            throw new NotImplementedException();
+            var materialBatch = await _context.MaterialBatches.FindAsync(id);
+            if (materialBatch != null)
+            {
+                _context.MaterialBatches.Remove(materialBatch);
+            }
         }
     }
 }

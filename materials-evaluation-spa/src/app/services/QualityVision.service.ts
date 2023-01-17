@@ -15,4 +15,8 @@ export class QualityVisionService {
   getAll(): Observable<QualityVision[]> {
     return this.http.get<QualityVision[]>(this.qualityVisionsUrl);
   }
+
+  delete(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.qualityVisionsUrl}/${id}`);
+  }
 }

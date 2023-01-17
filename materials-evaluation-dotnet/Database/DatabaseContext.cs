@@ -37,13 +37,13 @@ public class DatabaseContext : DbContext
             .HasOne(e => e.MaterialBatch)
             .WithMany(e => e.MaterialBatchTests)
             .HasForeignKey(c => c.MaterialBatchId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder
             .Entity<MaterialBatchTests>()
             .HasOne(e => e.QualityProperty)
             .WithMany(e => e.MaterialBatchTests)
             .HasForeignKey(c => c.QualityPropertyId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
