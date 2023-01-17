@@ -1,5 +1,6 @@
 using MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands;
 using MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries;
+using MaterialsEvaluation.Shared.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,9 +27,14 @@ namespace MaterialsEvaluation.API_Controllers
                 var response = await _mediator.Send(command);
                 return CreatedAtAction(nameof(PostMaterialBatch), new CreatedEntity(response));
             }
-            catch (DbUpdateException exception)
+            catch (Exception exception)
             {
-                return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
+                if (exception is DbUpdateException || exception is BusinessException)
+                {
+                    return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
+                }
+
+                throw;
             }
         }
 
@@ -70,9 +76,14 @@ namespace MaterialsEvaluation.API_Controllers
                 var response = await _mediator.Send(command);
                 return new CreatedEntity(response);
             }
-            catch (DbUpdateException exception)
+            catch (Exception exception)
             {
-                return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
+                if (exception is DbUpdateException || exception is BusinessException)
+                {
+                    return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
+                }
+
+                throw;
             }
         }
     }

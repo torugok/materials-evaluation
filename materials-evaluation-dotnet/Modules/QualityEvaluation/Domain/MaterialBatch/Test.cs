@@ -12,8 +12,9 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
         {
             if (resultQualitative == null && resultQuantitative == null)
             {
-                // TODO: criar exceções "business"
-                throw new Exception("Operação não permitida");
+                throw new BusinessException(
+                    "Operação não permitida, necessita um valor pelo menos!"
+                );
             }
 
             QualityPropertyId = qualityPropertyId;
