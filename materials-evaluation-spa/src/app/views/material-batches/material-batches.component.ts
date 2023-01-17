@@ -17,7 +17,8 @@ export class MaterialBatchesComponent {
   table!: MatTable<any>;
   displayedColumns: string[] = [
     //'id',
-    'name',
+    'materialName',
+    'qualityVisionName',
     'createdAt',
     'minQuantity',
     'grouping',

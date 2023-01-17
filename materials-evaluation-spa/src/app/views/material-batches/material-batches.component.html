@@ -9,8 +9,15 @@
       <td mat-cell *matCellDef="let materialBatch">{{ materialBatch.id }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Nome</th>
+    <ng-container matColumnDef="materialName">
+      <th mat-header-cell *matHeaderCellDef>Material</th>
+      <td mat-cell *matCellDef="let materialBatch">
+        {{ materialBatch.material.name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="qualityVisionName">
+      <th mat-header-cell *matHeaderCellDef>Visão</th>
       <td mat-cell *matCellDef="let materialBatch">
         {{ materialBatch.qualityVision.name }}
       </td>
