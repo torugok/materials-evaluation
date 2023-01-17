@@ -36,7 +36,7 @@ export class MaterialBatchesComponent {
       // convert timezone
       this.dataSource.forEach((materialBatch, index) => {
         this.dataSource[index].createdAt = convertToLocaleString(
-          this.dataSource[index].createdAt
+          materialBatch.createdAt
         );
       });
     });
