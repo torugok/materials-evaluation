@@ -15,6 +15,10 @@ export class MaterialBatchService {
     });
   }
 
+  get(id: string): Observable<MaterialBatch> {
+    return this.http.get<MaterialBatch>(`${this.materialBatchesUrl}/${id}`);
+  }
+
   getAll(): Observable<MaterialBatch[]> {
     return this.http.get<MaterialBatch[]>(this.materialBatchesUrl);
   }

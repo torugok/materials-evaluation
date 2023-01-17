@@ -67,8 +67,13 @@ export class MaterialBatchesComponent {
           this.materialBatchService
             .add(result)
             .subscribe((data: MaterialBatch) => {
-              this.dataSource.push(data);
-              this.table.renderRows();
+              this.materialBatchService
+                .get(data.id)
+                .subscribe((data: MaterialBatch) => {
+                  data.createdAt = convertToLocaleString(data.createdAt);
+                  this.dataSource.push(data);
+                  this.table.renderRows();
+                });
             });
         }
       }
