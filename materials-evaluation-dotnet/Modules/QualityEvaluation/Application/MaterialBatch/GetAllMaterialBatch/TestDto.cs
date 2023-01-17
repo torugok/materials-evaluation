@@ -1,5 +1,3 @@
-using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
-
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
 {
     public class TestDto
