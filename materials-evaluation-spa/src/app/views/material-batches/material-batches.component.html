@@ -1,1 +1,87 @@
-<p>material-batches works!</p>
+<div class="container">
+  <button mat-button color="primary" (click)="openDialog(null)">
+    Novo Lote
+  </button>
+
+  <table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>#</th>
+      <td mat-cell *matCellDef="let materialBatch">{{ materialBatch.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell *matCellDef="let materialBatch">
+        {{ materialBatch.qualityVision.name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef>Criação</th>
+      <td mat-cell *matCellDef="let materialBatch">
+        {{ materialBatch.createdAt }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="minQuantity">
+      <th mat-header-cell *matHeaderCellDef>Qtd. Mínima</th>
+      <td mat-cell *matCellDef="let materialBatch">
+        {{ materialBatch.qualityVision.avaliationMethodology.minQuantity }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="grouping">
+      <th mat-header-cell *matHeaderCellDef>Agrupamento</th>
+      <td mat-cell *matCellDef="let materialBatch">
+        {{
+          materialBatch.qualityVision.avaliationMethodology.grouping == "First"
+            ? "Primeiro(s)"
+            : "Último(s)"
+        }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="calculationType">
+      <th mat-header-cell *matHeaderCellDef>Tipo de Cálculo</th>
+      <td mat-cell *matCellDef="let materialBatch">
+        {{
+          materialBatch.qualityVision.avaliationMethodology.calculationType ==
+          "Median"
+            ? "Média"
+            : "Não Identificado"
+        }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="amountOfTests">
+      <th mat-header-cell *matHeaderCellDef>Ensaios Adicionados</th>
+      <td mat-cell *matCellDef="let materialBatch">
+        {{ materialBatch.amountOfTests }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Ação</th>
+      <td mat-cell *matCellDef="let materialBatch">
+        <!-- TODO: adicionar ações -->
+        <!-- <button
+          mat-icon-button
+          color="primary"
+          (click)="onEditMaterial(materialBatch)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="onDeleteMaterial(materialBatch.id)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button> -->
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

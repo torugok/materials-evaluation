@@ -33,6 +33,7 @@ import { QualityPropertyDialogComponent } from './views/quality-properties/quali
 import { QualityVisionsComponent } from './views/quality-visions/quality-visions.component';
 import { QualityVisionDialogComponent } from './views/quality-visions/quality-vision-dialog/quality-vision.component';
 import { MaterialBatchesComponent } from './views/material-batches/material-batches.component';
+import { MaterialBatchDialogComponent } from './views/material-batches/material-batch-dialog/material-batch-dialog.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { MaterialBatchesComponent } from './views/material-batches/material-batc
     QualityVisionsComponent,
     QualityVisionDialogComponent,
     MaterialBatchesComponent,
+    MaterialBatchDialogComponent,
   ],
   imports: [
     BrowserModule,
