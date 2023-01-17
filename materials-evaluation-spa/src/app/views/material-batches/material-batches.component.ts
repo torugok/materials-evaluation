@@ -5,6 +5,9 @@ import { MaterialBatch } from 'src/app/models/MaterialBatch';
 import { MaterialBatchService } from 'src/app/services/MaterialBatch.service';
 import { MaterialBatchDialogComponent } from './material-batch-dialog/material-batch-dialog.component';
 import { convertToLocaleString } from 'src/app/shared/utils/Dates';
+import { AddTestDialogComponent } from './add-test/add-test-dialog.component';
+import { TestResult } from 'src/app/models/QualityVision';
+import { Translations } from 'src/app/shared/utils/Translations';
 
 @Component({
   selector: 'app-material-batches',
@@ -28,6 +31,7 @@ export class MaterialBatchesComponent {
     'action',
   ];
   dataSource!: MaterialBatch[];
+  translations: typeof Translations;
 
   constructor(
     public dialog: MatDialog,
@@ -42,6 +46,7 @@ export class MaterialBatchesComponent {
         );
       });
     });
+    this.translations = Translations;
   }
 
   openDialog(materialBatch: MaterialBatch | null): void {
@@ -83,6 +88,16 @@ export class MaterialBatchesComponent {
   }
 
   onAddTest(materialBatch: MaterialBatch) {
-    console.log(materialBatch);
+    const dialogRef = this.dialog.open(AddTestDialogComponent, {
+      data: { ...materialBatch },
+    });
+
+    dialogRef.afterClosed().subscribe((result: TestResult[]) => {
+      this.materialBatchService
+        .addTest(materialBatch.id, result)
+        .subscribe((data: any) => {
+          materialBatch.amountOfTests++;
+        });
+    });
   }
 }

@@ -10,7 +10,6 @@ export enum Status {
 
 export interface Test {
   qualityProperty: QualityProperty;
-  createdAt: string;
   resultQualitative: boolean | null;
   resultQuantitative: number | null;
 }

@@ -1,0 +1,64 @@
+<h1 *ngIf="!isChange" mat-dialog-title>Novo Ensaio de Qualidade Por Lote</h1>
+<h1 *ngIf="isChange" mat-dialog-title>Editar Ensaio</h1>
+
+<div mat-dialog-content>
+  <table>
+    <tr>
+      <th>Característica</th>
+      <th>Valor</th>
+      <th>Valor Nominal</th>
+      <th>Referência</th>
+    </tr>
+
+    <tr *ngFor="let testResult of testResults; let i = index">
+      <td>
+        <p>{{ testResult.qualityPropertyDescription }}</p>
+      </td>
+
+      <td *ngIf="testResult.type == 'Quantitative'">
+        <mat-form-field appearance="fill">
+          <mat-label>Valor</mat-label>
+          <input matInput [(ngModel)]="testResults[i].resultQuantitative" />
+        </mat-form-field>
+        <p>{{ testResult.quantitativeParams.unit }}</p>
+      </td>
+      <td *ngIf="testResult.type == 'Qualitative'">
+        <mat-form-field appearance="fill">
+          <mat-label>Selecione uma opção</mat-label>
+          <mat-select [(value)]="testResults[i].resultQualitative">
+            <mat-option [value]="true">Aprovado</mat-option>
+            <mat-option [value]="false">Reprovado</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+      <td>
+        <p>{{ testResult.quantitativeParams.nominalValue }}</p>
+      </td>
+      <td>
+        <p>
+          {{ testResult.quantitativeParams.inferiorLimit }} -
+          {{ testResult.quantitativeParams.superiorLimit }}
+        </p>
+      </td>
+    </tr>
+  </table>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button
+    *ngIf="!isChange"
+    mat-button
+    [mat-dialog-close]="testResults"
+    cdkFocusInitial
+  >
+    Salvar
+  </button>
+  <button
+    *ngIf="isChange"
+    mat-button
+    [mat-dialog-close]="testResults"
+    cdkFocusInitial
+  >
+    Editar
+  </button>
+</div>

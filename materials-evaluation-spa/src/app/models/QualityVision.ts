@@ -1,4 +1,4 @@
-import { Material } from './Material';
+import { QualityType } from './QualityProperty';
 
 export enum Grouping {
   First,
@@ -27,7 +27,7 @@ export interface QualityProperty {
   id: string;
   acronym: string;
   description: string;
-  type: string;
+  type: QualityType;
   quantitativeParams: QuantitativeParams;
 }
 
@@ -38,4 +38,13 @@ export interface QualityVision {
   avaliationMethodology: AvaliationMethodology;
   qualityPropertiesIds: string[];
   qualityProperties?: QualityProperty[];
+}
+
+export interface TestResult {
+  qualityPropertyId: string;
+  qualityPropertyDescription: string;
+  type: QualityType;
+  resultQualitative: boolean | null;
+  resultQuantitative: number | null;
+  quantitativeParams: QuantitativeParams;
 }

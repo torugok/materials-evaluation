@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MaterialBatch } from '../models/MaterialBatch';
 import { Observable } from 'rxjs';
+import { TestResult } from '../models/QualityVision';
 
 @Injectable()
 export class MaterialBatchService {
@@ -13,6 +14,19 @@ export class MaterialBatchService {
       materialId: materialBatch.material.id,
       qualityVisionId: materialBatch.qualityVision.id,
     });
+  }
+
+  addTest(
+    materialBatchId: string,
+    testResults: TestResult[]
+  ): Observable<MaterialBatch> {
+    return this.http.put<MaterialBatch>(
+      `${this.materialBatchesUrl}/${materialBatchId}/add-test`,
+      {
+        materialBatchId: materialBatchId,
+        tests: testResults,
+      }
+    );
   }
 
   get(id: string): Observable<MaterialBatch> {

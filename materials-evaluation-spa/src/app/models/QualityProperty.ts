@@ -1,4 +1,4 @@
-enum QualityType {
+export enum QualityType {
   Quantitative = 'Quantitative',
   Qualitative = 'Qualitative',
 }
