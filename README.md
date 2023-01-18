@@ -34,15 +34,15 @@ Foi a primeira vez que programei pra valer em .NET e Angular. Por conta disso, p
 
 ### Tarefas Futuras
 
-- [ ] Adicionar .env ao Angular e .NET
 - [ ] Adicionar Flexbox aos formulários e organizar corretamente os inputs
+- [ ] Adicionar .env ao Angular e .NET
 - [ ] Adicionar EventBus
 - [ ] Calcular Resultado de Qualidade do Lote && Enviar Email(MailKit) como Notificação
 - [ ] Corrigir CI do NodeJS
 - [ ] Migrar "Materiais" E "Características" para Arquitetura Hexagonal (Atualmente tudo está no controller)
 - [ ] Adicionar Codeclimate ao Projeto
 - [ ] Adicionar Testes + Codecov para verificar cobertura (coverage)
-- [ ] Adicionar Badges (Passou no CI, )
+- [ ] Adicionar Badges
 - [ ] Editar Visão de Qualidade
 - [ ] Editar Lote
 - [ ] Editar/Exclui Ensaios Adicionados ao Lote
@@ -53,13 +53,84 @@ Foi a primeira vez que programei pra valer em .NET e Angular. Por conta disso, p
 - [ ] Adicionar tratamento de erro de API (front)
 - [ ] Adicionar central de notificações
 
-## Introdução
-
 ## Modelagem
+
+Para a modelagem do domínio, foi utilizado Event-Storming, que se trata de uma técnica que utiliza os conceitos do DDD para modelar um domínio. Tudo isso baseado em eventos. A imagem abaixo explica como funciona os diversos componentes dessa modelagem.
+
+![](https://miro.medium.com/max/4800/1*Os4nKeOFKROiAuWLhRmqhw.webp)
+(créditos: https://medium.com/xp-inc/event-storming-guia-b%C3%A1sico-216498f5dd2d)
+
+### Modelagem do Domínio de Avaliação de Qualidade
+
+A modelagem resultou na criação de 4 agregados para descrever o domínio.
+
+![](docs/1.png)
+
+Já a parte de cálculo, foi modelada de forma a levar em consideração todo o seu fluxo:
+
+![](docs/2.png)
+
+Com a modelagem ficou claro como o código do projeto seria desenvolvido para atender os requisitos.
 
 ## Arquitetura
 
-## Bibliotecas Utilizadas
+A arquitetura do projeto foi escolhida baseado na idéia de que se um projeto começa da forma correta (bem arquitetado), ele se mantém ao longo do tempo constante em termos de manutenabilidade. Pois projetos iniciados sem arquitetura tendem a se tornam uma "Big Bal Of Mud" ao passar do tempo.
+
+Para isso, foi utilizado uma arquitetura hexagonal (ou ports and adapters), ou seja, o sistema é dividido em camadas, onde as camadas mais acima conhecem as camadas de baixo, mas as camadas de baixo não conhecem as acima dela. Isso facilita na inversão de dependências, já que o domínio, que é a camada mais interna não conhece as demais, ou seja, as regras de negócios ficam protegidas longe da lógica que trata de banco de dados, cache e etc. Tudo isso torna o sistema mais reutilizável e modular. Facilitando a manutenção, apesar de iniciar uma arquitetura assim ser mais demorado, o prejuízo inicial compensa a médio e longo prazo.
+
+![](https://miro.medium.com/max/720/1*vz61CjLHGfiZ-P0IGXD9zg.webp)
+
+### CQRS - Command Query Responsibility Segregation.
+
+Foi utilizado o padrão CQRS para separação da stack de comandos e stack de queries, ou seja, existem dois modelos dentro do sistema, um de consulta e outro de comandos. Tal separação ajuda na indepêndencia dos modelos de consulta dos comandos, utilizando de data transfer objects.
+
+Essa separação ajuda na manutenção das consultas, caso elas sejam complexas (envolvendo mts joins), elas são feitas de forma separada, podendo atender melhor os front-ends.
+
+![](docs/3.png)
+
+Obs: Para o roteamento, foi utilizado o MediatR do .NET.
+
+A figura abaixo demonstra a organização dos módulos do sistema utilizando os padrões explicados acima:
+
+![](docs/4.png)
+
+## Paterns Utilizados
+
+- Mediator
+- Command / Command Handler
+- Unit Of Work
+- Injeção de Dependencias
+- Repositórios
+- Data Transfer Objects (DTOs)
+- Domain-Driven Design (Entidades, Agregados, Eventos, Objetos de Valor)
+- ~Strategy~ (Será utilizado no cálculo dos critérios de qualidade)
+
+## Bibliotecas Principais Utilizadas
+
+### Backend (.NET)
+
+- ASP.NET Core 7
+- AutoFac para Injeção de dependencias
+- FluentValidation para validação de comandos/queries
+- MediatR para rotear as chamadas dos comandos/queries
+- EntityFramework (+Extensões) como ORM e criação das migrações do banco
+- Roslynator e StyleCop para análise estática do código, para seguir os padrões corretos da linguagem
+- SQL Server 2022 como banco de dados
+
+### Front-end (Javascript)
+
+- Angular como framework principal da aplicação
+- Angular Material para componentes utilizados
+- Luxon para tratamento de datas
+
+## Referências
+
+- Arquitetura Limpa - Robert Martin
+- Implementando Domain - Driven Design - Vaugh Vernon
+- [Meu TCC](https://faceel.unifesspa.edu.br/images/works/TCC/EC/TCC_II___Torugo___FINAL.pdf)
+- [.NET Microservices: Architecture for Containerized .NET Applications](https://learn.microsoft.com/en-us/dotnet/architecture/microservices/)
+- [Modular Monolith: Domain-Centric Design](http://www.kamilgrzybek.com/design/modular-monolith-domain-centric-design/)
+- [Como fazer Event Storming — Introdução](https://medium.com/xp-inc/event-storming-guia-b%C3%A1sico-216498f5dd2d)
 
 ## Cheatsheet
 
