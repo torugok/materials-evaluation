@@ -1,66 +1,72 @@
 <h1 *ngIf="!isChange" mat-dialog-title>Nova Visão</h1>
 <h1 *ngIf="isChange" mat-dialog-title>Editar Visão</h1>
 
-<div mat-dialog-content>
-  <mat-form-field appearance="fill">
-    <mat-label>Nome</mat-label>
-    <input matInput [(ngModel)]="data.name" />
-  </mat-form-field>
+<div mat-dialog-content style="width: 800px">
+  <div class="wrapper">
+    <mat-form-field class="form-row" appearance="fill">
+      <mat-label>Nome</mat-label>
+      <input matInput [(ngModel)]="data.name" />
+    </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Selecione uma opção</mat-label>
-    <mat-select [(value)]="data.materialId">
-      <mat-option
-        *ngFor="let material of materialsOptions"
-        [value]="material.id"
-        >{{ material.name }}</mat-option
-      >
-    </mat-select>
-  </mat-form-field>
-  <p>Metodologia de Avaliação</p>
-  <mat-form-field appearance="fill">
-    <mat-label>Qtd. Mínima</mat-label>
-    <input
-      type="number"
-      matInput
-      [(ngModel)]="data.avaliationMethodology.minQuantity"
-    />
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Agrupamento</mat-label>
-    <mat-select [(value)]="data.avaliationMethodology.grouping">
-      <mat-option value="First">Primeiros</mat-option>
-      <mat-option value="Last">Últimos</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field class="form-row" appearance="fill">
+      <mat-label>Material</mat-label>
+      <mat-select [(value)]="data.materialId">
+        <mat-option
+          *ngFor="let material of materialsOptions"
+          [value]="material.id"
+          >{{ material.name }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <p>Metodologia de Avaliação</p>
+    <mat-form-field class="form-row" appearance="fill">
+      <mat-label>Qtd. Mínima</mat-label>
+      <input
+        type="number"
+        matInput
+        [(ngModel)]="data.avaliationMethodology.minQuantity"
+      />
+    </mat-form-field>
+    <mat-form-field class="form-row" appearance="fill">
+      <mat-label>Agrupamento</mat-label>
+      <mat-select [(value)]="data.avaliationMethodology.grouping">
+        <mat-option value="First">Primeiros</mat-option>
+        <mat-option value="Last">Últimos</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Tipo de Cálculo</mat-label>
-    <mat-select [(value)]="data.avaliationMethodology.calculationType">
-      <mat-option value="Median">Média</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field class="form-row" appearance="fill">
+      <mat-label>Tipo de Cálculo</mat-label>
+      <mat-select [(value)]="data.avaliationMethodology.calculationType">
+        <mat-option value="Median">Média</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <p>Características de Qualidade</p>
-  <button mat-icon-button (click)="onAddQualityPropertyOption()">
-    <mat-icon>add</mat-icon>
-  </button>
-  <mat-form-field
-    appearance="fill"
-    *ngFor="let qualityPropertyId of data.qualityPropertiesIds; let i = index"
-  >
-    <mat-label>Selecione uma opção</mat-label>
-    <mat-select [(value)]="data.qualityPropertiesIds[i]">
-      <mat-option
-        *ngFor="let qualityPropertyOption of qualityPropertiesOptions"
-        [value]="qualityPropertyOption.id"
-        >{{ qualityPropertyOption.description }}</mat-option
-      >
-    </mat-select>
-    <button mat-icon-button (click)="onRemoveQualityProperty(i)">
-      <mat-icon>delete</mat-icon>
-    </button>
-  </mat-form-field>
+    <div class="form-row">
+      <p>Características de Qualidade</p>
+      <button mat-icon-button (click)="onAddQualityPropertyOption()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <mat-form-field
+      class="form-row"
+      appearance="fill"
+      *ngFor="let qualityPropertyId of data.qualityPropertiesIds; let i = index"
+    >
+      <mat-label>Característica de Qualidade</mat-label>
+      <mat-select [(value)]="data.qualityPropertiesIds[i]">
+        <mat-option
+          *ngFor="let qualityPropertyOption of qualityPropertiesOptions"
+          [value]="qualityPropertyOption.id"
+          >{{ qualityPropertyOption.description }}</mat-option
+        >
+      </mat-select>
+      <button mat-icon-button (click)="onRemoveQualityProperty(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onCancel()">Cancelar</button>

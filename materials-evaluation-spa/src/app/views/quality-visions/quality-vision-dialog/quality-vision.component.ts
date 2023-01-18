@@ -15,7 +15,7 @@ import { handleApiErrors } from 'src/app/shared/utils/Errors';
 @Component({
   selector: 'app-quality-vision-dialog',
   templateUrl: './quality-vision-dialog.component.html',
-  //styleUrls: ['./quality-vision-dialog.component.scss'],
+  styleUrls: ['./quality-vision.component.scss'],
   providers: [MaterialService, QualityPropertyService],
 })
 export class QualityVisionDialogComponent {

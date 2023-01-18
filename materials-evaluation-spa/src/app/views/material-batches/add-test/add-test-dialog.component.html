@@ -1,7 +1,7 @@
 <h1 *ngIf="!isChange" mat-dialog-title>Novo Ensaio de Qualidade Por Lote</h1>
 <h1 *ngIf="isChange" mat-dialog-title>Editar Ensaio</h1>
 
-<div mat-dialog-content>
+<div mat-dialog-content style="width: 900px">
   <table>
     <tr>
       <th>Característica</th>
@@ -20,11 +20,11 @@
           <mat-label>Valor</mat-label>
           <input matInput [(ngModel)]="testResults[i].resultQuantitative" />
         </mat-form-field>
-        <p>{{ testResult.quantitativeParams.unit }}</p>
+        {{ testResult.quantitativeParams.unit }}
       </td>
       <td *ngIf="testResult.type == 'Qualitative'">
         <mat-form-field appearance="fill">
-          <mat-label>Selecione uma opção</mat-label>
+          <mat-label>Justificativa</mat-label>
           <mat-select [(value)]="testResults[i].resultQualitative">
             <mat-option [value]="true">Aprovado</mat-option>
             <mat-option [value]="false">Reprovado</mat-option>

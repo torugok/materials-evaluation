@@ -6,7 +6,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
     {
         public CreateQualityVisionValidator()
         {
-            RuleFor(x => x.Name).Length(5, 50);
+            RuleFor(x => x.Name).Length(0, 50);
         }
     }
 }

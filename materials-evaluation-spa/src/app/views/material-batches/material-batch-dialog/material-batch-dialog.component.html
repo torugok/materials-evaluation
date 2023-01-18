@@ -1,27 +1,29 @@
 <h1 *ngIf="!isChange" mat-dialog-title>Novo Lote</h1>
 <h1 *ngIf="isChange" mat-dialog-title>Editar Lote</h1>
 
-<div mat-dialog-content>
-  <mat-form-field appearance="fill">
-    <mat-label>Selecione uma opção</mat-label>
-    <mat-select [(value)]="data.material.id">
-      <mat-option
-        *ngFor="let material of materialsOptions"
-        [value]="material.id"
-        >{{ material.name }}</mat-option
-      >
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Selecione uma opção</mat-label>
-    <mat-select [(value)]="data.qualityVision.id">
-      <mat-option
-        *ngFor="let qualityVision of qualityVisionsOptions"
-        [value]="qualityVision.id"
-        >{{ qualityVision.name }}</mat-option
-      >
-    </mat-select>
-  </mat-form-field>
+<div mat-dialog-content style="width: 800px">
+  <div class="wrapper">
+    <mat-form-field class="form-row" appearance="fill">
+      <mat-label>Material</mat-label>
+      <mat-select [(value)]="data.material.id">
+        <mat-option
+          *ngFor="let material of materialsOptions"
+          [value]="material.id"
+          >{{ material.name }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="form-row" appearance="fill">
+      <mat-label>Visão de Qualidade</mat-label>
+      <mat-select [(value)]="data.qualityVision.id">
+        <mat-option
+          *ngFor="let qualityVision of qualityVisionsOptions"
+          [value]="qualityVision.id"
+          >{{ qualityVision.name }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onCancel()">Cancelar</button>
