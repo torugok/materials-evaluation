@@ -31,7 +31,7 @@ Foi a primeira vez que programei pra valer em .NET e Angular. Por conta disso, p
 - [x] ~CRUD de Ensaios de qualidade - com form obedecendo a visão~
 - [x] ~Criar templante em Angular com Angular Material~
 - [x] ~Adicionar validação de Inputs com FluentValidation~
-- [x] Calcular Resultado de Qualidade do Lote (Regra de negócio)
+- [x] ~Calcular Resultado de Qualidade do Lote (Regra de negócio)~
 
 ### Tarefas Futuras
 
