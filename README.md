@@ -21,7 +21,7 @@ Foi a primeira vez que programei pra valer em .NET e Angular. Por conta disso, p
 - [x] ~Modelagem do domínio com Event Storming~
 - [x] ~Adicionar Docker ao Angular + .Net
 - [x] ~Adicionar Lint ao .NET e Angular (CI/CD)~
-- [x] ~Adicionar CQRS e Arquitetura Hexagonal usando injeção de dependencias (AutoFac)
+- [x] ~Adicionar CQRS e Arquitetura Hexagonal usando injeção de dependencias (AutoFac)~
 - [x] ~Adicionar migrations com Entity Framework~
 - [x] ~Adicionar SQL Server + conexão Entity Framework ao projeto~
 - [x] ~CRUD de Materiais~
