@@ -7,6 +7,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
         public Guid QualityPropertyId { get; set; }
         public bool? ResultQualitative { get; set; }
         public double? ResultQuantitative { get; set; }
+        public bool? Result { get; set; }
 
         public Test(Guid qualityPropertyId, bool? resultQualitative, double? resultQuantitative)
         {

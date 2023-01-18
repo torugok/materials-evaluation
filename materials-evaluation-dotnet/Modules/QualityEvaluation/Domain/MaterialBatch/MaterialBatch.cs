@@ -91,5 +91,47 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
             Tests.AddRange(tests);
             AmountOfTests++;
         }
+
+        public void CheckTests()
+        {
+            // TODO: refatorar para usar business Rules
+            if (AmountOfTests >= QualityVision.AvaliationMethodology.MinQuantity)
+            {
+                foreach (Test test in Tests)
+                {
+                    foreach (QualityProperty qualityProperty in QualityVision.QualityProperties)
+                    {
+                        if (qualityProperty.Id == test.QualityPropertyId)
+                        {
+                            if (qualityProperty.Type == "Quantitative") //FIXME: usar enum
+                            {
+                                if (
+                                    test.ResultQuantitative
+                                        < qualityProperty.QuantitativeParams.InferiorLimit
+                                    || test.ResultQuantitative
+                                        > qualityProperty.QuantitativeParams.SuperiorLimit
+                                )
+                                {
+                                    test.Result = false;
+                                    Status = Status.OutOfRange;
+                                    return;
+                                }
+                            }
+                            else if (qualityProperty.Type == "Qualitative")
+                            {
+                                if (test.ResultQualitative == false)
+                                {
+                                    test.Result = false;
+                                    Status = Status.OutOfRange;
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Status = Status.InRange;
+            }
+        }
     }
 }

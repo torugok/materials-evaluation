@@ -115,7 +115,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
                 }
 
                 rawItem.AmountOfTests = materialBatch.AmountOfTests;
-                //TODO: adicionar restante dos campos
+                rawItem.Status = materialBatch.Status.ToString();
             }
 
             Seen.Add(materialBatch);

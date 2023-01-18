@@ -37,6 +37,13 @@ export class MaterialBatchService {
     return this.http.get<MaterialBatch[]>(this.materialBatchesUrl);
   }
 
+  checkTests(id: string): Observable<any> {
+    return this.http.post<any>(
+      `${this.materialBatchesUrl}/${id}/check-tests`,
+      {}
+    );
+  }
+
   delete(id: string): Observable<any> {
     return this.http.delete<any>(`${this.materialBatchesUrl}/${id}`);
   }

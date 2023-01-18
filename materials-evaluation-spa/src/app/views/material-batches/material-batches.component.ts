@@ -128,4 +128,15 @@ export class MaterialBatchesComponent {
       );
     });
   }
+
+  onCheckTests(materialBatch: MaterialBatch) {
+    this.materialBatchService.checkTests(materialBatch.id).subscribe(
+      (data: any) => {
+        materialBatch.amountOfTests++;
+      },
+      (err: any) => {
+        handleApiErrors(err);
+      }
+    );
+  }
 }

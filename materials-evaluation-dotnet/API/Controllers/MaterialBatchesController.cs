@@ -80,6 +80,20 @@ namespace MaterialsEvaluation.API_Controllers
             }
         }
 
+        [HttpPost("{id}/check-tests")]
+        public async Task<ActionResult<Guid>> CheckTestsMaterialBatch(Guid id)
+        {
+            try
+            {
+                var response = await _mediator.Send(new CheckTestsMaterialBatchCommand(id));
+                return response;
+            }
+            catch (DbUpdateException exception)
+            {
+                return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
+            }
+        }
+
         [HttpPut("{id}/add-test")]
         public async Task<ActionResult<CreatedEntity>> AddTest(
             AddTestToMaterialBatchCommand command
