@@ -31,13 +31,14 @@ Foi a primeira vez que programei pra valer em .NET e Angular. Por conta disso, p
 - [x] ~CRUD de Ensaios de qualidade - com form obedecendo a visão~
 - [x] ~Criar templante em Angular com Angular Material~
 - [x] ~Adicionar validação de Inputs com FluentValidation~
+- [x] Calcular Resultado de Qualidade do Lote (Regra de negócio)
 
 ### Tarefas Futuras
 
 - [ ] Adicionar Flexbox aos formulários e organizar corretamente os inputs
 - [ ] Adicionar .env ao Angular e .NET
 - [ ] Adicionar EventBus
-- [ ] Calcular Resultado de Qualidade do Lote && Enviar Email(MailKit) como Notificação
+- [ ] Enviar Resultado da qualidade do lote por Email(MailKit) como Notificação (Integration Event)
 - [ ] Corrigir CI do NodeJS
 - [ ] Migrar "Materiais" E "Características" para Arquitetura Hexagonal (Atualmente tudo está no controller)
 - [ ] Adicionar Codeclimate ao Projeto
