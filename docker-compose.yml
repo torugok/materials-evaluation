@@ -12,6 +12,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://*:80
+      - DATABASE_URL=${DATABASE_URL}
     depends_on:
       - database
 
@@ -19,6 +20,7 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: database
     restart: unless-stopped
+    user: root
     ports:
       - 1433:1433
     volumes:
@@ -30,15 +32,15 @@ services:
       SA_PASSWORD: "MaterialsEvaluation@123456789"
 
   # FIXME: o angular não funciona para hot-reload nessas configurações
-  spa:
-    restart: on-failure
-    container_name: angular-ui
-    build:
-      context: ./materials-evaluation-spa/
-    environment:
-      CHOKIDAR_USEPOLLING: "true"
-    ports:
-      - 4200:4200
-    volumes:
-      - ./materials-evaluation-spa:/usr/src/app
-      - /usr/src/app/web/node_modules
+  # spa:
+  #   restart: on-failure
+  #   container_name: angular-ui
+  #   build:
+  #     context: ./materials-evaluation-spa/
+  #   environment:
+  #     CHOKIDAR_USEPOLLING: "true"
+  #   ports:
+  #     - 4200:4200
+  #   volumes:
+  #     - ./materials-evaluation-spa:/usr/src/app
+  #     - /usr/src/app/web/node_modules

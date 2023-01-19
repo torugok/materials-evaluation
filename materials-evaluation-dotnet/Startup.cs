@@ -20,7 +20,7 @@ namespace MaterialsEvaluation
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json")
                 .AddUserSecrets<Startup>()
-                .AddEnvironmentVariables("MaterialEvaluation_")
+                .AddEnvironmentVariables()
                 .Build();
         }
 
@@ -52,7 +52,7 @@ namespace MaterialsEvaluation
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddDbContext<DatabaseContext>(
-                opt => opt.UseSqlServer(_configuration.GetConnectionString("Database"))
+                opt => opt.UseSqlServer(_configuration["DATABASE_URL"])
             );
 
             services.AddFluentValidationAutoValidation();
