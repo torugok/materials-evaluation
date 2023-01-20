@@ -4,6 +4,7 @@ using MaterialsEvaluation.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MaterialsEvaluation.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230117040326_AddMaterialBatch")]
+    partial class AddMaterialBatch
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,6 +79,9 @@ namespace MaterialsEvaluation.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("MaterialBatchId")
                         .HasColumnType("uniqueidentifier");
@@ -213,13 +219,13 @@ namespace MaterialsEvaluation.Migrations
                     b.HasOne("MaterialsEvaluation.Database.MaterialBatch", "MaterialBatch")
                         .WithMany("MaterialBatchTests")
                         .HasForeignKey("MaterialBatchId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("MaterialsEvaluation.Database.QualityProperty", "QualityProperty")
                         .WithMany("MaterialBatchTests")
                         .HasForeignKey("QualityPropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("MaterialBatch");

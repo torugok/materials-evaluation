@@ -52,7 +52,7 @@ namespace MaterialsEvaluation
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddDbContext<DatabaseContext>(
-                opt => opt.UseSqlite("Data Source=materials-evaluation.db") // HACK: utilizar SQL Server
+                opt => opt.UseSqlServer(_configuration["DATABASE_URL"])
             );
 
             services.AddFluentValidationAutoValidation();
