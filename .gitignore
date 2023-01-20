@@ -1,2 +1,5 @@
 /.vscode
 .env
+
+# Ignore the default SQLite database.
+*.db*
