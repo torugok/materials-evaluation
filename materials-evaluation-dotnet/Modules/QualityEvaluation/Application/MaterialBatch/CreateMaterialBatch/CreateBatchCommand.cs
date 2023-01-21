@@ -4,7 +4,7 @@ using MediatR;
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
 {
     [DataContract]
-    public class CreateMaterialBatchCommand : IRequest<Guid>
+    public class CreateBatchCommand : IRequest<Guid>
     {
         [DataMember]
         public Guid MaterialId { get; set; }
@@ -12,9 +12,9 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
         [DataMember]
         public Guid QualityVisionId { get; set; }
 
-        public CreateMaterialBatchCommand() { }
+        public CreateBatchCommand() { }
 
-        public CreateMaterialBatchCommand(Guid materialId, Guid qualityVisionId)
+        public CreateBatchCommand(Guid materialId, Guid qualityVisionId)
         {
             MaterialId = materialId;
             QualityVisionId = qualityVisionId;

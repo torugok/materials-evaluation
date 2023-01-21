@@ -1,4 +1,6 @@
+using AutoMapper;
 using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
 {
@@ -7,10 +9,12 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
         public List<Material> Seen { get; set; } // FIXME: buscar alternativa para despacho de eventos
 
         private readonly Database.DatabaseContext _context;
+        private readonly IMapper _mapper;
 
-        public EFMaterialRepository(Database.DatabaseContext context)
+        public EFMaterialRepository(Database.DatabaseContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
             Seen = new List<Material>();
         }
 
@@ -20,22 +24,20 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
             Seen.Add(material);
         }
 
-        public async Task<Material> Get(Guid id)
+        public async Task<Material?> Get(Guid id)
         {
-            var material = await _context.Materials.FindAsync(id);
-            return new Material(material.Id, material.Name);
+            return await _mapper
+                .ProjectTo<Material>(_context.Materials.Where(o => o.Id == id))
+                .FirstOrDefaultAsync();
         }
 
         public Task Update(Material material)
         {
             throw new NotImplementedException();
-
-            Seen.Add(material);
         }
 
         public async Task Delete(Guid id)
         {
-            var material = await Get(id);
             throw new NotImplementedException();
         }
     }

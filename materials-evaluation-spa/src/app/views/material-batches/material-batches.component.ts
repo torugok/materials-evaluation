@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
-import { MaterialBatch } from 'src/app/models/MaterialBatch';
-import { MaterialBatchService } from 'src/app/services/MaterialBatch.service';
-import { MaterialBatchDialogComponent } from './material-batch-dialog/material-batch-dialog.component';
+import { Batch } from 'src/app/models/Batch';
+import { BatchService } from 'src/app/services/Batch.service';
+import { BatchDialogComponent } from './material-batch-dialog/material-batch-dialog.component';
 import { convertToLocaleString } from 'src/app/shared/utils/Dates';
 import { AddTestDialogComponent } from './add-test/add-test-dialog.component';
 import { TestResult } from 'src/app/models/QualityVision';
@@ -14,9 +14,9 @@ import { handleApiErrors } from 'src/app/shared/utils/Errors';
   selector: 'app-material-batches',
   templateUrl: './material-batches.component.html',
   styleUrls: ['./material-batches.component.scss'],
-  providers: [MaterialBatchService],
+  providers: [BatchService],
 })
-export class MaterialBatchesComponent {
+export class BatchesComponent {
   @ViewChild(MatTable)
   table!: MatTable<any>;
   displayedColumns: string[] = [
@@ -31,20 +31,17 @@ export class MaterialBatchesComponent {
     'status',
     'action',
   ];
-  dataSource!: MaterialBatch[];
+  dataSource!: Batch[];
   translations: typeof Translations;
 
-  constructor(
-    public dialog: MatDialog,
-    public materialBatchService: MaterialBatchService
-  ) {
-    this.materialBatchService.getAll().subscribe(
-      (data: MaterialBatch[]) => {
+  constructor(public dialog: MatDialog, public batchService: BatchService) {
+    this.batchService.getAll().subscribe(
+      (data: Batch[]) => {
         this.dataSource = data;
         // convert timezone
-        this.dataSource.forEach((materialBatch, index) => {
+        this.dataSource.forEach((Batch, index) => {
           this.dataSource[index].createdAt = convertToLocaleString(
-            materialBatch.createdAt
+            Batch.createdAt
           );
         });
       },
@@ -55,20 +52,20 @@ export class MaterialBatchesComponent {
     this.translations = Translations;
   }
 
-  openDialog(materialBatch: MaterialBatch | null): void {
-    const dialogRef = this.dialog.open(MaterialBatchDialogComponent, {
+  openDialog(Batch: Batch | null): void {
+    const dialogRef = this.dialog.open(BatchDialogComponent, {
       // TODO: adicionar a edição corretamente
-      data: materialBatch === null ? { id: null } : { id: materialBatch.id },
+      data: Batch === null ? { id: null } : { id: Batch.id },
     });
 
-    dialogRef.afterClosed().subscribe((result: MaterialBatch) => {
+    dialogRef.afterClosed().subscribe((result: Batch) => {
       if (result !== undefined) {
         if (this.dataSource.map((p) => p.id).includes(result.id)) {
           // edição
           // FIXME: descomentar ao implementar a edição
-          // this.materialBatchService
+          // this.BatchService
           //   .editMaterial(result)
-          //   .subscribe((data: MaterialBatch) => {
+          //   .subscribe((data: Batch) => {
           //     var index = this.dataSource.findIndex(
           //       (item) => item.id === data.id
           //     );
@@ -77,10 +74,10 @@ export class MaterialBatchesComponent {
           //   });
         } else {
           // criação
-          this.materialBatchService.add(result).subscribe(
-            (data: MaterialBatch) => {
-              this.materialBatchService.get(data.id).subscribe(
-                (data: MaterialBatch) => {
+          this.batchService.add(result).subscribe(
+            (data: Batch) => {
+              this.batchService.get(data.id).subscribe(
+                (data: Batch) => {
                   data.createdAt = convertToLocaleString(data.createdAt);
                   this.dataSource.push(data);
                   this.table.renderRows();
@@ -100,7 +97,7 @@ export class MaterialBatchesComponent {
   }
 
   onDelete(id: string): void {
-    this.materialBatchService.delete(id).subscribe(
+    this.batchService.delete(id).subscribe(
       (data: any) => {
         this.dataSource = this.dataSource.filter(
           (element) => element.id !== id
@@ -112,15 +109,15 @@ export class MaterialBatchesComponent {
     );
   }
 
-  onAddTest(materialBatch: MaterialBatch) {
+  onAddTest(Batch: Batch) {
     const dialogRef = this.dialog.open(AddTestDialogComponent, {
-      data: { ...materialBatch },
+      data: { ...Batch },
     });
 
     dialogRef.afterClosed().subscribe((result: TestResult[]) => {
-      this.materialBatchService.addTest(materialBatch.id, result).subscribe(
+      this.batchService.addTest(Batch.id, result).subscribe(
         (data: any) => {
-          materialBatch.amountOfTests++;
+          Batch.amountOfTests++;
         },
         (err) => {
           handleApiErrors(err);
@@ -129,10 +126,10 @@ export class MaterialBatchesComponent {
     });
   }
 
-  onCheckTests(materialBatch: MaterialBatch) {
-    this.materialBatchService.checkTests(materialBatch.id).subscribe(
+  onCheckTests(Batch: Batch) {
+    this.batchService.checkTests(Batch.id).subscribe(
       (data: any) => {
-        materialBatch.amountOfTests++;
+        Batch.amountOfTests++;
       },
       (err: any) => {
         handleApiErrors(err);

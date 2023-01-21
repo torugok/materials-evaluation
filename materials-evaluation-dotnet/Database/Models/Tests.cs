@@ -1,11 +1,11 @@
 namespace MaterialsEvaluation.Database
 {
-    public class MaterialBatchTests
+    public class Tests
     {
         public Guid Id { get; set; }
 
-        public Guid MaterialBatchId { get; set; }
-        public virtual MaterialBatch MaterialBatch { get; set; }
+        public Guid BatchId { get; set; }
+        public virtual Batch Batch { get; set; }
 
         public Guid QualityPropertyId { get; set; }
         public virtual QualityProperty QualityProperty { get; set; }
@@ -13,23 +13,23 @@ namespace MaterialsEvaluation.Database
         public bool? ResultQualitative { get; set; }
         public double? ResultQuantitative { get; set; }
 
-        public bool? Result { get; set; }
+        public bool? Passed { get; set; }
 
-        public MaterialBatchTests(
+        public Tests(
             Guid id,
-            Guid materialBatchId,
+            Guid batchId,
             Guid qualityPropertyId,
             bool? resultQualitative,
             double? resultQuantitative,
-            bool? result
+            bool? passed
         )
         {
             Id = id;
-            MaterialBatchId = materialBatchId;
+            BatchId = batchId;
             QualityPropertyId = qualityPropertyId;
             ResultQualitative = resultQualitative;
             ResultQuantitative = resultQuantitative;
-            Result = result;
+            Passed = passed;
         }
     }
 }

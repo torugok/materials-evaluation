@@ -2,5 +2,5 @@ using MediatR;
 
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
 {
-    public class GetAllMaterialBatchQuery : IRequest<List<MaterialBatchDto>> { }
+    public class GetAllBatchesQuery : IRequest<List<BatchDto>> { }
 }

@@ -4,14 +4,14 @@ using MediatR;
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
 {
     [DataContract]
-    public class DeleteMaterialBatchCommand : IRequest<Guid>
+    public class CheckTestsCommand : IRequest<Guid>
     {
         [DataMember]
         public Guid Id { get; set; }
 
-        public DeleteMaterialBatchCommand() { }
+        public CheckTestsCommand() { }
 
-        public DeleteMaterialBatchCommand(Guid id)
+        public CheckTestsCommand(Guid id)
         {
             Id = id;
         }

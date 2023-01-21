@@ -1,6 +1,6 @@
 namespace MaterialsEvaluation.Database
 {
-    public class MaterialBatch
+    public class Batch
     {
         public Guid Id { get; set; }
 
@@ -15,9 +15,9 @@ namespace MaterialsEvaluation.Database
         public DateTime? CalculatedAt { get; set; }
         public string Status { get; set; }
 
-        public List<MaterialBatchTests> MaterialBatchTests { get; set; }
+        public List<Tests> Tests { get; set; }
 
-        public MaterialBatch(
+        public Batch(
             Guid id,
             Guid materialId,
             Guid qualityVisionId,

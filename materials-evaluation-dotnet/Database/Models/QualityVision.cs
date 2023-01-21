@@ -11,8 +11,8 @@ namespace MaterialsEvaluation.Database
         public Guid MaterialId { get; set; }
         public Material Material { get; set; }
 
-        public List<QualityVisionProperties> QualityVisionProperties { get; set; }
-        public List<MaterialBatch> MaterialBatches { get; set; }
+        public List<QualityVisionProperties> QualityProperties { get; set; }
+        public List<Batch> Batches { get; set; }
 
         public QualityVision() { }
 
@@ -23,7 +23,7 @@ namespace MaterialsEvaluation.Database
             string avaliationGrouping,
             string avaliationCalculationType,
             Guid materialId,
-            List<QualityVisionProperties> qualityVisionProperties
+            List<QualityVisionProperties> qualityProperties
         )
         {
             Id = id;
@@ -32,7 +32,7 @@ namespace MaterialsEvaluation.Database
             AvaliationGrouping = avaliationGrouping;
             AvaliationCalculationType = avaliationCalculationType;
             MaterialId = materialId;
-            QualityVisionProperties = qualityVisionProperties;
+            QualityProperties = qualityProperties;
         }
     }
 }

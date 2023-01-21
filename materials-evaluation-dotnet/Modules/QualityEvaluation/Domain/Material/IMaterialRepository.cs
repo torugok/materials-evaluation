@@ -6,7 +6,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
 
         public Task Insert(Material qualityVision);
 
-        public Task<Material> Get(Guid id);
+        public Task<Material?> Get(Guid id);
 
         public Task Update(Material qualityVision);
 

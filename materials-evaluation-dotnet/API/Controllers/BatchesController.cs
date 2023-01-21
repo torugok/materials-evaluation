@@ -9,23 +9,23 @@ namespace MaterialsEvaluation.API_Controllers
 {
     [Route("api/material-batches")]
     [ApiController]
-    public class MaterialBatchesController : ControllerBase
+    public class BatchesController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public MaterialBatchesController(IMediator mediator)
+        public BatchesController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Guid>> PostMaterialBatch(CreateMaterialBatchCommand command)
+        public async Task<ActionResult<Guid>> PostBatch(CreateBatchCommand command)
         {
             try
             {
                 var response = await _mediator.Send(command);
-                return CreatedAtAction(nameof(PostMaterialBatch), new CreatedEntity(response));
+                return CreatedAtAction(nameof(PostBatch), new CreatedEntity(response));
             }
             catch (Exception exception)
             {
@@ -39,11 +39,11 @@ namespace MaterialsEvaluation.API_Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<MaterialBatchDto>>> GetMaterialBatch()
+        public async Task<ActionResult<List<BatchDto>>> GetBatch()
         {
             try
             {
-                var response = await _mediator.Send(new GetAllMaterialBatchQuery());
+                var response = await _mediator.Send(new GetAllBatchesQuery());
                 return response;
             }
             catch (DbUpdateException exception)
@@ -53,12 +53,12 @@ namespace MaterialsEvaluation.API_Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<MaterialBatchDto>> GetOneMaterialBatch(Guid id)
+        public async Task<ActionResult<BatchDto>> GetOneBatch(Guid id)
         {
             try
             {
-                var response = await _mediator.Send(new GetOneMaterialBatchQuery(id));
-                return response;
+                var response = await _mediator.Send(new GetOneBatchQuery(id));
+                return response ?? (ActionResult<BatchDto>)NotFound();
             }
             catch (DbUpdateException exception)
             {
@@ -67,12 +67,11 @@ namespace MaterialsEvaluation.API_Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Guid>> DeleteMaterialBatch(Guid id)
+        public async Task<ActionResult<Guid>> DeleteBatch(Guid id)
         {
             try
             {
-                var response = await _mediator.Send(new DeleteMaterialBatchCommand(id));
-                return response;
+                return await _mediator.Send(new DeleteBatchCommand(id));
             }
             catch (DbUpdateException exception)
             {
@@ -81,11 +80,11 @@ namespace MaterialsEvaluation.API_Controllers
         }
 
         [HttpPost("{id}/check-tests")]
-        public async Task<ActionResult<Guid>> CheckTestsMaterialBatch(Guid id)
+        public async Task<ActionResult<Guid>> CheckTests(Guid id)
         {
             try
             {
-                var response = await _mediator.Send(new CheckTestsMaterialBatchCommand(id));
+                var response = await _mediator.Send(new CheckTestsCommand(id));
                 return response;
             }
             catch (DbUpdateException exception)
@@ -95,9 +94,7 @@ namespace MaterialsEvaluation.API_Controllers
         }
 
         [HttpPut("{id}/add-test")]
-        public async Task<ActionResult<CreatedEntity>> AddTest(
-            AddTestToMaterialBatchCommand command
-        )
+        public async Task<ActionResult<CreatedEntity>> AddTest(AddTestToBatchCommand command)
         {
             try
             {

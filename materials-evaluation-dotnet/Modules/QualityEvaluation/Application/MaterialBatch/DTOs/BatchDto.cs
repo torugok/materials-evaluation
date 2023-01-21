@@ -2,7 +2,7 @@ using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
 
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
 {
-    public class MaterialBatchDto
+    public class BatchDto
     {
         public Guid Id { get; set; }
         public MaterialDto Material { get; set; }
@@ -13,9 +13,9 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
         public Status Status { get; set; }
         public List<TestDto> Tests { get; set; }
 
-        public MaterialBatchDto() { }
+        public BatchDto() { }
 
-        public MaterialBatchDto(
+        public BatchDto(
             Guid id,
             MaterialDto material,
             QualityVisionDto qualityVision,

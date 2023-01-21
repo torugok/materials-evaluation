@@ -12,6 +12,8 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
 
         public List<QualityProperty> QualityProperties { get; set; }
 
+        public QualityVision() { }
+
         public QualityVision(
             Guid id,
             Guid materialId,

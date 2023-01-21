@@ -14,7 +14,7 @@ export interface Test {
   resultQuantitative: number | null;
 }
 
-export interface MaterialBatch {
+export interface Batch {
   id: string;
   material: Material;
   qualityVision: QualityVision;

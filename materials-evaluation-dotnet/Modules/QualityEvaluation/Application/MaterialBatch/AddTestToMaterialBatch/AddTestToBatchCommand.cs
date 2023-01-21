@@ -5,19 +5,19 @@ using MediatR;
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
 {
     [DataContract]
-    public class AddTestToMaterialBatchCommand : IRequest<Guid>
+    public class AddTestToBatchCommand : IRequest<Guid>
     {
         [DataMember]
-        public Guid MaterialBatchId { get; set; }
+        public Guid BatchId { get; set; }
 
         [DataMember]
         public List<Test> Tests { get; set; }
 
-        public AddTestToMaterialBatchCommand() { }
+        public AddTestToBatchCommand() { }
 
-        public AddTestToMaterialBatchCommand(Guid materialBatchId, List<Test> tests)
+        public AddTestToBatchCommand(Guid batchId, List<Test> tests)
         {
-            MaterialBatchId = materialBatchId;
+            BatchId = batchId;
             Tests = tests;
         }
     }

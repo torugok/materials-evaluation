@@ -1,3 +1,4 @@
+using AutoMapper;
 using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,10 +9,12 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
         public List<QualityVision> Seen { get; set; } // FIXME: buscar alternativa para despacho de eventos
 
         private readonly Database.DatabaseContext _context;
+        private readonly IMapper _mapper;
 
-        public EFQualityVisionRepository(Database.DatabaseContext context)
+        public EFQualityVisionRepository(Database.DatabaseContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
             Seen = new List<QualityVision>();
         }
 
@@ -46,41 +49,15 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
             Seen.Add(qualityVision);
         }
 
-        public async Task<QualityVision> Get(Guid id)
+        public async Task<QualityVision?> Get(Guid id)
         {
-            var rawItem = await _context.QualityVisions
-                .Include("QualityVisionProperties.QualityProperty")
-                .Where(q => q.Id == id)
+            return await _mapper
+                .ProjectTo<QualityVision>(
+                    _context.QualityVisions
+                        .Include("QualityVisionProperties.QualityProperty")
+                        .Where(q => q.Id == id)
+                )
                 .FirstOrDefaultAsync();
-            return new QualityVision(
-                rawItem.Id,
-                rawItem.MaterialId,
-                rawItem.Name,
-                new AvaliationMethodology(
-                    rawItem.AvaliationMinQuantity,
-                    Enum.Parse<Grouping>(rawItem.AvaliationGrouping),
-                    Enum.Parse<CalculationType>(rawItem.AvaliationCalculationType)
-                ),
-                rawItem.QualityVisionProperties != null
-                    ? rawItem.QualityVisionProperties.ConvertAll(
-                        o =>
-                            new QualityProperty
-                            {
-                                Id = o.QualityProperty.Id,
-                                Acronym = o.QualityProperty.Acronym,
-                                Description = o.QualityProperty.Description,
-                                Type = Enum.Parse<PropertyTypes>(o.QualityProperty.Type),
-                                QuantitativeParams = new QuantitativeParams(
-                                    o.QualityProperty.QuantitativeDecimals,
-                                    o.QualityProperty.QuantitativeUnit,
-                                    o.QualityProperty.QuantitativeNominalValue,
-                                    o.QualityProperty.QuantitativeInferiorLimit,
-                                    o.QualityProperty.QuantitativeSuperiorLimit
-                                )
-                            }
-                    )
-                    : new List<QualityProperty>()
-            );
         }
 
         public Task Update(QualityVision qualityVision)

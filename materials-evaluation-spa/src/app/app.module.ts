@@ -32,8 +32,8 @@ import { QualityPropertiesComponent } from './views/quality-properties/quality-p
 import { QualityPropertyDialogComponent } from './views/quality-properties/quality-property-dialog/quality-property-dialog.component';
 import { QualityVisionsComponent } from './views/quality-visions/quality-visions.component';
 import { QualityVisionDialogComponent } from './views/quality-visions/quality-vision-dialog/quality-vision.component';
-import { MaterialBatchesComponent } from './views/material-batches/material-batches.component';
-import { MaterialBatchDialogComponent } from './views/material-batches/material-batch-dialog/material-batch-dialog.component';
+import { BatchesComponent } from './views/material-batches/material-batches.component';
+import { BatchDialogComponent } from './views/material-batches/material-batch-dialog/material-batch-dialog.component';
 import { AddTestDialogComponent } from './views/material-batches/add-test/add-test-dialog.component';
 
 @NgModule({
@@ -48,8 +48,8 @@ import { AddTestDialogComponent } from './views/material-batches/add-test/add-te
     QualityPropertyDialogComponent,
     QualityVisionsComponent,
     QualityVisionDialogComponent,
-    MaterialBatchesComponent,
-    MaterialBatchDialogComponent,
+    BatchesComponent,
+    BatchDialogComponent,
     AddTestDialogComponent,
   ],
   imports: [

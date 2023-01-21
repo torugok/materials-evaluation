@@ -2,12 +2,12 @@ using MaterialsEvaluation.Shared.Domain;
 
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
 {
-    public class Test : ValueObject
+    public class Test : Entity
     {
         public Guid QualityPropertyId { get; set; }
         public bool? ResultQualitative { get; set; }
         public double? ResultQuantitative { get; set; }
-        public bool? Result { get; set; }
+        public bool? Passed { get; set; }
 
         public Test(Guid qualityPropertyId, bool? resultQualitative, double? resultQuantitative)
         {

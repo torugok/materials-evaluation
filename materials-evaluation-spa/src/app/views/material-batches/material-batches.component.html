@@ -6,42 +6,42 @@
   <table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>#</th>
-      <td mat-cell *matCellDef="let materialBatch">{{ materialBatch.id }}</td>
+      <td mat-cell *matCellDef="let batch">{{ batch.id }}</td>
     </ng-container>
 
     <ng-container matColumnDef="materialName">
       <th mat-header-cell *matHeaderCellDef>Material</th>
-      <td mat-cell *matCellDef="let materialBatch">
-        {{ materialBatch.material.name }}
+      <td mat-cell *matCellDef="let batch">
+        {{ batch.material.name }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="qualityVisionName">
       <th mat-header-cell *matHeaderCellDef>Visão</th>
-      <td mat-cell *matCellDef="let materialBatch">
-        {{ materialBatch.qualityVision.name }}
+      <td mat-cell *matCellDef="let batch">
+        {{ batch.qualityVision.name }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="createdAt">
       <th mat-header-cell *matHeaderCellDef>Criação</th>
-      <td mat-cell *matCellDef="let materialBatch">
-        {{ materialBatch.createdAt }}
+      <td mat-cell *matCellDef="let batch">
+        {{ batch.createdAt }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="minQuantity">
       <th mat-header-cell *matHeaderCellDef>Qtd. Mínima</th>
-      <td mat-cell *matCellDef="let materialBatch">
-        {{ materialBatch.qualityVision.avaliationMethodology.minQuantity }}
+      <td mat-cell *matCellDef="let batch">
+        {{ batch.qualityVision.avaliationMethodology.minQuantity }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="grouping">
       <th mat-header-cell *matHeaderCellDef>Agrupamento</th>
-      <td mat-cell *matCellDef="let materialBatch">
+      <td mat-cell *matCellDef="let batch">
         {{
-          materialBatch.qualityVision.avaliationMethodology.grouping == "First"
+          batch.qualityVision.avaliationMethodology.grouping == "First"
             ? "Primeiro(s)"
             : "Último(s)"
         }}
@@ -50,9 +50,9 @@
 
     <ng-container matColumnDef="calculationType">
       <th mat-header-cell *matHeaderCellDef>Tipo de Cálculo</th>
-      <td mat-cell *matCellDef="let materialBatch">
+      <td mat-cell *matCellDef="let batch">
         {{
-          materialBatch.qualityVision.avaliationMethodology.calculationType ==
+          batch.qualityVision.avaliationMethodology.calculationType ==
           "Median"
             ? "Média"
             : "Não Identificado"
@@ -62,24 +62,24 @@
 
     <ng-container matColumnDef="amountOfTests">
       <th mat-header-cell *matHeaderCellDef>Ensaios Adicionados</th>
-      <td mat-cell *matCellDef="let materialBatch">
-        {{ materialBatch.amountOfTests }}
+      <td mat-cell *matCellDef="let batch">
+        {{ batch.amountOfTests }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef>Status</th>
-      <td mat-cell *matCellDef="let materialBatch">
-        {{ translations[materialBatch.status] }}
+      <td mat-cell *matCellDef="let batch">
+        {{ translations[batch.status] }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef>Ação</th>
-      <td mat-cell *matCellDef="let materialBatch">
+      <td mat-cell *matCellDef="let batch">
         <button
           mat-icon-button
-          (click)="onAddTest(materialBatch)"
+          (click)="onAddTest(batch)"
           matTooltip="Adicionar Ensaio"
           matTooltipPosition="above"
         >
@@ -88,7 +88,7 @@
 
         <button
           mat-icon-button
-          (click)="onCheckTests(materialBatch)"
+          (click)="onCheckTests(batch)"
           matTooltip="Adicionar Ensaio"
           matTooltipPosition="above"
         >
@@ -98,14 +98,14 @@
         <!-- <button
           mat-icon-button
           color="primary"
-          (click)="onEditMaterial(materialBatch)"
+          (click)="onEditMaterial(batch)"
         >
           <mat-icon>edit</mat-icon>
         </button>-->
         <button
           mat-icon-button
           color="warn"
-          (click)="onDelete(materialBatch.id)"
+          (click)="onDelete(batch.id)"
         >
           <mat-icon>delete</mat-icon>
         </button>

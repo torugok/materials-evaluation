@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Material } from 'src/app/models/Material';
-import { MaterialBatch, Status } from 'src/app/models/MaterialBatch';
+import { Batch, Status } from 'src/app/models/Batch';
 import {
   CalculationType,
   Grouping,
@@ -17,16 +17,16 @@ import { handleApiErrors } from 'src/app/shared/utils/Errors';
   styleUrls: ['./material-batch-dialog.component.scss'],
   providers: [MaterialService, QualityVisionService],
 })
-export class MaterialBatchDialogComponent {
-  materialBatch!: MaterialBatch;
+export class BatchDialogComponent {
+  batch!: Batch;
   isChange!: boolean;
   materialsOptions!: Material[];
   qualityVisionsOptions!: QualityVision[];
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: MaterialBatch,
-    public dialogRef: MatDialogRef<MaterialBatchDialogComponent>,
+    public data: Batch,
+    public dialogRef: MatDialogRef<BatchDialogComponent>,
     public materialService: MaterialService,
     public qualityVisionService: QualityVisionService
   ) {

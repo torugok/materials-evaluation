@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MaterialBatch, Status } from 'src/app/models/MaterialBatch';
+import { Batch, Status } from 'src/app/models/Batch';
 import {
   CalculationType,
   Grouping,
@@ -13,13 +13,13 @@ import {
   styleUrls: ['./add-test-dialog.component.scss'],
 })
 export class AddTestDialogComponent {
-  materialBatch!: MaterialBatch;
+  batch!: Batch;
   isChange!: boolean;
   testResults!: TestResult[];
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: MaterialBatch,
+    public data: Batch,
     public dialogRef: MatDialogRef<AddTestDialogComponent>
   ) {
     if (data.id === null) {

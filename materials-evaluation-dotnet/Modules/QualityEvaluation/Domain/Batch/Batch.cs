@@ -9,7 +9,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
         InRange
     }
 
-    public class MaterialBatch : AggregateRoot
+    public class Batch : AggregateRoot
     {
         public Material Material { get; set; }
         public QualityVision QualityVision { get; set; }
@@ -19,7 +19,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
         public List<Test> Tests { get; set; }
         public Status Status { get; set; }
 
-        public MaterialBatch(
+        public Batch(
             Guid id,
             Material material,
             QualityVision qualityVision,
@@ -47,7 +47,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
             Status = status;
         }
 
-        public MaterialBatch(
+        public Batch(
             Material material,
             QualityVision qualityVision,
             DateTime createdAt,
@@ -73,9 +73,9 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
             Status = status;
         }
 
-        public static MaterialBatch Create(Material material, QualityVision qualityVision)
+        public static Batch Create(Material material, QualityVision qualityVision)
         {
-            var materialBatch = new MaterialBatch(
+            var batch = new Batch(
                 material,
                 qualityVision,
                 DateTime.UtcNow,
@@ -84,8 +84,8 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
                 new List<Test>(),
                 Status.Pending
             );
-            materialBatch.AddDomainEvent(new MaterialBatchCreated());
-            return materialBatch;
+            batch.AddDomainEvent(new BatchCreated());
+            return batch;
         }
 
         public void AddTest(List<Test> tests)
@@ -113,13 +113,13 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
                                     qualityProperty.QuantitativeParams == null
                                     || (
                                         test.ResultQuantitative
-                                            < qualityProperty.QuantitativeParams.InferiorLimit
+                                            < qualityProperty.QuantitativeParams?.InferiorLimit
                                         || test.ResultQuantitative
-                                            > qualityProperty.QuantitativeParams.SuperiorLimit
+                                            > qualityProperty.QuantitativeParams?.SuperiorLimit
                                     )
                                 )
                                 {
-                                    test.Result = false;
+                                    test.Passed = false;
                                     Status = Status.OutOfRange;
                                     return;
                                 }
@@ -128,7 +128,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
                             {
                                 if (test.ResultQualitative == false)
                                 {
-                                    test.Result = false;
+                                    test.Passed = false;
                                     Status = Status.OutOfRange;
                                     return;
                                 }
