@@ -13,6 +13,8 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
         public Status Status { get; set; }
         public List<TestDto> Tests { get; set; }
 
+        public MaterialBatchDto() { }
+
         public MaterialBatchDto(
             Guid id,
             MaterialDto material,

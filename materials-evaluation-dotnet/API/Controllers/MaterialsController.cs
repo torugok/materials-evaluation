@@ -38,12 +38,7 @@ namespace MaterialsEvaluation.API_Controllers
 
             var material = await _context.Materials.FindAsync(id);
 
-            if (material == null)
-            {
-                return NotFound();
-            }
-
-            return material;
+            return material ?? (ActionResult<Material>)NotFound();
         }
 
         // PUT: api/Materials/5
@@ -62,16 +57,9 @@ namespace MaterialsEvaluation.API_Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException) when (!MaterialExists(id))
             {
-                if (!MaterialExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return material;

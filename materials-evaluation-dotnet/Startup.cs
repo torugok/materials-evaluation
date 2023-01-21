@@ -1,12 +1,13 @@
 using System.Text.Json.Serialization;
 using Autofac;
+using AutoMapper.Contrib.Autofac.DependencyInjection;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using MaterialsEvaluation.Database;
 using MaterialsEvaluation.Modules.QualityEvaluation;
+using MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using FluentValidation;
-using MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands;
-using FluentValidation.AspNetCore;
 
 namespace MaterialsEvaluation
 {
@@ -26,7 +27,7 @@ namespace MaterialsEvaluation
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+            const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
             services.AddCors(options =>
             {
@@ -62,6 +63,9 @@ namespace MaterialsEvaluation
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterMediatR(typeof(Startup).Assembly);
+            builder.RegisterAutoMapper(typeof(Startup).Assembly);
+
+            // local modules
             builder.RegisterModule(new QualityEvaluationAutofacModule());
         }
 
@@ -84,10 +88,7 @@ namespace MaterialsEvaluation
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }

@@ -38,7 +38,13 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
             foreach (Guid id in qualityPropertiesIds)
             {
                 qualityProperties.Add(
-                    new QualityProperty(id, string.Empty, string.Empty, string.Empty, null) // HACK: verificar outra maneira de usar objetos compostos em C#
+                    new QualityProperty(
+                        id,
+                        string.Empty,
+                        string.Empty,
+                        PropertyTypes.Quantitative,
+                        null
+                    ) // HACK: verificar outra maneira de usar objetos compostos em C#
                 );
             }
 

@@ -12,7 +12,8 @@ public class DatabaseContext : DbContext
     public DbSet<MaterialBatch> MaterialBatches { get; set; } = null!;
     public DbSet<MaterialBatchTests> MaterialBatchTests { get; set; } = null!;
 
-    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+    public DatabaseContext(DbContextOptions<DatabaseContext> options)
+        : base(options)
     {
         // FIXME: Substituir para outra abordagem, não recomendada por: https://learn.microsoft.com/pt-br/ef/core/managing-schemas/migrations/applying?tabs=dotnet-core-cli#apply-migrations-at-runtime
         this.Database.Migrate();
@@ -20,10 +21,9 @@ public class DatabaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<QualityVisionProperties>(b =>
-        {
-            b.HasIndex(e => new { e.QualityVisionId, e.QualityPropertyId }).IsUnique();
-        });
+        modelBuilder.Entity<QualityVisionProperties>(
+            b => b.HasIndex(e => new { e.QualityVisionId, e.QualityPropertyId }).IsUnique()
+        );
 
         modelBuilder
             .Entity<MaterialBatch>()

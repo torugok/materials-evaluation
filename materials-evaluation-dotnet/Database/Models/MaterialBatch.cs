@@ -36,33 +36,4 @@ namespace MaterialsEvaluation.Database
             Status = status;
         }
     }
-
-    public class MaterialBatchTests
-    {
-        public Guid Id { get; set; }
-
-        public Guid MaterialBatchId { get; set; }
-        public virtual MaterialBatch MaterialBatch { get; set; }
-
-        public Guid QualityPropertyId { get; set; }
-        public virtual QualityProperty QualityProperty { get; set; }
-
-        public bool? ResultQualitative { get; set; }
-        public double? ResultQuantitative { get; set; }
-
-        public MaterialBatchTests(
-            Guid id,
-            Guid materialBatchId,
-            Guid qualityPropertyId,
-            bool? resultQualitative,
-            double? resultQuantitative
-        )
-        {
-            Id = id;
-            MaterialBatchId = materialBatchId;
-            QualityPropertyId = qualityPropertyId;
-            ResultQualitative = resultQualitative;
-            ResultQuantitative = resultQuantitative;
-        }
-    }
 }

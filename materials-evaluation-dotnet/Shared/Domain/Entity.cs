@@ -8,7 +8,7 @@ namespace MaterialsEvaluation.Shared.Domain
 
         public IReadOnlyCollection<DomainEvent>? DomainEvents => _domainEvents?.AsReadOnly();
 
-        public Entity()
+        protected Entity()
         {
             Id = Guid.NewGuid();
             _domainEvents = new List<DomainEvent>();

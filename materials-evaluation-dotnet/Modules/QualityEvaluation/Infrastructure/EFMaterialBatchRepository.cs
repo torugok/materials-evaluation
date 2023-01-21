@@ -53,25 +53,23 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
                         Enum.Parse<CalculationType>(rawItem.QualityVision.AvaliationCalculationType)
                     ),
                     rawItem.QualityVision.QualityVisionProperties != null
-                        ? rawItem.QualityVision.QualityVisionProperties
-                            .Select(
-                                o =>
-                                    new QualityProperty
-                                    {
-                                        Id = o.QualityProperty.Id,
-                                        Acronym = o.QualityProperty.Acronym,
-                                        Description = o.QualityProperty.Description,
-                                        Type = o.QualityProperty.Type,
-                                        QuantitativeParams = new QuantitativeParams(
-                                            o.QualityProperty.QuantitativeDecimals,
-                                            o.QualityProperty.QuantitativeUnit,
-                                            o.QualityProperty.QuantitativeNominalValue,
-                                            o.QualityProperty.QuantitativeInferiorLimit,
-                                            o.QualityProperty.QuantitativeSuperiorLimit
-                                        )
-                                    }
-                            )
-                            .ToList()
+                        ? rawItem.QualityVision.QualityVisionProperties.ConvertAll(
+                            o =>
+                                new QualityProperty
+                                {
+                                    Id = o.QualityProperty.Id,
+                                    Acronym = o.QualityProperty.Acronym,
+                                    Description = o.QualityProperty.Description,
+                                    Type = Enum.Parse<PropertyTypes>(o.QualityProperty.Type),
+                                    QuantitativeParams = new QuantitativeParams(
+                                        o.QualityProperty.QuantitativeDecimals,
+                                        o.QualityProperty.QuantitativeUnit,
+                                        o.QualityProperty.QuantitativeNominalValue,
+                                        o.QualityProperty.QuantitativeInferiorLimit,
+                                        o.QualityProperty.QuantitativeSuperiorLimit
+                                    )
+                                }
+                        )
                         : new List<QualityProperty>()
                 ),
                 rawItem.CreatedAt,
@@ -108,7 +106,8 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
                                     materialBatch.Id,
                                     o.QualityPropertyId,
                                     o.ResultQualitative,
-                                    o.ResultQuantitative
+                                    o.ResultQuantitative,
+                                    o.Result
                                 )
                         )
                     );

@@ -36,6 +36,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
                     "Operação não permitida! A visão de qualidade pertencer ao material."
                 );
             }
+
             Id = id;
             Material = material;
             QualityVision = qualityVision;
@@ -62,6 +63,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
                     "Operação não permitida! A visão de qualidade pertencer ao material."
                 );
             }
+
             Material = material;
             QualityVision = qualityVision;
             CreatedAt = createdAt;
@@ -94,6 +96,8 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
 
         public void CheckTests()
         {
+            Status = Status.InRange;
+
             // TODO: refatorar para usar business Rules
             if (AmountOfTests >= QualityVision.AvaliationMethodology.MinQuantity)
             {
@@ -103,13 +107,16 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
                     {
                         if (qualityProperty.Id == test.QualityPropertyId)
                         {
-                            if (qualityProperty.Type == "Quantitative") //FIXME: usar enum
+                            if (qualityProperty.Type == PropertyTypes.Quantitative)
                             {
                                 if (
-                                    test.ResultQuantitative
-                                        < qualityProperty.QuantitativeParams.InferiorLimit
-                                    || test.ResultQuantitative
-                                        > qualityProperty.QuantitativeParams.SuperiorLimit
+                                    qualityProperty.QuantitativeParams == null
+                                    || (
+                                        test.ResultQuantitative
+                                            < qualityProperty.QuantitativeParams.InferiorLimit
+                                        || test.ResultQuantitative
+                                            > qualityProperty.QuantitativeParams.SuperiorLimit
+                                    )
                                 )
                                 {
                                     test.Result = false;
@@ -117,7 +124,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
                                     return;
                                 }
                             }
-                            else if (qualityProperty.Type == "Qualitative")
+                            else if (qualityProperty.Type == PropertyTypes.Qualitative)
                             {
                                 if (test.ResultQualitative == false)
                                 {
@@ -129,8 +136,6 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
                         }
                     }
                 }
-
-                Status = Status.InRange;
             }
         }
     }
