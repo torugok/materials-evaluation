@@ -5,6 +5,9 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>MaterialsEvaluation</RootNamespace>
+    <OutputPath>./../materials-evaluation-build/$(ProjectName)/bin/$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>./../materials-evaluation-build/$(ProjectName)/obj</BaseIntermediateOutputPath>
+    <BaseOutputPath>./../materials-evaluation-build</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
