@@ -13,7 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MaterialDialogComponent } from './views/materials/material-dialog/material-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
@@ -35,7 +35,9 @@ import { QualityVisionDialogComponent } from './views/quality-visions/quality-vi
 import { BatchesComponent } from './views/batches/batches.component';
 import { BatchDialogComponent } from './views/batches/batch-dialog/batch-dialog.component';
 import { AddTestDialogComponent } from './views/batches/add-test/add-test-dialog.component';
-
+import { ErrorDialogComponent } from './shared/error-dialog/error-dialog.component';
+import { ErrorDialogService } from './shared/error-dialog/error-dialog.service';
+import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,7 +75,15 @@ import { AddTestDialogComponent } from './views/batches/add-test/add-test-dialog
     MatMenuModule,
     MatSelectModule,
   ],
-  providers: [],
+  providers: [
+    ErrorDialogService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpConfigInterceptor,
+      multi: true,
+    },
+  ],
+  entryComponents: [ErrorDialogComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

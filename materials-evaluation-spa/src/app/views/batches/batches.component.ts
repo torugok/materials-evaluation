@@ -8,7 +8,6 @@ import { convertToLocaleString } from 'src/app/shared/utils/Dates';
 import { AddTestDialogComponent } from './add-test/add-test-dialog.component';
 import { TestResult } from 'src/app/models/QualityVision';
 import { Translations } from 'src/app/shared/utils/Translations';
-import { handleApiErrors } from 'src/app/shared/utils/Errors';
 
 @Component({
   selector: 'app-batches',
@@ -35,20 +34,15 @@ export class BatchesComponent {
   translations: typeof Translations;
 
   constructor(public dialog: MatDialog, public batchService: BatchService) {
-    this.batchService.getAll().subscribe(
-      (data: Batch[]) => {
-        this.dataSource = data;
-        // convert timezone
-        this.dataSource.forEach((Batch, index) => {
-          this.dataSource[index].createdAt = convertToLocaleString(
-            Batch.createdAt
-          );
-        });
-      },
-      (err) => {
-        handleApiErrors(err);
-      }
-    );
+    this.batchService.getAll().subscribe((data: Batch[]) => {
+      this.dataSource = data;
+      // convert timezone
+      this.dataSource.forEach((Batch, index) => {
+        this.dataSource[index].createdAt = convertToLocaleString(
+          Batch.createdAt
+        );
+      });
+    });
     this.translations = Translations;
   }
 
@@ -74,39 +68,22 @@ export class BatchesComponent {
           //   });
         } else {
           // criação
-          this.batchService.add(result).subscribe(
-            (data: Batch) => {
-              this.batchService.get(data.id).subscribe(
-                (data: Batch) => {
-                  data.createdAt = convertToLocaleString(data.createdAt);
-                  this.dataSource.push(data);
-                  this.table.renderRows();
-                },
-                (err) => {
-                  handleApiErrors(err);
-                }
-              );
-            },
-            (err) => {
-              handleApiErrors(err);
-            }
-          );
+          this.batchService.add(result).subscribe((data: Batch) => {
+            this.batchService.get(data.id).subscribe((data: Batch) => {
+              data.createdAt = convertToLocaleString(data.createdAt);
+              this.dataSource.push(data);
+              this.table.renderRows();
+            });
+          });
         }
       }
     });
   }
 
   onDelete(id: string): void {
-    this.batchService.delete(id).subscribe(
-      (data: any) => {
-        this.dataSource = this.dataSource.filter(
-          (element) => element.id !== id
-        );
-      },
-      (err) => {
-        handleApiErrors(err);
-      }
-    );
+    this.batchService.delete(id).subscribe((data: any) => {
+      this.dataSource = this.dataSource.filter((element) => element.id !== id);
+    });
   }
 
   onAddTest(Batch: Batch) {
@@ -115,25 +92,15 @@ export class BatchesComponent {
     });
 
     dialogRef.afterClosed().subscribe((result: TestResult[]) => {
-      this.batchService.addTest(Batch.id, result).subscribe(
-        (data: any) => {
-          Batch.amountOfTests++;
-        },
-        (err) => {
-          handleApiErrors(err);
-        }
-      );
+      this.batchService.addTest(Batch.id, result).subscribe((data: any) => {
+        Batch.amountOfTests++;
+      });
     });
   }
 
   onCheckTests(Batch: Batch) {
-    this.batchService.checkTests(Batch.id).subscribe(
-      (data: any) => {
-        Batch.amountOfTests++;
-      },
-      (err: any) => {
-        handleApiErrors(err);
-      }
-    );
+    this.batchService.checkTests(Batch.id).subscribe((data: any) => {
+      Batch.amountOfTests++;
+    });
   }
 }

@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { QualityProperty, QualityVision } from 'src/app/models/QualityVision';
 import { QualityVisionService } from 'src/app/services/QualityVision.service';
-import { handleApiErrors } from 'src/app/shared/utils/Errors';
 import { QualityVisionDialogComponent } from './quality-vision-dialog/quality-vision.component';
 
 @Component({
@@ -26,14 +25,9 @@ export class QualityVisionsComponent {
     public dialog: MatDialog,
     public qualityVisionService: QualityVisionService
   ) {
-    this.qualityVisionService.getAll().subscribe(
-      (data: QualityVision[]) => {
-        this.dataSource = data;
-      },
-      (err) => {
-        handleApiErrors(err);
-      }
-    );
+    this.qualityVisionService.getAll().subscribe((data: QualityVision[]) => {
+      this.dataSource = data;
+    });
   }
 
   openDialog(qualityVision: QualityVision | null): void {
@@ -60,31 +54,19 @@ export class QualityVisionsComponent {
           //   });
         } else {
           // criação
-          this.qualityVisionService.add(result).subscribe(
-            () => {
-              this.dataSource.push(result);
-              this.table.renderRows();
-            },
-            (err) => {
-              handleApiErrors(err);
-            }
-          );
+          this.qualityVisionService.add(result).subscribe(() => {
+            this.dataSource.push(result);
+            this.table.renderRows();
+          });
         }
       }
     });
   }
 
   onDelete(id: string): void {
-    this.qualityVisionService.delete(id).subscribe(
-      (data: any) => {
-        this.dataSource = this.dataSource.filter(
-          (element) => element.id !== id
-        );
-      },
-      (err) => {
-        handleApiErrors(err);
-      }
-    );
+    this.qualityVisionService.delete(id).subscribe((data: any) => {
+      this.dataSource = this.dataSource.filter((element) => element.id !== id);
+    });
   }
 
   // FIXME: descomentar para adicionar a edição
