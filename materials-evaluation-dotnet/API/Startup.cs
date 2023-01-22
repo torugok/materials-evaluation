@@ -1,8 +1,8 @@
+using System.Globalization;
 using System.Text.Json.Serialization;
 using Autofac;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using MaterialsEvaluation.Database;
 using MaterialsEvaluation.Middlewares;
 using MaterialsEvaluation.Modules.QualityEvaluation;
@@ -57,8 +57,8 @@ namespace MaterialsEvaluation
                 opt => opt.UseSqlite("Data Source=materials-evaluation.db") // HACK: utilizar SQL Server
             );
 
-            services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssemblyContaining<CreateQualityVisionValidator>();
+            ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("pt-BR");
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
