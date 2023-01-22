@@ -1,12 +1,9 @@
-using System.Globalization;
 using System.Text.Json.Serialization;
 using Autofac;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
-using FluentValidation;
 using MaterialsEvaluation.Database;
 using MaterialsEvaluation.Middlewares;
 using MaterialsEvaluation.Modules.QualityEvaluation;
-using MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 
@@ -56,9 +53,6 @@ namespace MaterialsEvaluation
             services.AddDbContext<DatabaseContext>(
                 opt => opt.UseSqlite("Data Source=materials-evaluation.db") // HACK: utilizar SQL Server
             );
-
-            services.AddValidatorsFromAssemblyContaining<CreateQualityVisionValidator>();
-            ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("pt-BR");
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
