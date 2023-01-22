@@ -99,8 +99,6 @@ export class BatchesComponent {
   }
 
   onCheckTests(Batch: Batch) {
-    this.batchService.checkTests(Batch.id).subscribe((data: any) => {
-      Batch.amountOfTests++;
-    });
+    this.batchService.checkTests(Batch.id).subscribe((data: any) => {});
   }
 }
