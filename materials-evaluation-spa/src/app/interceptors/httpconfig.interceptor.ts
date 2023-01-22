@@ -24,11 +24,22 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         return event;
       }),
       catchError((error: HttpErrorResponse) => {
+        var message: any = '';
+        if (error.error.message !== undefined) {
+          message = error.error.message;
+        } else if (error.error.errors !== undefined) {
+          // trata erros Fluent Validation
+          Object.entries(error.error.errors).forEach((entry) => {
+            const [key, value] = entry;
+            //@ts-ignore
+            if (value.length > 0) {
+              //@ts-ignore
+              message = value[0];
+            }
+          });
+        }
         this.errorDialogService.openDialog({
-          message:
-            error && error.error && error.error.message
-              ? error.error.message
-              : '',
+          message: message,
           status: error.status,
         });
         return throwError(error);
