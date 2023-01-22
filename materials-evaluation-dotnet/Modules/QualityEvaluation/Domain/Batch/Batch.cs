@@ -98,44 +98,55 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
         {
             Status = Status.InRange;
 
-            // TODO: refatorar para usar business Rules
             if (AmountOfTests >= QualityVision.AvaliationMethodology.MinQuantity)
             {
                 foreach (Test test in Tests)
                 {
-                    foreach (QualityProperty qualityProperty in QualityVision.QualityProperties)
+                    switch (test.QualityProperty.Type)
                     {
-                        if (qualityProperty.Id == test.QualityPropertyId)
-                        {
-                            if (qualityProperty.Type == PropertyTypes.Quantitative)
-                            {
-                                if (
-                                    qualityProperty.QuantitativeParams == null
-                                    || (
-                                        test.ResultQuantitative
-                                            < qualityProperty.QuantitativeParams?.InferiorLimit
-                                        || test.ResultQuantitative
-                                            > qualityProperty.QuantitativeParams?.SuperiorLimit
-                                    )
-                                )
-                                {
-                                    test.Passed = false;
-                                    Status = Status.OutOfRange;
-                                    return;
-                                }
-                            }
-                            else if (qualityProperty.Type == PropertyTypes.Qualitative)
-                            {
-                                if (test.ResultQualitative == false)
-                                {
-                                    test.Passed = false;
-                                    Status = Status.OutOfRange;
-                                    return;
-                                }
-                            }
-                        }
+                        case PropertyTypes.Quantitative:
+                            CheckQuantitativeTest(test);
+                            break;
+                        case PropertyTypes.Qualitative:
+                            CheckQualitativeTest(test);
+                            break;
+                        default:
+                            throw new Exception("Tipo de característica não implementado");
                     }
                 }
+            }
+        }
+
+        private void CheckQuantitativeTest(Test test)
+        {
+            if (
+                test.QualityProperty.QuantitativeParams == null
+                || (
+                    test.ResultQuantitative < test.QualityProperty.QuantitativeParams?.InferiorLimit
+                    || test.ResultQuantitative
+                        > test.QualityProperty.QuantitativeParams?.SuperiorLimit
+                )
+            )
+            {
+                test.Passed = false;
+                Status = Status.OutOfRange;
+            }
+            else
+            {
+                test.Passed = true;
+            }
+        }
+
+        private void CheckQualitativeTest(Test test)
+        {
+            if (test.ResultQualitative == false)
+            {
+                test.Passed = false;
+                Status = Status.OutOfRange;
+            }
+            else
+            {
+                test.Passed = true;
             }
         }
     }

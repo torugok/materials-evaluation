@@ -25,12 +25,25 @@ namespace MaterialsEvaluation.Middlewares
                 var response = context.Response;
                 response.ContentType = "application/json";
 
-                response.StatusCode = error switch
+                switch (error)
                 {
-                    BusinessException => (int)HttpStatusCode.BadRequest,
-                    NotFoundException => (int)HttpStatusCode.NotFound,
-                    _ => (int)HttpStatusCode.InternalServerError, // unhandled error
-                };
+                    case BusinessException:
+                        // custom application error
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        break;
+                    case NotFoundException:
+                        // not found error
+                        response.StatusCode = (int)HttpStatusCode.NotFound;
+                        break;
+                    default:
+                        // unhandled error
+                        Console.WriteLine(error);
+
+                        // TODO: enviar erros para o Sentry
+                        response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        break;
+                }
+
                 var result = JsonSerializer.Serialize(new { message = error?.Message });
                 await response.WriteAsync(result);
             }

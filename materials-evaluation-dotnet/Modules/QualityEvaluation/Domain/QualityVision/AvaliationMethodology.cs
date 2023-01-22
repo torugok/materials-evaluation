@@ -1,3 +1,5 @@
+using MaterialsEvaluation.Shared.Domain;
+
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
 {
     public enum Grouping
@@ -27,6 +29,11 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
             CalculationType calculatiorType
         )
         {
+            if (MinQuantity < 1)
+            {
+                throw new BusinessException("A quantidade mínima de ensaios é 1, verifique!");
+            }
+
             MinQuantity = minQuantity;
             Grouping = grouping;
             CalculationType = calculatiorType;

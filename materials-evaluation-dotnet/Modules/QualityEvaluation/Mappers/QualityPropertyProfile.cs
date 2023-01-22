@@ -82,6 +82,14 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Mappers
                 .ForMember(d => d.Id, op => op.MapFrom(o => o.QualityProperty.Id));
 
             CreateProjection<Database.QualityProperty, Domain.QualityProperty>()
+                .ForCtorParam(
+                    nameof(Domain.QualityProperty.Type),
+                    m => m.MapFrom(x => Enum.Parse<Domain.PropertyTypes>(x.Type))
+                )
+                .ForMember(
+                    d => d.Type,
+                    op => op.MapFrom(o => Enum.Parse<Domain.PropertyTypes>(o.Type))
+                )
                 .ForMember(
                     d => d.QuantitativeParams,
                     op =>

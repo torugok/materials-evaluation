@@ -4,12 +4,16 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
 {
     public class Test : Entity
     {
-        public Guid QualityPropertyId { get; set; }
+        public QualityProperty QualityProperty { get; set; }
         public bool? ResultQualitative { get; set; }
         public double? ResultQuantitative { get; set; }
         public bool? Passed { get; set; }
 
-        public Test(Guid qualityPropertyId, bool? resultQualitative, double? resultQuantitative)
+        public Test(
+            QualityProperty qualityProperty,
+            bool? resultQualitative,
+            double? resultQuantitative
+        )
         {
             if (resultQualitative == null && resultQuantitative == null)
             {
@@ -18,7 +22,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
                 );
             }
 
-            QualityPropertyId = qualityPropertyId;
+            QualityProperty = qualityProperty;
             ResultQualitative = resultQualitative;
             ResultQuantitative = resultQuantitative;
         }

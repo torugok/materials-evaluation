@@ -1,3 +1,5 @@
+using MaterialsEvaluation.Shared.Domain;
+
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
 {
     public readonly struct QuantitativeParams
@@ -22,6 +24,13 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
             double superiorLimit
         )
         {
+            if (inferiorLimit > superiorLimit)
+            {
+                throw new BusinessException(
+                    "Limite inferior deve ser maior que o limite superior!"
+                );
+            }
+
             Decimals = decimals;
             Unit = unit;
             NominalValue = nominalValue;
