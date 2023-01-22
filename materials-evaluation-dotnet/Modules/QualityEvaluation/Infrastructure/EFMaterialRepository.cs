@@ -38,7 +38,11 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
 
         public async Task Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var material = await _context.Materials.FindAsync(id);
+            if (material != null)
+            {
+                _context.Materials.Remove(material);
+            }
         }
     }
 }
