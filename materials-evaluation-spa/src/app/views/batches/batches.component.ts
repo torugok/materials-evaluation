@@ -93,9 +93,11 @@ export class BatchesComponent {
     });
 
     dialogRef.afterClosed().subscribe((result: TestResult[]) => {
-      this.batchService.addTest(batch.id, result).subscribe((data: any) => {
-        batch.amountOfTests++;
-      });
+      if (result !== undefined) {
+        this.batchService.addTest(batch.id, result).subscribe((data: any) => {
+          batch.amountOfTests++;
+        });
+      }
     });
   }
 
