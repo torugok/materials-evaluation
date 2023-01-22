@@ -1,3 +1,4 @@
+import { Status } from './../models/Batch';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Batch } from '../models/Batch';
@@ -31,8 +32,8 @@ export class BatchService {
     return this.http.get<Batch[]>(this.BatchesUrl);
   }
 
-  checkTests(id: string): Observable<any> {
-    return this.http.post<any>(`${this.BatchesUrl}/${id}/check-tests`, {});
+  checkTests(id: string): Observable<Status> {
+    return this.http.post<Status>(`${this.BatchesUrl}/${id}/check-tests`, {});
   }
 
   delete(id: string): Observable<any> {

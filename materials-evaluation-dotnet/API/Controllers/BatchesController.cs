@@ -1,5 +1,6 @@
 using MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands;
 using MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries;
+using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,7 +44,7 @@ namespace MaterialsEvaluation.API_Controllers
         }
 
         [HttpPost("{id}/check-tests")]
-        public async Task<ActionResult<Guid>> CheckTests(Guid id)
+        public async Task<ActionResult<Status>> CheckTests(Guid id)
         {
             return await _mediator.Send(new CheckTestsCommand(id));
         }

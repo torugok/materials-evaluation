@@ -4,7 +4,7 @@ using MediatR;
 
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
 {
-    public class CheckTestsCommandHandler : IRequestHandler<CheckTestsCommand, Guid>
+    public class CheckTestsCommandHandler : IRequestHandler<CheckTestsCommand, Status>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -13,7 +13,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Guid> Handle(
+        public async Task<Status> Handle(
             CheckTestsCommand request,
             CancellationToken cancellationToken
         )
@@ -29,7 +29,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
             await _unitOfWork.BatchRepository.Update(batch);
             await _unitOfWork.Commit(cancellationToken);
 
-            return batch.Id;
+            return batch.Status;
         }
     }
 }

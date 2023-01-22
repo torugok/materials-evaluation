@@ -1,3 +1,4 @@
+import { Status } from './../../models/Batch';
 import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
@@ -37,19 +38,19 @@ export class BatchesComponent {
     this.batchService.getAll().subscribe((data: Batch[]) => {
       this.dataSource = data;
       // convert timezone
-      this.dataSource.forEach((Batch, index) => {
+      this.dataSource.forEach((batch, index) => {
         this.dataSource[index].createdAt = convertToLocaleString(
-          Batch.createdAt
+          batch.createdAt
         );
       });
     });
     this.translations = Translations;
   }
 
-  openDialog(Batch: Batch | null): void {
+  openDialog(batch: Batch | null): void {
     const dialogRef = this.dialog.open(BatchDialogComponent, {
       // TODO: adicionar a edição corretamente
-      data: Batch === null ? { id: null } : { id: Batch.id },
+      data: batch === null ? { id: null } : { id: batch.id },
     });
 
     dialogRef.afterClosed().subscribe((result: Batch) => {
@@ -86,19 +87,21 @@ export class BatchesComponent {
     });
   }
 
-  onAddTest(Batch: Batch) {
+  onAddTest(batch: Batch) {
     const dialogRef = this.dialog.open(AddTestDialogComponent, {
-      data: { ...Batch },
+      data: { ...batch },
     });
 
     dialogRef.afterClosed().subscribe((result: TestResult[]) => {
-      this.batchService.addTest(Batch.id, result).subscribe((data: any) => {
-        Batch.amountOfTests++;
+      this.batchService.addTest(batch.id, result).subscribe((data: any) => {
+        batch.amountOfTests++;
       });
     });
   }
 
-  onCheckTests(Batch: Batch) {
-    this.batchService.checkTests(Batch.id).subscribe((data: any) => {});
+  onCheckTests(batch: Batch) {
+    this.batchService.checkTests(batch.id).subscribe((data: Status) => {
+      batch.status = data;
+    });
   }
 }
