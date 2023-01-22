@@ -12,9 +12,9 @@ import { QualityVisionService } from 'src/app/services/QualityVision.service';
 import { handleApiErrors } from 'src/app/shared/utils/Errors';
 
 @Component({
-  selector: 'app-material-batch-dialog',
-  templateUrl: './material-batch-dialog.component.html',
-  styleUrls: ['./material-batch-dialog.component.scss'],
+  selector: 'app-batch-dialog',
+  templateUrl: './batch-dialog.component.html',
+  styleUrls: ['./batch-dialog.component.scss'],
   providers: [MaterialService, QualityVisionService],
 })
 export class BatchDialogComponent {

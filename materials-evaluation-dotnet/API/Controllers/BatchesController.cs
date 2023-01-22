@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MaterialsEvaluation.API_Controllers
 {
-    [Route("api/material-batches")]
+    [Route("api/batches")]
     [ApiController]
     public class BatchesController : ControllerBase
     {

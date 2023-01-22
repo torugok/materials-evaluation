@@ -6,7 +6,7 @@ import { TestResult } from '../models/QualityVision';
 
 @Injectable()
 export class BatchService {
-  BatchesUrl = 'http://localhost:5000/api/material-batches'; // FIXME: usar .env
+  BatchesUrl = 'http://localhost:5000/api/batches'; // FIXME: usar .env
   constructor(private http: HttpClient) {}
 
   add(batch: Batch): Observable<Batch> {

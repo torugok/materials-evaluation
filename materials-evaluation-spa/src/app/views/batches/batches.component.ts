@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { Batch } from 'src/app/models/Batch';
 import { BatchService } from 'src/app/services/Batch.service';
-import { BatchDialogComponent } from './material-batch-dialog/material-batch-dialog.component';
+import { BatchDialogComponent } from './batch-dialog/batch-dialog.component';
 import { convertToLocaleString } from 'src/app/shared/utils/Dates';
 import { AddTestDialogComponent } from './add-test/add-test-dialog.component';
 import { TestResult } from 'src/app/models/QualityVision';
@@ -11,9 +11,9 @@ import { Translations } from 'src/app/shared/utils/Translations';
 import { handleApiErrors } from 'src/app/shared/utils/Errors';
 
 @Component({
-  selector: 'app-material-batches',
-  templateUrl: './material-batches.component.html',
-  styleUrls: ['./material-batches.component.scss'],
+  selector: 'app-batches',
+  templateUrl: './batches.component.html',
+  styleUrls: ['./batches.component.scss'],
   providers: [BatchService],
 })
 export class BatchesComponent {
