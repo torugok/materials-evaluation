@@ -69,7 +69,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
                         batch.Tests.ConvertAll(
                             o =>
                                 new Database.Test(
-                                    o.Id,
+                                    Guid.NewGuid(),
                                     batch.Id,
                                     o.QualityPropertyId,
                                     o.ResultQualitative,

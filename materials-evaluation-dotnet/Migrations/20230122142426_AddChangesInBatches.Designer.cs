@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MaterialsEvaluation.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230121191330_ChangeBatchs2")]
-    partial class ChangeBatchs2
+    [Migration("20230122142426_AddChangesInBatches")]
+    partial class AddChangesInBatches
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

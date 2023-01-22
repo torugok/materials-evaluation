@@ -82,7 +82,8 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation
                                 .ForMember(
                                     d => d.Type, // FIXME: usar enum
                                     op => op.MapFrom(o => o.QualityProperty.Type)
-                                );
+                                )
+                                .ForMember(d => d.Id, op => op.MapFrom(o => o.QualityProperty.Id));
 
                             cfg.CreateProjection<Database.QualityProperty, QualityPropertyDto>()
                                 .ForMember(
@@ -217,7 +218,8 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation
                                 .ForMember(
                                     d => d.Description,
                                     op => op.MapFrom(o => o.QualityProperty.Description)
-                                );
+                                )
+                                .ForMember(d => d.Id, op => op.MapFrom(o => o.QualityProperty.Id));
                         })
                 )
                 .AsSelf()

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MaterialsEvaluation.Migrations
 {
     /// <inheritdoc />
-    public partial class ChangeBatchs : Migration
+    public partial class AddChangesInBatches : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
