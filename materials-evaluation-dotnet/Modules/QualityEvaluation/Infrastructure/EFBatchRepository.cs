@@ -71,7 +71,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
                                 new Database.Test(
                                     Guid.NewGuid(),
                                     batch.Id,
-                                    o.QualityProperty.Id,
+                                    o.QualityPropertyId,
                                     o.ResultQualitative,
                                     o.ResultQuantitative,
                                     o.Passed

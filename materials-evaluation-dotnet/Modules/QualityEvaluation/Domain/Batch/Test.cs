@@ -2,18 +2,14 @@ using MaterialsEvaluation.Shared.Domain;
 
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
 {
-    public class Test : Entity
+    public class Test : ValueObject // FIXME: o teste se encaixa melhor como entidade!
     {
-        public QualityProperty QualityProperty { get; set; }
+        public Guid QualityPropertyId { get; set; }
         public bool? ResultQualitative { get; set; }
         public double? ResultQuantitative { get; set; }
         public bool? Passed { get; set; }
 
-        public Test(
-            QualityProperty qualityProperty,
-            bool? resultQualitative,
-            double? resultQuantitative
-        )
+        public Test(Guid qualityPropertyId, bool? resultQualitative, double? resultQuantitative)
         {
             if (resultQualitative == null && resultQuantitative == null)
             {
@@ -22,7 +18,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
                 );
             }
 
-            QualityProperty = qualityProperty;
+            QualityPropertyId = qualityPropertyId;
             ResultQualitative = resultQualitative;
             ResultQuantitative = resultQuantitative;
         }

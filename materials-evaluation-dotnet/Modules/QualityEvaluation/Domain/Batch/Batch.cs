@@ -102,16 +102,22 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
             {
                 foreach (Test test in Tests)
                 {
-                    switch (test.QualityProperty.Type)
+                    foreach (QualityProperty qualityProperty in QualityVision.QualityProperties)
                     {
-                        case PropertyTypes.Quantitative:
-                            CheckQuantitativeTest(test);
-                            break;
-                        case PropertyTypes.Qualitative:
-                            CheckQualitativeTest(test);
-                            break;
-                        default:
-                            throw new Exception("Tipo de característica não implementado");
+                        if (test.QualityPropertyId == qualityProperty.Id)
+                        {
+                            switch (qualityProperty.Type)
+                            {
+                                case PropertyTypes.Quantitative:
+                                    CheckQuantitativeTest(test, qualityProperty);
+                                    break;
+                                case PropertyTypes.Qualitative:
+                                    CheckQualitativeTest(test);
+                                    break;
+                                default:
+                                    throw new Exception("Tipo de característica não implementado");
+                            }
+                        }
                     }
                 }
             }
@@ -121,14 +127,13 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
             }
         }
 
-        private void CheckQuantitativeTest(Test test)
+        private void CheckQuantitativeTest(Test test, QualityProperty qualityProperty)
         {
             if (
-                test.QualityProperty.QuantitativeParams == null
+                qualityProperty.QuantitativeParams == null
                 || (
-                    test.ResultQuantitative < test.QualityProperty.QuantitativeParams?.InferiorLimit
-                    || test.ResultQuantitative
-                        > test.QualityProperty.QuantitativeParams?.SuperiorLimit
+                    test.ResultQuantitative < qualityProperty.QuantitativeParams?.InferiorLimit
+                    || test.ResultQuantitative > qualityProperty.QuantitativeParams?.SuperiorLimit
                 )
             )
             {
