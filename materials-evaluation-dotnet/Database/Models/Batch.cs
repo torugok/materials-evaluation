@@ -15,7 +15,7 @@ namespace MaterialsEvaluation.Database
         public DateTime? CalculatedAt { get; set; }
         public string Status { get; set; }
 
-        public List<Tests> Tests { get; set; }
+        public List<Test> Tests { get; set; }
 
         public Batch(
             Guid id,

@@ -24,7 +24,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
             return await _mapper
                 .ProjectTo<BatchDto>(
                     _context.Batches
-                        .Include("QualityVision.QualityVisionProperties.QualityProperty")
+                        .Include("QualityVision.QualityProperties.QualityProperty")
                         .Include("Material")
                         .Include("Tests.QualityProperty")
                         .Where(q => q.Id == request.Id),

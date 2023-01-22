@@ -1,6 +1,6 @@
 namespace MaterialsEvaluation.Database
 {
-    public class Tests
+    public class Test
     {
         public Guid Id { get; set; }
 
@@ -15,7 +15,7 @@ namespace MaterialsEvaluation.Database
 
         public bool? Passed { get; set; }
 
-        public Tests(
+        public Test(
             Guid id,
             Guid batchId,
             Guid qualityPropertyId,

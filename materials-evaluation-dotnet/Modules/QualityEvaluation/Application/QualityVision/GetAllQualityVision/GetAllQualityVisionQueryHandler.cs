@@ -23,7 +23,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
         {
             return await _mapper
                 .ProjectTo<QualityVisionDto>(
-                    _context.QualityVisions.Include("QualityVisionProperties.QualityProperty"),
+                    _context.QualityVisions.Include("QualityProperties.QualityProperty"),
                     null
                 )
                 .ToListAsync(cancellationToken);

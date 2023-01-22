@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
 using Microsoft.EntityFrameworkCore;
@@ -40,7 +41,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
             return await _mapper
                 .ProjectTo<Batch>(
                     _context.Batches
-                        .Include("QualityVision.QualityVisionProperties.QualityProperty")
+                        .Include("QualityVision.QualityProperties.QualityProperty")
                         .Include("Material")
                         .Include("Tests.QualityProperty"),
                     null
@@ -67,7 +68,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
                     _context.Tests.BulkInsert(
                         batch.Tests.ConvertAll(
                             o =>
-                                new Database.Tests(
+                                new Database.Test(
                                     o.Id,
                                     batch.Id,
                                     o.QualityPropertyId,

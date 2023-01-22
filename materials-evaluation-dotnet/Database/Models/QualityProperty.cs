@@ -15,5 +15,5 @@ public class QualityProperty
     public double? QuantitativeInferiorLimit { get; set; }
     public double? QuantitativeSuperiorLimit { get; set; }
 
-    public List<Tests>? Tests { get; set; }
+    public List<Test>? Tests { get; set; }
 }

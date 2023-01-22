@@ -49,7 +49,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation
                             cfg.EnableEnumMappingValidation();
 
                             // Database to DTOs
-                            cfg.CreateProjection<Database.Tests, TestDto>();
+                            cfg.CreateProjection<Database.Test, TestDto>();
                             cfg.CreateProjection<Database.Material, MaterialDto>();
 
                             cfg.CreateProjection<
@@ -127,6 +127,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation
                                 );
 
                             // Database To Entities
+                            cfg.CreateProjection<Database.Test, Domain.Test>();
                             cfg.CreateProjection<Database.Material, Domain.Material>();
                             cfg.CreateProjection<Database.QualityVision, Domain.QualityVision>()
                                 .ForMember(
@@ -161,6 +162,10 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation
                                         )
                                 );
                             cfg.CreateProjection<Database.Batch, Domain.Batch>()
+                                .ForCtorParam(
+                                    nameof(Domain.Batch.Status),
+                                    m => m.MapFrom(x => Enum.Parse<Domain.Status>(x.Status))
+                                )
                                 .ForMember(
                                     d => d.Status,
                                     op => op.MapFrom(o => Enum.Parse<Domain.Status>(o.Status))
@@ -212,10 +217,6 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation
                                 .ForMember(
                                     d => d.Description,
                                     op => op.MapFrom(o => o.QualityProperty.Description)
-                                )
-                                .ForMember(
-                                    d => d.Type, // FIXME: usar enum
-                                    op => op.MapFrom(o => o.QualityProperty.Type)
                                 );
                         })
                 )

@@ -54,7 +54,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
             return await _mapper
                 .ProjectTo<QualityVision>(
                     _context.QualityVisions
-                        .Include("QualityVisionProperties.QualityProperty")
+                        .Include("QualityProperties.QualityProperty")
                         .Where(q => q.Id == id)
                 )
                 .FirstOrDefaultAsync();

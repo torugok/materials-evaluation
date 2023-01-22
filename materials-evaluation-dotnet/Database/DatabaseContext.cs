@@ -10,7 +10,7 @@ public class DatabaseContext : DbContext
     public DbSet<QualityVisionProperties> QualityVisionProperties { get; set; } = null!;
 
     public DbSet<Batch> Batches { get; set; } = null!;
-    public DbSet<Tests> Tests { get; set; } = null!;
+    public DbSet<Test> Tests { get; set; } = null!;
 
     public DatabaseContext(DbContextOptions<DatabaseContext> options)
         : base(options)
@@ -33,14 +33,14 @@ public class DatabaseContext : DbContext
             .OnDelete(DeleteBehavior.NoAction);
 
         modelBuilder
-            .Entity<Tests>()
+            .Entity<Test>()
             .HasOne(e => e.Batch)
             .WithMany(e => e.Tests)
             .HasForeignKey(c => c.BatchId)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder
-            .Entity<Tests>()
+            .Entity<Test>()
             .HasOne(e => e.QualityProperty)
             .WithMany(e => e.Tests)
             .HasForeignKey(c => c.QualityPropertyId)
