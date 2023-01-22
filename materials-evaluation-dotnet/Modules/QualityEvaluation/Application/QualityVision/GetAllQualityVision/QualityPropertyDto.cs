@@ -9,7 +9,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
 
         public string Description { get; set; }
 
-        public string Type { get; set; }
+        public PropertyTypes Type { get; set; }
 
         public QuantitativeParams? QuantitativeParams { get; set; }
 
@@ -19,7 +19,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
             Guid id,
             string acronym,
             string description,
-            string type,
+            PropertyTypes type,
             QuantitativeParams? quantitativeParams
         )
         {
