@@ -31,7 +31,9 @@ namespace MaterialsEvaluation.API_Controllers
             {
                 if (exception is DbUpdateException || exception is BusinessException)
                 {
-                    return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
+                    return BadRequest(
+                      new Error(exception.Message) // FIXME: melhorar tratamento de erros de banco
+                    ); 
                 }
 
                 throw;

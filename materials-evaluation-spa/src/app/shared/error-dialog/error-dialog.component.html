@@ -1,10 +1,9 @@
-<div>
-      <div>
-          <p>
-              Reason: {{data.reason}}
-          </p>
-          <p>
-              Status: {{data.status}}
-          </p>
-      </div>
-  </div>
+<h1 mat-dialog-title>Erro!</h1>
+<div mat-dialog-content>
+  {{ data.message }}
+</div>
+<div mat-dialog-actions>
+  <button class="action-buttons" mat-button mat-dialog-close cdkFocusInitial>
+    Ok
+  </button>
+</div>

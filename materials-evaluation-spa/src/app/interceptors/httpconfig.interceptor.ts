@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
   HttpRequest,
-  HttpResponse,
   HttpHandler,
   HttpEvent,
   HttpErrorResponse,
@@ -25,15 +24,13 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         return event;
       }),
       catchError((error: HttpErrorResponse) => {
-        let data = {};
-        data = {
-          reason:
-            error && error.error && error.error.reason
-              ? error.error.reason
+        this.errorDialogService.openDialog({
+          message:
+            error && error.error && error.error.message
+              ? error.error.message
               : '',
           status: error.status,
-        };
-        this.errorDialogService.openDialog(data);
+        });
         return throwError(error);
       })
     );

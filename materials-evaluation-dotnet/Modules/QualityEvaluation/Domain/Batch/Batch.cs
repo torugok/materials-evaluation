@@ -33,7 +33,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
             if (qualityVision.MaterialId != material.Id)
             {
                 throw new BusinessException(
-                    "Operação não permitida! A visão de qualidade pertencer ao material."
+                    "Operação não permitida! A visão de qualidade deve pertencer ao material."
                 );
             }
 
@@ -60,7 +60,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
             if (qualityVision.MaterialId != material.Id)
             {
                 throw new BusinessException(
-                    "Operação não permitida! A visão de qualidade pertencer ao material."
+                    "Operação não permitida! A visão de qualidade deve pertencer ao material."
                 );
             }
 

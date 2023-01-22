@@ -53,6 +53,7 @@ import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
     BatchesComponent,
     BatchDialogComponent,
     AddTestDialogComponent,
+    ErrorDialogComponent,
   ],
   imports: [
     BrowserModule,
