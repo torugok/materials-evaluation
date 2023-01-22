@@ -102,22 +102,24 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
             {
                 foreach (Test test in Tests)
                 {
-                    foreach (QualityProperty qualityProperty in QualityVision.QualityProperties)
+                    var qualityProperty = GetQualityPropertyByTest(test);
+                    if (qualityProperty == null)
                     {
-                        if (test.QualityPropertyId == qualityProperty.Id)
-                        {
-                            switch (qualityProperty.Type)
-                            {
-                                case PropertyTypes.Quantitative:
-                                    CheckQuantitativeTest(test, qualityProperty);
-                                    break;
-                                case PropertyTypes.Qualitative:
-                                    CheckQualitativeTest(test);
-                                    break;
-                                default:
-                                    throw new Exception("Tipo de característica não implementado");
-                            }
-                        }
+                        throw new BusinessException(
+                            "Teste não tem uma característica de qualidade associada!"
+                        );
+                    }
+
+                    switch (qualityProperty.Type)
+                    {
+                        case PropertyTypes.Quantitative:
+                            CheckQuantitativeTest(test, qualityProperty);
+                            break;
+                        case PropertyTypes.Qualitative:
+                            CheckQualitativeTest(test);
+                            break;
+                        default:
+                            throw new Exception("Tipo de característica não implementado");
                     }
                 }
             }
@@ -157,6 +159,18 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
             {
                 test.Passed = true;
             }
+        }
+
+        private QualityProperty? GetQualityPropertyByTest(Test test)
+        {
+            foreach (QualityProperty qualityProperty in QualityVision.QualityProperties)
+            {
+                if (test.QualityPropertyId == qualityProperty.Id)
+                {
+                    return qualityProperty;
+                }
+            }
+            return null;
         }
     }
 }
