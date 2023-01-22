@@ -21,43 +21,20 @@ namespace MaterialsEvaluation.API_Controllers
         [HttpPost]
         public async Task<ActionResult<Guid>> PostQualityVision(CreateQualityVisionCommand command)
         {
-            try
-            {
-                var response = await _mediator.Send(command);
-                return CreatedAtAction(nameof(PostQualityVision), new CreatedEntity(response));
-            }
-            catch (DbUpdateException exception)
-            {
-                return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
-            }
+            var response = await _mediator.Send(command);
+            return CreatedAtAction(nameof(PostQualityVision), new CreatedEntity(response));
         }
 
         [HttpGet]
         public async Task<ActionResult<List<QualityVisionDto>>> GetQualityVision()
         {
-            try
-            {
-                var response = await _mediator.Send(new GetAllQualityVisionQuery());
-                return response;
-            }
-            catch (DbUpdateException exception)
-            {
-                return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
-            }
+            return await _mediator.Send(new GetAllQualityVisionQuery());
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<Guid>> DeleteQualityVision(Guid id)
         {
-            try
-            {
-                var response = await _mediator.Send(new DeleteQualityVisionCommand(id));
-                return response;
-            }
-            catch (DbUpdateException exception)
-            {
-                return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
-            }
+            return await _mediator.Send(new DeleteQualityVisionCommand(id));
         }
     }
 }

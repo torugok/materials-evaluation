@@ -4,6 +4,7 @@ using AutoMapper.Contrib.Autofac.DependencyInjection;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MaterialsEvaluation.Database;
+using MaterialsEvaluation.Middlewares;
 using MaterialsEvaluation.Modules.QualityEvaluation;
 using MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands;
 using MediatR.Extensions.Autofac.DependencyInjection;
@@ -87,6 +88,9 @@ namespace MaterialsEvaluation
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // global error handler
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }

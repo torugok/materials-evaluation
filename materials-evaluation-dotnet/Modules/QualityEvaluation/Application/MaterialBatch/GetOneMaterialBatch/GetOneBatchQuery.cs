@@ -2,7 +2,7 @@ using MediatR;
 
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
 {
-    public class GetOneBatchQuery : IRequest<BatchDto?>
+    public class GetOneBatchQuery : IRequest<BatchDto>
     {
         public Guid Id { get; set; }
 

@@ -1,9 +1,7 @@
 using MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands;
 using MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries;
-using MaterialsEvaluation.Shared.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace MaterialsEvaluation.API_Controllers
 {
@@ -22,96 +20,39 @@ namespace MaterialsEvaluation.API_Controllers
         [HttpPost]
         public async Task<ActionResult<Guid>> PostBatch(CreateBatchCommand command)
         {
-            try
-            {
-                var response = await _mediator.Send(command);
-                return CreatedAtAction(nameof(PostBatch), new CreatedEntity(response));
-            }
-            catch (Exception exception)
-            {
-                if (exception is DbUpdateException || exception is BusinessException)
-                {
-                    return BadRequest(
-                      new Error(exception.Message) // FIXME: melhorar tratamento de erros de banco
-                    ); 
-                }
-
-                throw;
-            }
+            var response = await _mediator.Send(command);
+            return CreatedAtAction(nameof(PostBatch), new CreatedEntity(response));
         }
 
         [HttpGet]
         public async Task<ActionResult<List<BatchDto>>> GetBatch()
         {
-            try
-            {
-                var response = await _mediator.Send(new GetAllBatchesQuery());
-                return response;
-            }
-            catch (DbUpdateException exception)
-            {
-                return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
-            }
+            return await _mediator.Send(new GetAllBatchesQuery());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<BatchDto>> GetOneBatch(Guid id)
         {
-            try
-            {
-                var response = await _mediator.Send(new GetOneBatchQuery(id));
-                return response ?? (ActionResult<BatchDto>)NotFound();
-            }
-            catch (DbUpdateException exception)
-            {
-                return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
-            }
+            return await _mediator.Send(new GetOneBatchQuery(id));
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<Guid>> DeleteBatch(Guid id)
         {
-            try
-            {
-                return await _mediator.Send(new DeleteBatchCommand(id));
-            }
-            catch (DbUpdateException exception)
-            {
-                return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
-            }
+            return await _mediator.Send(new DeleteBatchCommand(id));
         }
 
         [HttpPost("{id}/check-tests")]
         public async Task<ActionResult<Guid>> CheckTests(Guid id)
         {
-            try
-            {
-                var response = await _mediator.Send(new CheckTestsCommand(id));
-                return response;
-            }
-            catch (DbUpdateException exception)
-            {
-                return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
-            }
+            return await _mediator.Send(new CheckTestsCommand(id));
         }
 
         [HttpPut("{id}/add-test")]
         public async Task<ActionResult<CreatedEntity>> AddTest(AddTestToBatchCommand command)
         {
-            try
-            {
-                var response = await _mediator.Send(command);
-                return new CreatedEntity(response);
-            }
-            catch (Exception exception)
-            {
-                if (exception is DbUpdateException || exception is BusinessException)
-                {
-                    return BadRequest(exception.ToString()); // FIXME: melhorar tratamento de erros de banco
-                }
-
-                throw;
-            }
+            var response = await _mediator.Send(command);
+            return new CreatedEntity(response);
         }
     }
 }
