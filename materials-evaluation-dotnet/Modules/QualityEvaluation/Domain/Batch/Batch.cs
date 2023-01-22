@@ -115,6 +115,10 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
                     }
                 }
             }
+            else
+            {
+                throw new BusinessException("Ensaios mínimos necessários não adicionados!");
+            }
         }
 
         private void CheckQuantitativeTest(Test test)
