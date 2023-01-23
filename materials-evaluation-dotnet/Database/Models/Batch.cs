@@ -1,3 +1,5 @@
+using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
+
 namespace MaterialsEvaluation.Database
 {
     public class Batch

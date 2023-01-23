@@ -1,3 +1,5 @@
+using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
+using MaterialsEvaluation.Shared.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace MaterialsEvaluation.Database;
@@ -45,5 +47,8 @@ public class DatabaseContext : DbContext
             .WithMany(e => e.Tests)
             .HasForeignKey(c => c.QualityPropertyId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        // Mapping Domain to EF
+        modelBuilder.ApplyConfiguration(new MaterialMap());
     }
 }

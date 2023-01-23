@@ -7,41 +7,36 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
     public class EFMaterialRepository : IMaterialRepository
     {
         public List<Material> Seen { get; set; } // FIXME: buscar alternativa para despacho de eventos
+        private readonly DbSet<Material> _dbSet;
 
-        private readonly Database.DatabaseContext _context;
-        private readonly IMapper _mapper;
-
-        public EFMaterialRepository(Database.DatabaseContext context, IMapper mapper)
+        public EFMaterialRepository(Database.DatabaseContext context)
         {
-            _context = context;
-            _mapper = mapper;
+            _dbSet = context.Set<Material>();
             Seen = new List<Material>();
         }
 
         public async Task Insert(Material material)
         {
-            await _context.AddAsync(new Database.Material(material.Id, material.Name));
+            await _dbSet.AddAsync(material);
             Seen.Add(material);
         }
 
         public async Task<Material?> Get(Guid id)
         {
-            return await _mapper
-                .ProjectTo<Material>(_context.Materials.Where(o => o.Id == id))
-                .FirstOrDefaultAsync();
+            return await _dbSet.Where(o => o.Id == id).FirstOrDefaultAsync();
         }
 
-        public Task Update(Material material)
+        public void Update(Material material)
         {
-            throw new NotImplementedException();
+            _dbSet.Update(material);
         }
 
         public async Task Delete(Guid id)
         {
-            var material = await _context.Materials.FindAsync(id);
+            var material = await _dbSet.FindAsync(id);
             if (material != null)
             {
-                _context.Materials.Remove(material);
+                _dbSet.Remove(material);
             }
         }
     }

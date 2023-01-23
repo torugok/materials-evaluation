@@ -8,7 +8,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
 
         public Task<Material?> Get(Guid id);
 
-        public Task Update(Material qualityVision);
+        public void Update(Material qualityVision);
 
         public Task Delete(Guid id);
     }

@@ -6,7 +6,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Mappers
     {
         public MaterialProfile()
         {
-            CreateProjection<Database.Material, Application.Queries.MaterialDto>();
+            CreateProjection<Domain.Material, Application.Queries.MaterialDto>();
         }
     }
 }
