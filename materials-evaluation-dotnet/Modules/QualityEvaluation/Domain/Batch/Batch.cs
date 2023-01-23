@@ -170,6 +170,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
                     return qualityProperty;
                 }
             }
+
             return null;
         }
     }
