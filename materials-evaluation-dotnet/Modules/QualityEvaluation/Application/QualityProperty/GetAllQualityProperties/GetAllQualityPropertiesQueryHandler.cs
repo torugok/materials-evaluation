@@ -4,25 +4,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
 {
-    public class GetAllMaterialsQueryHandler
-        : IRequestHandler<GetAllMaterialsQuery, List<MaterialDto>>
+    public class GetAllQualityPropertiesQueryHandler
+        : IRequestHandler<GetAllQualityPropertiesQuery, List<QualityPropertyDto>>
     {
         private readonly Database.DatabaseContext _context;
         private readonly IMapper _mapper;
 
-        public GetAllMaterialsQueryHandler(Database.DatabaseContext context, IMapper mapper)
+        public GetAllQualityPropertiesQueryHandler(Database.DatabaseContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<List<MaterialDto>> Handle(
-            GetAllMaterialsQuery request,
+        public async Task<List<QualityPropertyDto>> Handle(
+            GetAllQualityPropertiesQuery request,
             CancellationToken cancellationToken
         )
         {
             return await _mapper
-                .ProjectTo<MaterialDto>(_context.Materials, null)
+                .ProjectTo<QualityPropertyDto>(_context.QualityProperties, null)
                 .ToListAsync(cancellationToken: cancellationToken);
         }
     }

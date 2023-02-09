@@ -7,8 +7,6 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
 {
     public class EFBatchRepository : IBatchRepository
     {
-        public List<Batch> Seen { get; set; } // FIXME: buscar alternativa para despacho de eventos
-
         private readonly Database.DatabaseContext _context;
         private readonly IMapper _mapper;
 
@@ -16,7 +14,6 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
         {
             _context = context;
             _mapper = mapper;
-            Seen = new List<Batch>();
         }
 
         public async Task Insert(Batch batch)
@@ -32,8 +29,6 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
                     batch.Status.ToString()
                 )
             );
-
-            Seen.Add(batch);
         }
 
         public async Task<Batch?> Get(Guid id)
@@ -83,8 +78,6 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
                 rawItem.AmountOfTests = batch.AmountOfTests;
                 rawItem.Status = batch.Status.ToString();
             }
-
-            Seen.Add(batch);
         }
 
         public async Task Delete(Guid id)

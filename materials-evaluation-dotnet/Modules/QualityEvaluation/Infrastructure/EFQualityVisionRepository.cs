@@ -6,8 +6,6 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
 {
     public class EFQualityVisionRepository : IQualityVisionRepository
     {
-        public List<QualityVision> Seen { get; set; } // FIXME: buscar alternativa para despacho de eventos
-
         private readonly Database.DatabaseContext _context;
         private readonly IMapper _mapper;
 
@@ -15,7 +13,6 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
         {
             _context = context;
             _mapper = mapper;
-            Seen = new List<QualityVision>();
         }
 
         public async Task Insert(QualityVision qualityVision)
@@ -45,8 +42,6 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
                     qualityVisionProperties
                 )
             );
-
-            Seen.Add(qualityVision);
         }
 
         public async Task<QualityVision?> Get(Guid id)
@@ -63,8 +58,6 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
         public Task Update(QualityVision qualityVision)
         {
             throw new NotImplementedException();
-
-            // Seen.Add(qualityVision);
         }
 
         public async Task Delete(Guid id)

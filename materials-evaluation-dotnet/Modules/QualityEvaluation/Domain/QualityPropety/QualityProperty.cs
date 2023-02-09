@@ -20,15 +20,36 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
 
         public QualityProperty() { }
 
-        public QualityProperty(
-            Guid id,
+        private QualityProperty(
             string acronym,
             string description,
             PropertyTypes type,
             QuantitativeParams? quantitativeParams
         )
         {
-            Id = id;
+            Acronym = acronym;
+            Description = description;
+            Type = type;
+            QuantitativeParams = quantitativeParams;
+        }
+
+        public static QualityProperty Create(
+            string acronym,
+            string description,
+            PropertyTypes type,
+            QuantitativeParams? quantitativeParams
+        )
+        {
+            return new QualityProperty(acronym, description, type, quantitativeParams);
+        }
+
+        public void Edit(
+            string acronym,
+            string description,
+            PropertyTypes type,
+            QuantitativeParams? quantitativeParams
+        )
+        {
             Acronym = acronym;
             Description = description;
             Type = type;
