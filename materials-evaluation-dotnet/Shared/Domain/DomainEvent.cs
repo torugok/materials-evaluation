@@ -8,7 +8,7 @@ namespace MaterialsEvaluation.Shared.Domain
 
         public DateTime OccurredOn { get; }
 
-        public DomainEvent()
+        protected DomainEvent()
         {
             Id = Guid.NewGuid();
             OccurredOn = DateTime.UtcNow;

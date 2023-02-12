@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using MaterialsEvaluation.Shared.Domain;
 
 namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
@@ -14,13 +13,13 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Domain
         Median
     }
 
-    public class AvaliationMethodology : ValueObject
+    public readonly struct AvaliationMethodology
     {
-        public int MinQuantity { get; set; }
+        public int MinQuantity { get; }
 
-        public Grouping Grouping { get; set; }
+        public Grouping Grouping { get; }
 
-        public CalculationType CalculationType { get; set; }
+        public CalculationType CalculationType { get; }
 
         public AvaliationMethodology() { }
 

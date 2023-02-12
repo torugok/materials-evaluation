@@ -36,12 +36,7 @@ namespace MaterialsEvaluation.API_Controllers
 
             var qualityProperty = await _context.QualityProperties.FindAsync(id);
 
-            if (qualityProperty == null)
-            {
-                return NotFound();
-            }
-
-            return qualityProperty;
+            return qualityProperty ?? (ActionResult<QualityProperty>)NotFound();
         }
 
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -62,16 +57,9 @@ namespace MaterialsEvaluation.API_Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException) when (!QualityPropertyExists(id))
             {
-                if (!QualityPropertyExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return qualityProperty;

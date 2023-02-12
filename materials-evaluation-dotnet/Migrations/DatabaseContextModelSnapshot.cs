@@ -3,7 +3,6 @@ using System;
 using MaterialsEvaluation.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -16,51 +15,32 @@ namespace MaterialsEvaluation.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("MaterialsEvaluation.Database.Material", b =>
+            modelBuilder.Entity("MaterialsEvaluation.Database.Batch", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Materials");
-                });
-
-            modelBuilder.Entity("MaterialsEvaluation.Database.MaterialBatch", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("AmountOfTests")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("CalculatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("MaterialId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("QualityVisionId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -68,68 +48,41 @@ namespace MaterialsEvaluation.Migrations
 
                     b.HasIndex("QualityVisionId");
 
-                    b.ToTable("MaterialBatches");
-                });
-
-            modelBuilder.Entity("MaterialsEvaluation.Database.MaterialBatchTests", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("MaterialBatchId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("QualityPropertyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool?>("ResultQualitative")
-                        .HasColumnType("bit");
-
-                    b.Property<double?>("ResultQuantitative")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MaterialBatchId");
-
-                    b.HasIndex("QualityPropertyId");
-
-                    b.ToTable("MaterialBatchTests");
+                    b.ToTable("Batches");
                 });
 
             modelBuilder.Entity("MaterialsEvaluation.Database.QualityProperty", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Acronym")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("QuantitativeDecimals")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<double?>("QuantitativeInferiorLimit")
-                        .HasColumnType("float");
+                        .HasColumnType("REAL");
 
                     b.Property<double?>("QuantitativeNominalValue")
-                        .HasColumnType("float");
+                        .HasColumnType("REAL");
 
                     b.Property<double?>("QuantitativeSuperiorLimit")
-                        .HasColumnType("float");
+                        .HasColumnType("REAL");
 
                     b.Property<string>("QuantitativeUnit")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -140,25 +93,25 @@ namespace MaterialsEvaluation.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("AvaliationCalculationType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("AvaliationGrouping")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("AvaliationMinQuantity")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("MaterialId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -171,13 +124,13 @@ namespace MaterialsEvaluation.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("QualityPropertyId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("QualityVisionId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -189,16 +142,61 @@ namespace MaterialsEvaluation.Migrations
                     b.ToTable("QualityVisionProperties");
                 });
 
-            modelBuilder.Entity("MaterialsEvaluation.Database.MaterialBatch", b =>
+            modelBuilder.Entity("MaterialsEvaluation.Database.Test", b =>
                 {
-                    b.HasOne("MaterialsEvaluation.Database.Material", "Material")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("BatchId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool?>("Passed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("QualityPropertyId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool?>("ResultQualitative")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double?>("ResultQuantitative")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BatchId");
+
+                    b.HasIndex("QualityPropertyId");
+
+                    b.ToTable("Tests");
+                });
+
+            modelBuilder.Entity("MaterialsEvaluation.Modules.QualityEvaluation.Domain.Material", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Materials");
+                });
+
+            modelBuilder.Entity("MaterialsEvaluation.Database.Batch", b =>
+                {
+                    b.HasOne("MaterialsEvaluation.Modules.QualityEvaluation.Domain.Material", "Material")
                         .WithMany()
                         .HasForeignKey("MaterialId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MaterialsEvaluation.Database.QualityVision", "QualityVision")
-                        .WithMany("MaterialBatches")
+                        .WithMany("Batches")
                         .HasForeignKey("QualityVisionId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -208,28 +206,9 @@ namespace MaterialsEvaluation.Migrations
                     b.Navigation("QualityVision");
                 });
 
-            modelBuilder.Entity("MaterialsEvaluation.Database.MaterialBatchTests", b =>
-                {
-                    b.HasOne("MaterialsEvaluation.Database.MaterialBatch", "MaterialBatch")
-                        .WithMany("MaterialBatchTests")
-                        .HasForeignKey("MaterialBatchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MaterialsEvaluation.Database.QualityProperty", "QualityProperty")
-                        .WithMany("MaterialBatchTests")
-                        .HasForeignKey("QualityPropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MaterialBatch");
-
-                    b.Navigation("QualityProperty");
-                });
-
             modelBuilder.Entity("MaterialsEvaluation.Database.QualityVision", b =>
                 {
-                    b.HasOne("MaterialsEvaluation.Database.Material", "Material")
+                    b.HasOne("MaterialsEvaluation.Modules.QualityEvaluation.Domain.Material", "Material")
                         .WithMany()
                         .HasForeignKey("MaterialId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -247,7 +226,7 @@ namespace MaterialsEvaluation.Migrations
                         .IsRequired();
 
                     b.HasOne("MaterialsEvaluation.Database.QualityVision", "QualityVision")
-                        .WithMany("QualityVisionProperties")
+                        .WithMany("QualityProperties")
                         .HasForeignKey("QualityVisionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -257,21 +236,40 @@ namespace MaterialsEvaluation.Migrations
                     b.Navigation("QualityVision");
                 });
 
-            modelBuilder.Entity("MaterialsEvaluation.Database.MaterialBatch", b =>
+            modelBuilder.Entity("MaterialsEvaluation.Database.Test", b =>
                 {
-                    b.Navigation("MaterialBatchTests");
+                    b.HasOne("MaterialsEvaluation.Database.Batch", "Batch")
+                        .WithMany("Tests")
+                        .HasForeignKey("BatchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MaterialsEvaluation.Database.QualityProperty", "QualityProperty")
+                        .WithMany("Tests")
+                        .HasForeignKey("QualityPropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Batch");
+
+                    b.Navigation("QualityProperty");
+                });
+
+            modelBuilder.Entity("MaterialsEvaluation.Database.Batch", b =>
+                {
+                    b.Navigation("Tests");
                 });
 
             modelBuilder.Entity("MaterialsEvaluation.Database.QualityProperty", b =>
                 {
-                    b.Navigation("MaterialBatchTests");
+                    b.Navigation("Tests");
                 });
 
             modelBuilder.Entity("MaterialsEvaluation.Database.QualityVision", b =>
                 {
-                    b.Navigation("MaterialBatches");
+                    b.Navigation("Batches");
 
-                    b.Navigation("QualityVisionProperties");
+                    b.Navigation("QualityProperties");
                 });
 #pragma warning restore 612, 618
         }

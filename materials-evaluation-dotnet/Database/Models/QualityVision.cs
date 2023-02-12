@@ -1,3 +1,5 @@
+using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
+
 namespace MaterialsEvaluation.Database
 {
     public class QualityVision
@@ -11,8 +13,8 @@ namespace MaterialsEvaluation.Database
         public Guid MaterialId { get; set; }
         public Material Material { get; set; }
 
-        public List<QualityVisionProperties> QualityVisionProperties { get; set; }
-        public List<MaterialBatch> MaterialBatches { get; set; }
+        public List<QualityVisionProperties> QualityProperties { get; set; }
+        public List<Batch> Batches { get; set; }
 
         public QualityVision() { }
 
@@ -23,7 +25,7 @@ namespace MaterialsEvaluation.Database
             string avaliationGrouping,
             string avaliationCalculationType,
             Guid materialId,
-            List<QualityVisionProperties> qualityVisionProperties
+            List<QualityVisionProperties> qualityProperties
         )
         {
             Id = id;
@@ -32,27 +34,7 @@ namespace MaterialsEvaluation.Database
             AvaliationGrouping = avaliationGrouping;
             AvaliationCalculationType = avaliationCalculationType;
             MaterialId = materialId;
-            QualityVisionProperties = qualityVisionProperties;
-        }
-    }
-
-    public class QualityVisionProperties
-    {
-        public Guid Id { get; set; } // FIXME: usar long para isso
-
-        public Guid QualityVisionId { get; set; }
-        public QualityVision QualityVision { get; set; }
-
-        public Guid QualityPropertyId { get; set; }
-        public QualityProperty QualityProperty { get; set; }
-
-        public QualityVisionProperties() { }
-
-        public QualityVisionProperties(Guid id, Guid qualityVisionId, Guid qualityPropertyId)
-        {
-            Id = id;
-            QualityVisionId = qualityVisionId;
-            QualityPropertyId = qualityPropertyId;
+            QualityProperties = qualityProperties;
         }
     }
 }

@@ -6,19 +6,19 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure
     {
         private readonly Database.DatabaseContext _context;
         public IQualityVisionRepository QualityVisionRepository { get; }
-        public IMaterialBatchRepository MaterialBatchRepository { get; }
+        public IBatchRepository BatchRepository { get; }
         public IMaterialRepository MaterialRepository { get; }
 
         public EFUnitOfWork(
             Database.DatabaseContext context,
             IQualityVisionRepository qualityVisionRepository,
-            IMaterialBatchRepository materialBatchRepository,
+            IBatchRepository batchRepository,
             IMaterialRepository materialRepository
         )
         {
             _context = context;
             QualityVisionRepository = qualityVisionRepository;
-            MaterialBatchRepository = materialBatchRepository;
+            BatchRepository = batchRepository;
             MaterialRepository = materialRepository;
         }
 

@@ -151,4 +151,4 @@ A figura abaixo demonstra a organização dos módulos do sistema utilizando os 
 
 `dotnet ef database update`
 
-` dotnet ef migrations remove --force`
+`dotnet ef migrations remove --force`

@@ -1,2 +1,6 @@
 /.vscode
 .env
+
+# Ignore the default SQLite database.
+*.db*
+materials-evaluation-build

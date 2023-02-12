@@ -27,6 +27,10 @@ jobs:
         run: dotnet build --no-restore
         working-directory: materials-evaluation-dotnet
 
+      - name: Csharpier
+        run: dotnet csharpier . --check
+        working-directory: materials-evaluation-dotnet
+
       - name: Test
         run: dotnet test --no-build --verbosity normal
         working-directory: materials-evaluation-dotnet

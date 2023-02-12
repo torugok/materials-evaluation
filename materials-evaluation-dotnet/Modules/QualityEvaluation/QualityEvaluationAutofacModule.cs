@@ -1,6 +1,7 @@
 using Autofac;
-using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
+using AutoMapper;
 using MaterialsEvaluation.Modules.QualityEvaluation.Infrastructure;
+using MaterialsEvaluation.Modules.QualityEvaluation.Mappers;
 
 namespace MaterialsEvaluation.Modules.QualityEvaluation
 {
@@ -9,21 +10,50 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation
         protected override void Load(ContainerBuilder builder)
         {
             builder
-                .RegisterType<EFQualityVisionRepository>()
-                .As<IQualityVisionRepository>()
+                .Register(c =>
+                {
+                    var context = c.Resolve<IComponentContext>();
+                    var config = context.Resolve<MapperConfiguration>();
+
+                    return config.CreateMapper(context.Resolve);
+                })
+                .As<IMapper>()
                 .InstancePerLifetimeScope();
 
             builder
-                .RegisterType<EFMaterialBatchRepository>()
-                .As<IMaterialBatchRepository>()
+                .RegisterType<EFQualityVisionRepository>()
+                .As<Domain.IQualityVisionRepository>()
+                .InstancePerLifetimeScope();
+
+            builder
+                .RegisterType<EFBatchRepository>()
+                .As<Domain.IBatchRepository>()
                 .InstancePerLifetimeScope();
 
             builder
                 .RegisterType<EFMaterialRepository>()
-                .As<IMaterialRepository>()
+                .As<Domain.IMaterialRepository>()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterType<EFUnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
+            builder
+                .RegisterType<EFUnitOfWork>()
+                .As<Domain.IUnitOfWork>()
+                .InstancePerLifetimeScope();
+
+            builder
+                .Register(
+                    _ =>
+                        new MapperConfiguration(cfg =>
+                        {
+                            cfg.AddProfile<MaterialProfile>();
+                            cfg.AddProfile<QualityPropertyProfile>();
+                            cfg.AddProfile<QualityVisionProfile>();
+                            cfg.AddProfile<BatchProfile>();
+                            cfg.AddProfile<TestProfile>();
+                        })
+                )
+                .AsSelf()
+                .SingleInstance();
         }
     }
 }

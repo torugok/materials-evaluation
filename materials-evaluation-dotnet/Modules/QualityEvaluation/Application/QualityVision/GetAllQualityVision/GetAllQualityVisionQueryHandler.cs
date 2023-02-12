@@ -1,4 +1,4 @@
-using MaterialsEvaluation.Modules.QualityEvaluation.Domain;
+using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,10 +8,12 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
         : IRequestHandler<GetAllQualityVisionQuery, List<QualityVisionDto>>
     {
         private readonly Database.DatabaseContext _context;
+        private readonly IMapper _mapper;
 
-        public GetAllQualityVisionQueryHandler(Database.DatabaseContext context)
+        public GetAllQualityVisionQueryHandler(Database.DatabaseContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<List<QualityVisionDto>> Handle(
@@ -19,52 +21,12 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries
             CancellationToken cancellationToken
         )
         {
-            var qualityVisionRaw = await _context.QualityVisions
-                .Include("QualityVisionProperties.QualityProperty")
+            return await _mapper
+                .ProjectTo<QualityVisionDto>(
+                    _context.QualityVisions.Include("QualityProperties.QualityProperty"),
+                    null
+                )
                 .ToListAsync(cancellationToken);
-            var qualityVisionsResult = new List<QualityVisionDto>();
-
-            foreach (var rawItem in qualityVisionRaw)
-            {
-                qualityVisionsResult.Add(ConvertToDto(rawItem));
-            }
-
-            return qualityVisionsResult;
-        }
-
-        public static QualityVisionDto ConvertToDto(Database.QualityVision? rawItem)
-        {
-            return new QualityVisionDto(
-                rawItem.Id,
-                rawItem.Name,
-                rawItem.MaterialId,
-                new AvaliationMethodology(
-                    rawItem.AvaliationMinQuantity,
-                    Enum.Parse<Grouping>(rawItem.AvaliationGrouping),
-                    Enum.Parse<CalculationType>(rawItem.AvaliationCalculationType)
-                ),
-                rawItem.QualityVisionProperties != null
-                    ? rawItem.QualityVisionProperties
-                        .Select(
-                            o =>
-                                new QualityPropertyDto
-                                {
-                                    Id = o.QualityProperty.Id,
-                                    Acronym = o.QualityProperty.Acronym,
-                                    Description = o.QualityProperty.Description,
-                                    Type = o.QualityProperty.Type,
-                                    QuantitativeParams = new QuantitativeParams(
-                                        o.QualityProperty.QuantitativeDecimals,
-                                        o.QualityProperty.QuantitativeUnit,
-                                        o.QualityProperty.QuantitativeNominalValue,
-                                        o.QualityProperty.QuantitativeInferiorLimit,
-                                        o.QualityProperty.QuantitativeSuperiorLimit
-                                    )
-                                }
-                        )
-                        .ToList()
-                    : new List<QualityPropertyDto>()
-            );
         }
     }
 }

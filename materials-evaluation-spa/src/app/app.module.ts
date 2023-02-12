@@ -13,7 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MaterialDialogComponent } from './views/materials/material-dialog/material-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
@@ -32,10 +32,12 @@ import { QualityPropertiesComponent } from './views/quality-properties/quality-p
 import { QualityPropertyDialogComponent } from './views/quality-properties/quality-property-dialog/quality-property-dialog.component';
 import { QualityVisionsComponent } from './views/quality-visions/quality-visions.component';
 import { QualityVisionDialogComponent } from './views/quality-visions/quality-vision-dialog/quality-vision.component';
-import { MaterialBatchesComponent } from './views/material-batches/material-batches.component';
-import { MaterialBatchDialogComponent } from './views/material-batches/material-batch-dialog/material-batch-dialog.component';
-import { AddTestDialogComponent } from './views/material-batches/add-test/add-test-dialog.component';
-
+import { BatchesComponent } from './views/batches/batches.component';
+import { BatchDialogComponent } from './views/batches/batch-dialog/batch-dialog.component';
+import { AddTestDialogComponent } from './views/batches/add-test/add-test-dialog.component';
+import { ErrorDialogComponent } from './shared/error-dialog/error-dialog.component';
+import { ErrorDialogService } from './shared/error-dialog/error-dialog.service';
+import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,9 +50,10 @@ import { AddTestDialogComponent } from './views/material-batches/add-test/add-te
     QualityPropertyDialogComponent,
     QualityVisionsComponent,
     QualityVisionDialogComponent,
-    MaterialBatchesComponent,
-    MaterialBatchDialogComponent,
+    BatchesComponent,
+    BatchDialogComponent,
     AddTestDialogComponent,
+    ErrorDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,7 +76,15 @@ import { AddTestDialogComponent } from './views/material-batches/add-test/add-te
     MatMenuModule,
     MatSelectModule,
   ],
-  providers: [],
+  providers: [
+    ErrorDialogService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpConfigInterceptor,
+      multi: true,
+    },
+  ],
+  entryComponents: [ErrorDialogComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

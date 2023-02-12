@@ -1,0 +1,12 @@
+{
+    "omnisharp.enableRoslynAnalyzers": true,
+    "editor.formatOnSave": true,
+    "[csharp]": {
+      "editor.defaultFormatter": "csharpier.csharpier-vscode",
+      "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+     }
+    },
+    "omnisharp.organizeImportsOnFormat": true,
+    "omnisharp.enableImportCompletion": true,
+}

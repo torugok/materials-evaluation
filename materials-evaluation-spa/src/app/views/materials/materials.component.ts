@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
+import { CreatedEntity } from 'src/app/models/CreatedEntity';
 import { Material } from 'src/app/models/Material';
 import { MaterialService } from 'src/app/services/Material.service';
-import { handleApiErrors } from 'src/app/shared/utils/Errors';
 import { MaterialDialogComponent } from './material-dialog/material-dialog.component';
 
 @Component({
@@ -26,14 +26,9 @@ export class MaterialsComponent {
     public dialog: MatDialog,
     public materialService: MaterialService
   ) {
-    this.materialService.getMaterials().subscribe(
-      (data: Material[]) => {
-        this.dataSource = data;
-      },
-      (err) => {
-        handleApiErrors(err);
-      }
-    );
+    this.materialService.getMaterials().subscribe((data: Material[]) => {
+      this.dataSource = data;
+    });
   }
 
   openDialog(material: Material | null): void {
@@ -48,45 +43,33 @@ export class MaterialsComponent {
       if (result !== undefined) {
         // edição
         if (this.dataSource.map((p) => p.id).includes(result.id)) {
-          this.materialService.editMaterial(result).subscribe(
-            (data: Material) => {
-              var index = this.dataSource.findIndex(
-                (item) => item.id === data.id
-              );
-              this.dataSource[index] = result;
-              this.table.renderRows();
-            },
-            (err) => {
-              handleApiErrors(err);
-            }
-          );
+          this.materialService.editMaterial(result).subscribe((data: void) => {
+            var index = this.dataSource.findIndex(
+              (item) => item.id === result.id
+            );
+            this.dataSource[index] = result;
+            this.table.renderRows();
+          });
         } else {
           // criação
-          this.materialService.newMaterial(result).subscribe(
-            (data: Material) => {
-              this.dataSource.push(data);
+          this.materialService
+            .newMaterial(result)
+            .subscribe((data: CreatedEntity) => {
+              result.id = data.id;
+              this.dataSource.push(result);
               this.table.renderRows();
-            },
-            (err) => {
-              handleApiErrors(err);
-            }
-          );
+            });
         }
       }
     });
   }
 
   onDeleteMaterial(id: string): void {
-    this.materialService.deleteMaterial(id).subscribe(
-      (data: Material) => {
-        this.dataSource = this.dataSource.filter(
-          (material) => material.id !== id
-        );
-      },
-      (err) => {
-        handleApiErrors(err);
-      }
-    );
+    this.materialService.deleteMaterial(id).subscribe((data: void) => {
+      this.dataSource = this.dataSource.filter(
+        (material) => material.id !== id
+      );
+    });
   }
 
   onEditMaterial(material: Material): void {

@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { QualityProperty } from 'src/app/models/QualityProperty';
 import { QualityPropertyService } from 'src/app/services/QualityProperty.service';
-import { handleApiErrors } from 'src/app/shared/utils/Errors';
 import { QualityPropertyDialogComponent } from './quality-property-dialog/quality-property-dialog.component';
 
 @Component({
@@ -33,14 +32,11 @@ export class QualityPropertiesComponent {
     public dialog: MatDialog,
     public qualityPropertyService: QualityPropertyService
   ) {
-    this.qualityPropertyService.getAll().subscribe(
-      (data: QualityProperty[]) => {
+    this.qualityPropertyService
+      .getAll()
+      .subscribe((data: QualityProperty[]) => {
         this.dataSource = data;
-      },
-      (err) => {
-        handleApiErrors(err);
-      }
-    );
+      });
   }
 
   openDialog(qualityProperty: QualityProperty | null): void {
@@ -77,45 +73,36 @@ export class QualityPropertiesComponent {
       if (result !== undefined) {
         // edição
         if (this.dataSource.map((p) => p.id).includes(result.id)) {
-          this.qualityPropertyService.edit(result).subscribe(
-            (data: QualityProperty) => {
+          this.qualityPropertyService
+            .edit(result)
+            .subscribe((data: QualityProperty) => {
               var index = this.dataSource.findIndex(
                 (item) => item.id === data.id
               );
               this.dataSource[index] = result;
               this.table.renderRows();
-            },
-            (err) => {
-              handleApiErrors(err);
-            }
-          );
+            });
         } else {
           // criação
-          this.qualityPropertyService.add(result).subscribe(
-            (data: QualityProperty) => {
+          this.qualityPropertyService
+            .add(result)
+            .subscribe((data: QualityProperty) => {
               this.dataSource.push(data);
               this.table.renderRows();
-            },
-            (err) => {
-              handleApiErrors(err);
-            }
-          );
+            });
         }
       }
     });
   }
 
   onDelete(id: string): void {
-    this.qualityPropertyService.delete(id).subscribe(
-      (data: QualityProperty) => {
+    this.qualityPropertyService
+      .delete(id)
+      .subscribe((data: QualityProperty) => {
         this.dataSource = this.dataSource.filter(
           (qualityProperty) => qualityProperty.id !== id
         );
-      },
-      (err) => {
-        handleApiErrors(err);
-      }
-    );
+      });
   }
 
   onEdit(qualityProperty: QualityProperty): void {

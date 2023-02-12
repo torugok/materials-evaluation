@@ -1,6 +1,7 @@
-using MaterialsEvaluation.Database;
+using MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands;
+using MaterialsEvaluation.Modules.QualityEvaluation.Application.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace MaterialsEvaluation.API_Controllers
 {
@@ -8,110 +9,42 @@ namespace MaterialsEvaluation.API_Controllers
     [ApiController]
     public class MaterialsController : ControllerBase
     {
-        private readonly DatabaseContext _context;
+        private readonly IMediator _mediator;
 
-        public MaterialsController(DatabaseContext context)
+        public MaterialsController(IMediator mediator)
         {
-            _context = context;
+            _mediator = mediator;
         }
 
-        // GET: api/Materials
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Material>>> GetMaterials()
-        {
-            if (_context.Materials == null)
-            {
-                return NotFound();
-            }
-
-            return await _context.Materials.ToListAsync();
-        }
-
-        // GET: api/Materials/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Material>> GetMaterial(Guid id)
-        {
-            if (_context.Materials == null)
-            {
-                return NotFound();
-            }
-
-            var material = await _context.Materials.FindAsync(id);
-
-            if (material == null)
-            {
-                return NotFound();
-            }
-
-            return material;
-        }
-
-        // PUT: api/Materials/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<ActionResult<Material>> PutMaterial(Guid id, Material material)
-        {
-            if (id != material.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(material).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MaterialExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return material;
-        }
-
-        // POST: api/Materials
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Material>> PostMaterial(Material material)
+        public async Task<ActionResult<Guid>> PostMaterial(CreateMaterialCommand command)
         {
-            _context.Materials.Add(material);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetMaterial), new { id = material.Id }, material);
+            var response = await _mediator.Send(command);
+            return CreatedAtAction(nameof(PostMaterial), new CreatedEntity(response));
         }
 
-        // DELETE: api/Materials/5
+        [HttpGet]
+        public async Task<ActionResult<List<MaterialDto>>> GetMaterial()
+        {
+            return await _mediator.Send(new GetAllMaterialsQuery());
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<MaterialDto>> GetOneMaterial(Guid id)
+        {
+            return await _mediator.Send(new GetOneMaterialQuery(id));
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<Unit>> EditMaterial(EditMaterialCommand command)
+        {
+            return await _mediator.Send(command);
+        }
+
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMaterial(Guid id)
+        public async Task<ActionResult<Guid>> DeleteMaterial(Guid id)
         {
-            if (_context.Materials == null)
-            {
-                return NotFound();
-            }
-
-            var material = await _context.Materials.FindAsync(id);
-            if (material == null)
-            {
-                return NotFound();
-            }
-
-            _context.Materials.Remove(material);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool MaterialExists(Guid id)
-        {
-            return (_context.Materials?.Any(e => e.Id == id)).GetValueOrDefault();
+            return await _mediator.Send(new DeleteMaterialCommand(id));
         }
     }
 }
