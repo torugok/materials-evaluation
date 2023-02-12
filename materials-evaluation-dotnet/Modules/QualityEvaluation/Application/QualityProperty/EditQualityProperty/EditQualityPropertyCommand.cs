@@ -24,8 +24,6 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
             QuantitativeParams? quantitativeParams
         )
         {
-            PropertyTypes.Qualitative;
-            
             Id = id;
             Acronym = acronym;
             Description = description;

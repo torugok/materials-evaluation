@@ -25,7 +25,7 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
                 throw new NotFoundException("Característica de qualidade não encontrada!");
             }
 
-            qualityProperty.Edit(request.Acronym, request.Description);
+            qualityProperty.Edit(request.Acronym, request.Description, request.Type, request.QuantitativeParams);
 
             _unitOfWork.QualityPropertyRepository.Update(qualityProperty);
             await _unitOfWork.Commit(cancellationToken);

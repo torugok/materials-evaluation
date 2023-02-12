@@ -20,10 +20,10 @@ namespace MaterialsEvaluation.Modules.QualityEvaluation.Application.Commands
         )
         {
             var qualityProperty = QualityProperty.Create(
-                request.acronym,
-                request.description,
-                request.type,
-                request.quantitativeParams
+                request.Acronym,
+                request.Description,
+                request.Type,
+                request.QuantitativeParams
             );
 
             await _unitOfWork.QualityPropertyRepository.Insert(qualityProperty);
